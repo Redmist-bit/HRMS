@@ -784,6 +784,12 @@ export default {
             });
         }
       } else if (args.target.classList.contains("Edit")){
+        let data = args
+            this.editedIndex = 1;
+            console.log(data)
+            this.editedItem = data.rowData
+            this.DialogTambahKaryawan = true
+
 	if (args.rowData.Aktif == 0) {
 		this.dataTemp = args.rowData
 		this.dialogAktifData = true
