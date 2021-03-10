@@ -493,10 +493,21 @@
             :allowSorting='true'
             :allowResizing='true'
             :allowGrouping='true'
+            :commandClick="commandClick"
             :toolbar='toolbarOptions'
             :pageSettings='pageSettings'
           >
             <e-columns>
+              <e-column field="Commands" headerText=" Action" width="120" :commands="commands">
+                <div class="btn-group">
+                  <!-- <v-btn type="button" class="btn btn-default" (click)="prediemRowEdit($event)">
+                    <i class="fa fa-pencil"></i>
+                  </v-btn>
+                  <v-btn type="button" class="btn btn-default" (click)="prediemRowDelete($event)">
+                    <i class="fa fa-trash"></i>
+                  </v-btn> -->
+                </div>
+              </e-column>
               <e-column field='KODE_KARYAWAN' headerText='Kode' textAlign='Left' width=150></e-column>
               <e-column field='NAMA' headerText='Nama' width=300></e-column>
               <e-column field='NRK' headerText='NRK' textAlign='Left' width=150></e-column>
@@ -628,6 +639,16 @@ export default {
       pageSettings: { pageSize: 5 },
     };
   },
+  
+  commands: [
+    {
+      buttonOption: { cssClass: "e-flat Edit", iconCss: "e-edit e-icons"}
+    },
+    {
+      buttonOption: { cssClass:"e-flat Delete", iconCss: "e-delete e-icons"}
+    }
+  ],
+
   provide: {
     grid: [Page, Sort, Group, Resize, Toolbar, Search]
   },
