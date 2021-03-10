@@ -667,7 +667,7 @@ export default {
           this.form.append('Tgl_Lahir', this.editedItem.Tgl_Lahir);
           this.form.append('Alamat_Ktp', this.editedItem.Alamat_Ktp);
           this.form.append('Alamat_Sekarang', this.editedItem.Alamat_Sekarang);
-          this.form.append('No_Telp', this.editedItem.No_Telp);
+          this.form.append('No_Tlp', this.editedItem.No_Tlp);
           this.form.append('Jenis_Kelamin', this.editedItem.Jenis_Kelamin);
           this.form.append('Pendidikan_Terakhir', this.editedItem.Pendidikan_Terakhir);
           this.form.append('Jurusan', this.editedItem.Jurusan);
@@ -781,6 +781,7 @@ export default {
       this.$nextTick(() => {
         this.editedItem = Object.assign({}, this.defaultItem)
         this.editedIndex = -1
+        this.foto = null
         this.editedItem.Tgl_Masuk = this.date
         this.editedItem.Tgl_Lahir = this.date
         this.editedItem.Tgl_Phk = this.date

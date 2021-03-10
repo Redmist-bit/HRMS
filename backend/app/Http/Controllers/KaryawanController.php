@@ -56,7 +56,7 @@ class KaryawanController extends Controller
         $krywn->TGL_LAHIR = $request->Tgl_Lahir;
         $krywn->ALAMAT_KTP = $request->Alamat_KTP;
         $krywn->ALAMAT_SEKARANG = $request->Alamat_Sekarang;
-        $krywn->NO_TLP = $request->No_Telp;
+        $krywn->NO_TLP = $request->No_Tlp;
         $krywn->JENIS_KELAMIN = $request->Jenis_Kelamin;
         $krywn->PENDIDIKAN_TERAKHIR = $request->Pendidikan_Terakhir;
         $krywn->JURUSAN = $request->Jurusan;
@@ -154,7 +154,7 @@ class KaryawanController extends Controller
             "TGL_LAHIR"=>$request->Tgl_lahir,
             "ALAMAT_KTP"=>$request->Alamat_Ktp,
             "ALAMAT_SEKARANG"=>$request->Alamat_Sekarang,
-            "NO_TLP"=>$request->No_Telp,
+            "NO_TLP"=>$request->No_Tlp,
             "JENIS_KELAMIN"=>$request->Jenis_Kelamin,
             "PENDIDIKAN_TERAKHIR"=>$request->Pendidikan_Terakhir,
             "JURUSAN"=>$request->Jurusan,
