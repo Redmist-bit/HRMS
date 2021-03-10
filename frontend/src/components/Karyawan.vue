@@ -653,7 +653,47 @@ export default {
   methods: {
     Simpan(){
       if(this.formTitleKaryawan === "Tambah Karyawan"){
-          // this.TambahData()
+          api.post("/karyawan", {
+          Nama: this.editedItem.Nama,
+          Kategori: this.editedItem.Kategori,
+          SubKategori: this.editedItem.SubKategori,
+          Grup: this.editedItem.Grup,
+          SubGrup: this.editedItem.SubGrup,
+          Memo: this.editedItem.Memo,
+          Merk: this.editedItem.Merk,
+          Type: this.editedItem.Type,
+          PartNumber1: this.editedItem.PartNumber1,
+          PartNumber2: this.editedItem.PartNumber2,
+          Dimensi: this.editedItem.Dimensi,
+          Kendaraan: this.editedItem.Kendaraan,
+          DiBuatOleh:'',
+          // DiBuatTgl:today,
+          DiubahOleh:'',
+          // DiubahTgl:today,
+          Aktif: true,
+          Gudang: 'TA1'
+            })
+            .then((res) => {
+          this.Nama = "";
+          this.Kategori = "";
+          this.SubKategori = "";
+          this.Grup = "";
+          this.SubGrup = "";
+          this.Memo = "";
+          this.Merk = "";
+          this.Type = "";
+          this.PartNumber1 = "";
+          this.PartNumber2 = "";
+          this.Dimensi = "";
+          this.Kendaraan = "";
+          this.Aktif = "";
+              
+          console.log(res);
+          this.getDataTambahpro();
+        // })
+          this.Upload()
+        this.closeproduk();
+            })
       }else{
           // this.UpdateData()
       }
