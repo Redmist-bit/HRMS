@@ -17,25 +17,48 @@
         <v-icon>{{ drawerMenu ? 'mdi-backburger' : 'mdi-menu' }}</v-icon>
       </v-btn>
 
-      <a class="title black--text">HRM</a>
+      <a @click="home" class="title black--text">HRM</a>
 
       <v-spacer></v-spacer>
 
       <!-- Pencarian -->
-        <v-col
-          cols="5"
-          sm="8"
-          md="6"
+      <v-col
+        cols="5"
+        sm="8"
+        md="4"
+      >
+        <v-text-field
+          solo
+          flat
+          dense
+          outlined
+          clearable
+          color="grey darken-1"
+          class="mt-7 rounded-lg mr-1"
+          placeholder="Pencarian"
+          
         >
-          <v-text-field
-            solo
-            color="red darken-4"
-            class="mt-7 rounded-lg"
-            placeholder="Percarian"
-            prepend-inner-icon="mdi-magnify"
-          ></v-text-field>
-        </v-col>
-      <v-spacer></v-spacer>
+        <!-- prepend-inner-icon="mdi-magnify" -->
+          <template v-slot:append>
+            <v-btn
+              text
+              dark
+              small
+              depressed
+              width="50"
+              height="40"
+              color="red darken-4"
+              class="rounded-r-lg mx-n3"
+            >
+              <v-icon>mdi-magnify</v-icon>
+            </v-btn>
+          </template>
+
+          <v-divider></v-divider>
+        </v-text-field>
+      </v-col>
+
+      <v-divider inset vertical class="mr-1"></v-divider>
 
       <!-- Button Akun -->
       <div class="text-center">
@@ -128,7 +151,7 @@
     <v-navigation-drawer
       app
       fixed
-      width="300"
+      width="250"
       v-model="drawerMenu"
       color="white"
     >
@@ -136,13 +159,12 @@
         flat
         color="white"
       >
-        <a>
+        <a @click="home">
           <v-list-item>
             <v-list-item-content
               class="mx-n6"
             >
               <v-img
-                to="/home"
                 max-width="38"
                 max-height="150px"
                 src="../assets/LogoTrinity.png"
@@ -158,10 +180,10 @@
       
       <v-divider></v-divider>
 
-      <!-- Menu -->
+      <!-- Menu Beranda -->
       <v-list nav dense>
         <v-list-item
-          v-for="item in menu1"
+          v-for="item in Beranda"
           :key="item.title"
           :to="item.link"
           link
@@ -175,11 +197,10 @@
             <v-list-item-title>{{ item.title }}</v-list-item-title>
           </v-list-item-content>
           </v-list-item>
-          <v-divider></v-divider>
 
-          <!-- Laporan -->
+          <!-- Master -->
           <v-list-group
-            v-for="item in Laporan"
+            v-for="item in Menu"
             :key="item.title"
             v-model="item.active"
             :prepend-icon="item.action"
@@ -193,37 +214,7 @@
             </template>
 
             <v-list-item
-              v-for="child in item.ItemsLaporan"
-              :key="child.title"
-              :to="child.link"
-              link
-              color="red darken-4"
-            >
-              <v-list-item-content>
-                <v-list-item-title v-text="child.title"></v-list-item-title>
-              </v-list-item-content>
-              <v-icon v-text="child.icon"></v-icon>
-            </v-list-item>
-          </v-list-group>
-          <v-divider></v-divider>
-
-          <!-- Setting -->
-          <v-list-group
-            v-for="item in Setting"
-            :key="item.title"
-            v-model="item.active"
-            :prepend-icon="item.action"
-            no-action
-            color="red darken-4"
-          >
-            <template v-slot:activator>
-              <v-list-item-content>
-                <v-list-item-title v-text="item.title"></v-list-item-title>
-              </v-list-item-content>
-            </template>
-
-            <v-list-item
-              v-for="child in item.ItemsSetting"
+              v-for="child in item.ListMenu"
               :key="child.title"
               :to="child.link"
               link
@@ -288,35 +279,53 @@
         MenuShowNotif: false,
         drawerMenu: true,
 
-        menu1: [
-          { title: 'Dashboard', icon: 'mdi-view-dashboard', link: '/' },
-          { title: 'Data Karyawan', icon: 'mdi-badge-account-horizontal', link: '/Karyawan' },
-          { title: 'Absensi Karyawan', icon: 'mdi-book-account', link: '/Absensi' },
-          { title: 'Gologan Karyawan', icon: 'mdi-account-hard-hat', link: '/Golongan' },
-          { title: 'Penggajian', icon: 'mdi-account-cash', link: '/Penggajian' },
+        // Menu Navigation Drawer
+
+        // Beranda
+        Beranda: [
+          { title: 'Beranda', icon: 'mdi-home', link: '/' },
+          
         ],
 
-        Setting: [
+        // Menu
+        Menu: [
+          // Master
           {
-            action: 'mdi-cog',
-            ItemsSetting: [
-              { title: 'Pengguna', icon: 'mdi-account-cog' , link: 'Pengguna' }
+            action: 'mdi-database',
+            ListMenu: [
+              { title: 'Karyawan', icon: 'mdi-badge-account-horizontal' , link: 'Karyawan' }
             ],
-            title: 'Pengaturan',
+            title: 'Master',
           },
-        ],
 
-        Laporan: [
+          // Proses
           {
-            action: 'mdi-file',
-            ItemsLaporan: [
-              { title: 'Laporan Data Karyawan', link: 'LapDataKaryawan' },
-              { title: 'Laporan Absensi karyawan', link: 'LapAbsensiKaryawan' }
+            action: 'mdi-database',
+            ListMenu: [
+              
             ],
-            title: 'Laporan',
+            title: 'Proses',
           },
         ],
       }
+    },
+
+    computed: {
+
+    },
+    watch: {
+
+    },
+
+    methods: {
+      home(){
+        if (this.$router.currentRoute.name == "Home") {
+          //do nothing
+        }else{
+          this.$router.push("/")
+        }
+        
+      },
     },
   }
 </script>
