@@ -54,6 +54,34 @@
                 <v-card-text>
                   <v-container class="mt-3">
                     <v-row>
+                      <v-col cols="12" sm="12" md="12">
+                        <div class="pa-3">
+                          <!-- <legend>Upload foto</legend> -->
+                          <strong>Select Image :</strong>
+                            <!-- <div class="form-group" v-for="(image, key) in attachments" :key="key"> -->
+                              <div class="form-group">
+                                <input id="upload-file" type="file" ref="fileupload" multiple class="custom-file-input" @change="fieldChange">
+                              <!-- <img class="preview" :ref="'image'" /> -->
+
+                            </div>
+                            <!-- <button class="btn btn-primary" @click="uploadFile">Submit</button> -->
+                        </div>
+                        <v-card 
+                          outlined
+                          max-height="250"
+                          max-width="180"
+                          class="rounded-lg elevation-2"
+                        >
+                          <v-responsive :aspect-ratio="9/16">
+                            <!-- <v-img
+                              max-height="250"
+                              max-width="150"
+                            >
+                            </v-img> -->
+                          </v-responsive>
+                        </v-card>
+                      </v-col>
+
                       <v-col cols="12" sm="6" md="3">
                         <v-text-field
                           dense
@@ -630,6 +658,30 @@ export default {
           // this.UpdateData()
       }
       this.KeluarDialogKaryawan()    
+    },
+
+    fieldChange(e){
+      console.log(e)
+      let selectedFiles=e.target.files;
+      if(!selectedFiles.length){
+        return false;
+      }
+      for(let i=0;i<selectedFiles.length;i++){
+        this.attachments.push(selectedFiles[i]);
+      }
+      for (let i = 0; i < this.attachments.length; i++) {
+        let reader = new FileReader();// eslint-disable-next-line
+        reader.onload = (e) => { 
+        this.$refs.image[i].src = reader.result; 
+        // console.log(this.$refs.attachments[i].src);
+        
+        };
+
+        
+        reader.readAsDataURL(this.attachments[i]);
+        
+      }
+      console.log(this.attachments);
     },
 
     KeluarDialogKaryawan () {
