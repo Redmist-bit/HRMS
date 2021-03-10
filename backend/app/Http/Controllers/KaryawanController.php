@@ -53,7 +53,7 @@ class KaryawanController extends Controller
         $krywn->POH = $request->Poh;
         $krywn->TGL_MASUK = $request->Tgl_Masuk;
         $krywn->TEMPAT_LAHIR = $request->Tempat_Lahir;
-        $krywn->TGL_LAHIR = $request->Tgl_lahir;
+        $krywn->TGL_LAHIR = $request->Tgl_Lahir;
         $krywn->ALAMAT_KTP = $request->Alamat_KTP;
         $krywn->ALAMAT_SEKARANG = $request->Alamat_Sekarang;
         $krywn->NO_TLP = $request->No_Telp;
@@ -63,10 +63,10 @@ class KaryawanController extends Controller
         $krywn->AGAMA = $request->Agama;
         $krywn->SUKU = $request->Suku;
         $krywn->NO_REK_TABUNGAN = $request->No_Rek_Tabungan;
-        $krywn->NO_KARTU_BPJS_TK = $request->No_Kartu_BPJS_TK;
-        $krywn->NO_KARTU_BPJS_KES = $request->No_Kartu_BPJS_KES;
-        $krywn->NO_KTP = $request->No_KTP;
-        $krywn->NO_NPWP = $request->No_NPWP;
+        $krywn->NO_KARTU_BPJS_TK = $request->No_Kartu_Bpjs_Tk;
+        $krywn->NO_KARTU_BPJS_KES = $request->No_Kartu_Bpjs_Kes;
+        $krywn->NO_KTP = $request->No_Ktp;
+        $krywn->NO_NPWP = $request->No_Npwp;
         $krywn->GOL_DR = $request->Gol_Dr;
         $krywn->STATUS = $request->Status;
         $krywn->STATUS_KERJA = $request->Status_Kerja;
@@ -152,7 +152,7 @@ class KaryawanController extends Controller
             "TGL_MASUK"=>$request->Tgl_Masuk,
             "TEMPAT_LAHIR"=>$request->Tempat_Lahir,
             "TGL_LAHIR"=>$request->Tgl_lahir,
-            "ALAMAT_KTP"=>$request->Alamat_KTP,
+            "ALAMAT_KTP"=>$request->Alamat_Ktp,
             "ALAMAT_SEKARANG"=>$request->Alamat_Sekarang,
             "NO_TLP"=>$request->No_Telp,
             "JENIS_KELAMIN"=>$request->Jenis_Kelamin,
@@ -163,8 +163,8 @@ class KaryawanController extends Controller
             "NO_REK_TABUNGAN"=>$request->No_Rek_Tabungan,
             "NO_KARTU_BPJS_TK"=>$request->No_Kartu_BPJS_TK,
             "NO_KARTU_BPJS_KES"=>$request->No_Kartu_BPJS_KES,
-            "NO_KTP"=>$request->No_KTP,
-            "NO_NPWP"=>$request->No_NPWP,
+            "NO_KTP"=>$request->No_Ktp,
+            "NO_NPWP"=>$request->No_Npwp,
             "GOL_DR"=>$request->Gol_Dr,
             "STATUS"=>$request->Status,
             "STATUS_KERJA"=>$request->Status_Kerja,

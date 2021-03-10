@@ -60,7 +60,7 @@
                           <strong>Select Image :</strong>
                             <!-- <div class="form-group" v-for="(image, key) in attachments" :key="key"> -->
                               <div class="form-group">
-                                <input id="upload-file" type="file" ref="fileupload" multiple class="custom-file-input" @change="fieldChange">
+                                <input id="upload-file" type="file" ref="fileupload" class="custom-file-input" @change="fieldChange">
                               <!-- <img class="preview" :ref="'image'" /> -->
 
                             </div>
@@ -73,6 +73,7 @@
                           class="rounded-lg elevation-2"
                         >
                           <v-responsive :aspect-ratio="9/16">
+                          <v-img v-if="foto" :src="foto"></v-img>
                             <!-- <v-img
                               max-height="250"
                               max-width="150"
@@ -496,38 +497,38 @@
             :pageSettings='pageSettings'
           >
             <e-columns>
-              <e-column field='Kode_Karyawan' headerText='Kode' textAlign='Left' width=150></e-column>
-              <e-column field='Nama' headerText='Nama' width=300></e-column>
-              <e-column field='Nrk' headerText='NRK' textAlign='Left' width=150></e-column>
-              <e-column field='Kode_Jabatan' headerText='Kode Jabatan' textAlign='Left' width=150></e-column>
-              <e-column field='Poh' headerText='POH' textAlign='Left' width=150></e-column>
-              <e-column field='Tgl_Masuk' headerText='Tgl Masuk' textAlign='Left' width=150></e-column>
-              <e-column field='Tempat_Lahir' headerText='Tempat Lahir' textAlign='Left' width=150></e-column>
-              <e-column field='Tgl_Lahir' headerText='Tgl Lahir' textAlign='Left' width=150></e-column>
-              <e-column field='Alamat_Ktp' headerText='Alamat KTP' textAlign='Left' width=200></e-column>
-              <e-column field='Alamat_Sekarang' headerText='Alamat Sekarang' textAlign='Left' width=200></e-column>
-              <e-column field='No_Tlp' headerText='No. Tlp' textAlign='Left' width=150></e-column>
-              <e-column field='Jenis_Kelamin' headerText='Jenis Kelamin' textAlign='Left' width=150></e-column>
-              <e-column field='Pendidikan_Terakhir' headerText='Pendidikan Terakhir' textAlign='Left' width=150></e-column>
-              <e-column field='Jurusan' headerText='Jurusan' textAlign='Left' width=150></e-column>
-              <e-column field='Agama' headerText='Agama' textAlign='Left' width=150></e-column>
-              <e-column field='Suku' headerText='Suku' textAlign='Left' width=150></e-column>
-              <e-column field='No_Rek_Tabungan' headerText='No. RekTabungan' textAlign='Left' width=150></e-column>
-              <e-column field='No_Kartu_Bpjs_Tk' headerText='No. Kartu BPJS TK' textAlign='Left' width=150></e-column>
-              <e-column field='No_Kartu_Bpjs_Kes' headerText='No. Kartu BPJS Kes' textAlign='Left' width=150></e-column>
-              <e-column field='No_Ktp' headerText='No. KTP' textAlign='Left' width=150></e-column>
-              <e-column field='No_Npwp' headerText='No. NPWP' textAlign='Left' width=150></e-column>
-              <e-column field='Gol_Dr' headerText='Golongan Darah' textAlign='Left' width=150></e-column>
-              <e-column field='Status' headerText='Status' textAlign='Left' width=150></e-column>
-              <e-column field='Status_Kerja' headerText='Status Kerja' textAlign='Left' width=150></e-column>
-              <e-column field='Ukuran_Baju' headerText='Ukuran Baju' textAlign='Left' width=150></e-column>
-              <e-column field='Ukuran_Sepatu' headerText='Ukuran Sepatu' textAlign='Left' width=150></e-column>
-              <e-column field='Phk' headerText='PHK' textAlign='Left' width=150></e-column>
-              <e-column field='Tgl_Phk' headerText='Tgl PHK' textAlign='Left' width=150></e-column>
-              <e-column field='Keterangan' headerText='Keterangan' textAlign='Left' width=150></e-column>
-              <e-column field='Photo' headerText='Photo' textAlign='Left' width=150></e-column>
-              <e-column field='Nama_Istri_Suami' headerText='Nama Istri Suami' textAlign='Left' width=150></e-column>
-              <e-column field='DibuatOleh' headerText='DibuatOleh' textAlign='Left' width=150></e-column>
+              <e-column field='KODE_KARYAWAN' headerText='Kode' textAlign='Left' width=150></e-column>
+              <e-column field='NAMA' headerText='Nama' width=300></e-column>
+              <e-column field='NRK' headerText='NRK' textAlign='Left' width=150></e-column>
+              <e-column field='KODE_JABATAN' headerText='Kode Jabatan' textAlign='Left' width=150></e-column>
+              <e-column field='POH' headerText='POH' textAlign='Left' width=150></e-column>
+              <e-column field='TGL_MASUK' headerText='Tgl Masuk' textAlign='Left' width=150></e-column>
+              <e-column field='TEMPAT_LAHIR' headerText='Tempat Lahir' textAlign='Left' width=150></e-column>
+              <e-column field='TGL_LAHIR' headerText='Tgl Lahir' textAlign='Left' width=150></e-column>
+              <e-column field='ALAMAT_KTP' headerText='Alamat KTP' textAlign='Left' width=200></e-column>
+              <e-column field='ALAMAT_SEKARANG' headerText='Alamat Sekarang' textAlign='Left' width=200></e-column>
+              <e-column field='NO_TLP' headerText='No. Tlp' textAlign='Left' width=150></e-column>
+              <e-column field='JENIS_KELAMIN' headerText='Jenis Kelamin' textAlign='Left' width=150></e-column>
+              <e-column field='PENDIDIKAN_TERAKHIR' headerText='Pendidikan Terakhir' textAlign='Left' width=150></e-column>
+              <e-column field='JURUSAN' headerText='Jurusan' textAlign='Left' width=150></e-column>
+              <e-column field='AGAMA' headerText='Agama' textAlign='Left' width=150></e-column>
+              <e-column field='SUKU' headerText='Suku' textAlign='Left' width=150></e-column>
+              <e-column field='NO_REK_TABUNGAN' headerText='No. RekTabungan' textAlign='Left' width=150></e-column>
+              <e-column field='NO_KARTU_BPJS_TK' headerText='No. Kartu BPJS TK' textAlign='Left' width=150></e-column>
+              <e-column field='NO_KARTU_BPJS_KES' headerText='No. Kartu BPJS Kes' textAlign='Left' width=150></e-column>
+              <e-column field='NO_KTP' headerText='No. KTP' textAlign='Left' width=150></e-column>
+              <e-column field='NO_NPWP' headerText='No. NPWP' textAlign='Left' width=150></e-column>
+              <e-column field='GOL_DR' headerText='Golongan Darah' textAlign='Left' width=150></e-column>
+              <e-column field='STATUS' headerText='Status' textAlign='Left' width=150></e-column>
+              <e-column field='STATUS_KERJA' headerText='Status Kerja' textAlign='Left' width=150></e-column>
+              <e-column field='UKURAN_BAJU' headerText='Ukuran Baju' textAlign='Left' width=150></e-column>
+              <e-column field='UKURAN_SEPATU' headerText='Ukuran Sepatu' textAlign='Left' width=150></e-column>
+              <e-column field='PHK' headerText='PHK' textAlign='Left' width=150></e-column>
+              <e-column field='TGL_PHK' headerText='Tgl PHK' textAlign='Left' width=150></e-column>
+              <e-column field='KETERANGAN' headerText='Keterangan' textAlign='Left' width=150></e-column>
+              <e-column field='PHOTO' headerText='Photo' textAlign='Left' width=150></e-column>
+              <e-column field='NAMA_ISTRI_SUAMI' headerText='Nama Istri Suami' textAlign='Left' width=150></e-column>
+              <e-column field='DiBuatOleh' headerText='DibuatOleh' textAlign='Left' width=150></e-column>
               <e-column field='DibuatTgl' headerText='DibuatTgl' textAlign='Left' width=150></e-column>
               <e-column field='DiubahOleh' headerText='DiubahOleh' textAlign='Left' width=150></e-column>
               <e-column field='DiubahTgl' headerText='DiubahTgl' textAlign='Left' width=150></e-column>
@@ -541,7 +542,7 @@
 <script>
 import Vue from "vue";
 import { GridPlugin, Page, Sort, Group, Resize, Toolbar, Search } from "@syncfusion/ej2-vue-grids";
-
+import api from "@/services/http";
 Vue.use(GridPlugin);
 
 export default {
@@ -552,8 +553,10 @@ export default {
       MenuTglLahir: false,
       MenuTglPHK: false,
       DialogTambahKaryawan: false,
-
+      form: new FormData,
       editedIndex: -1,
+      FotoKaryawan:[],
+      foto: null,
       defaultItem: {
         Kode_Karyawan: "",
         Nama: "",
@@ -630,6 +633,7 @@ export default {
   },
 
   mounted(){
+    this.getdata()
     this.editedItem.Tgl_Masuk = this.date
     this.editedItem.Tgl_Lahir = this.date
     this.editedItem.Tgl_Phk = this.date
@@ -653,47 +657,82 @@ export default {
   methods: {
     Simpan(){
       if(this.formTitleKaryawan === "Tambah Karyawan"){
-        //   api.post("/karyawan", {
-        //   Nama: this.editedItem.Nama,
-        //   Kategori: this.editedItem.Kategori,
-        //   SubKategori: this.editedItem.SubKategori,
-        //   Grup: this.editedItem.Grup,
-        //   SubGrup: this.editedItem.SubGrup,
-        //   Memo: this.editedItem.Memo,
-        //   Merk: this.editedItem.Merk,
-        //   Type: this.editedItem.Type,
-        //   PartNumber1: this.editedItem.PartNumber1,
-        //   PartNumber2: this.editedItem.PartNumber2,
-        //   Dimensi: this.editedItem.Dimensi,
-        //   Kendaraan: this.editedItem.Kendaraan,
-        //   DiBuatOleh:'',
-        //   // DiBuatTgl:today,
-        //   DiubahOleh:'',
-        //   // DiubahTgl:today,
-        //   Aktif: true,
-        //   Gudang: 'TA1'
-        //     })
-        //     .then((res) => {
-        //   this.Nama = "";
-        //   this.Kategori = "";
-        //   this.SubKategori = "";
-        //   this.Grup = "";
-        //   this.SubGrup = "";
-        //   this.Memo = "";
-        //   this.Merk = "";
-        //   this.Type = "";
-        //   this.PartNumber1 = "";
-        //   this.PartNumber2 = "";
-        //   this.Dimensi = "";
-        //   this.Kendaraan = "";
-        //   this.Aktif = "";
-              
-        //   console.log(res);
-        //   this.getDataTambahpro();
-        // // })
-        //   this.Upload()
-        // this.closeproduk();
-        //     })
+          this.form.append('files',this.FotoKaryawan);
+          this.form.append('Nama', this.editedItem.Nama);
+          this.form.append('Nrk', this.editedItem.Nrk);
+          this.form.append('Kode_Jabatan', this.editedItem.Kode_Jabatan);
+          this.form.append('Poh', this.editedItem.Poh);
+          this.form.append('Tgl_Masuk', this.editedItem.Tgl_Masuk);
+          this.form.append('Tempat_Lahir', this.editedItem.Tempat_Lahir);
+          this.form.append('Tgl_Lahir', this.editedItem.Tgl_Lahir);
+          this.form.append('Alamat_Ktp', this.editedItem.Alamat_Ktp);
+          this.form.append('Alamat_Sekarang', this.editedItem.Alamat_Sekarang);
+          this.form.append('No_Telp', this.editedItem.No_Telp);
+          this.form.append('Jenis_Kelamin', this.editedItem.Jenis_Kelamin);
+          this.form.append('Pendidikan_Terakhir', this.editedItem.Pendidikan_Terakhir);
+          this.form.append('Jurusan', this.editedItem.Jurusan);
+          this.form.append('Agama', this.editedItem.Agama);
+          this.form.append('Suku', this.editedItem.Suku);
+          this.form.append('No_Rek_Tabungan', this.editedItem.No_Rek_Tabungan);
+          this.form.append('No_Kartu_Bpjs_Tk', this.editedItem.No_Kartu_Bpjs_Tk);
+          this.form.append('No_Kartu_Bpjs_Kes', this.editedItem.No_Kartu_Bpjs_Kes);
+          this.form.append('No_Ktp', this.editedItem.No_Ktp);
+          this.form.append('No_Npwp', this.editedItem.No_Npwp);
+          this.form.append('Gol_Dr', this.editedItem.Gol_Dr);
+          this.form.append('Status', this.editedItem.Status);
+          this.form.append('Status_Kerja', this.editedItem.Status_Kerja);
+          this.form.append('Ukuran_Baju', this.editedItem.Ukuran_Baju);
+          this.form.append('Ukuran_Sepatu', this.editedItem.Ukuran_Sepatu);
+          this.form.append('Phk', this.editedItem.Phk);
+          this.form.append('Tgl_Phk', this.editedItem.Tgl_Phk);
+          this.form.append('Keterangan', this.editedItem.Keterangan);
+          this.form.append('Nama_Istri_Suami', this.editedItem.Nama_Istri_Suami);
+          this.form.append('DiBuatOleh', this.editedItem.DiBuatOleh);
+          this.form.append('DiubahOleh', this.editedItem.DiubahOleh); 
+          console.log(this.form)
+          const config = { headers: { 'Content-Type': 'multipart/form-data' } };
+          api.post("/karyawan",this.form,config 
+          // Nama: this.editedItem.Nama,
+          // Nrk: this.editedItem.Nrk,
+          // Kode_Jabatan: this.editedItem.Kode_Jabatan,
+          // Poh: this.editedItem.Poh,
+          // Tgl_Masuk: this.editedItem.Tgl_Masuk,
+          // Tempat_Lahir: this.editedItem.Tempat_Lahir,
+          // Tgl_lahir: this.editedItem.Tgl_lahir,
+          // Alamat_KTP: this.editedItem.Alamat_KTP,
+          // Alamat_Sekarang: this.editedItem.Alamat_Sekarang,
+          // No_Telp: this.editedItem.No_Telp,
+          // Jenis_Kelamin: this.editedItem.Jenis_Kelamin,
+          // Pendidikan_Terakhir: this.editedItem.Pendidikan_Terakhir,
+          // Jurusan: this.editedItem.Jurusan,
+          // Agama:this.editedItem.Agama,
+          // Suku: this.editedItem.Suku,
+          // No_Rek_Tabungan: this.editedItem.No_Rek_Tabungan,
+          // No_Kartu_BPJS_TK: this.editedItem.No_Kartu_BPJS_TK,
+          // No_Kartu_BPJS_KES: this.editedItem.No_Kartu_BPJS_KES,
+          // No_NPWP: this.editedItem.No_NPWP,
+          // Gol_Dr: this.editedItem.Gol_Dr,
+          // Status: this.editedItem.Status,
+          // Status_Kerja: this.editedItem.Status_Kerja,
+          // Ukuran_Baju: this.editedItem.Ukuran_Baju,
+          // Ukuran_Sepatu: this.editedItem.Ukuran_Sepatu,
+          // Phk: this.editedItem.Phk,
+          // Tgl_Phk: this.editedItem.Tgl_Phk,
+          // Keterangan: this.editedItem.Keterangan,
+          // Nama_Istri_Suami: this.editedItem.Nama_Istri_Suami,
+          // DiBuatOleh: this.editedItem.DiBuatOleh,
+          // DiubahOleh: this.editedItem.DiubahOleh
+            )
+            .then((res) => {
+              console.log(res)
+              this.$refs.fileupload.value=null
+              this.FotoKaryawan = []
+              this.form = new FormData
+              this.foto = null
+            })
+            .catch((error) => {
+                    console.log(JSON.stringify(error))
+                })
       }else{
           // this.UpdateData()
       }
@@ -702,26 +741,39 @@ export default {
 
     fieldChange(e){
       console.log(e)
-      let selectedFiles=e.target.files;
-      if(!selectedFiles.length){
-        return false;
-      }
-      for(let i=0;i<selectedFiles.length;i++){
-        this.attachments.push(selectedFiles[i]);
-      }
-      for (let i = 0; i < this.attachments.length; i++) {
-        let reader = new FileReader();// eslint-disable-next-line
-        reader.onload = (e) => { 
-        this.$refs.image[i].src = reader.result; 
-        // console.log(this.$refs.attachments[i].src);
-        
-        };
-
-        
-        reader.readAsDataURL(this.attachments[i]);
-        
-      }
-      console.log(this.attachments);
+				let selectedFiles=e.target.files;
+				if(!selectedFiles.length){
+					return false;
+				}
+				for(let i=0;i<selectedFiles.length;i++){
+					this.FotoKaryawan = selectedFiles[0];
+				}
+				// for (let i = 0; i < this.FotoKaryawan.length; i++) {
+				// 	let reader = new FileReader();// eslint-disable-next-line
+				// 	reader.onload = (e) => { 
+				// 	this.foto = e.target.files; 
+				// 	// console.log(this.$refs.attachments[i].src);
+					
+				// 	};
+          const file = this.FotoKaryawan;
+          this.foto = URL.createObjectURL(file);
+					// reader.readAsDataURL(this.FotoKaryawan[0]);
+					
+				// }
+				console.log(this.FotoKaryawan);
+      // console.log(e)
+      // let selectedFiles=e.target.files;
+      // if(!selectedFiles.length){
+      //   return false;
+      // }
+      // // for(let i=0;i<selectedFiles.length;i++){
+      // //   this.FotoKaryawan.push(selectedFiles[i]);
+      // // }
+			// 		this.FotoKaryawan.push(selectedFiles[0])
+      // // for (let i = 0; i < this.FotoKaryawan.length; i++) {
+      // const file = selectedFiles[0];
+      // this.foto = URL.createObjectURL(file);
+      // console.log('awowowo',this.FotoKaryawan);
     },
 
     KeluarDialogKaryawan () {
@@ -733,6 +785,18 @@ export default {
         this.editedItem.Tgl_Lahir = this.date
         this.editedItem.Tgl_Phk = this.date
       })
+    },
+
+    getdata(){
+      api.get('/karyawan').then(
+				res => {
+					console.log(res);
+          this.DataKaryawan = res.data
+				},
+				err => {
+					console.log(err);
+				}
+			)
     },
 
     Reset() {
