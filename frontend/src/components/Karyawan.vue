@@ -87,7 +87,7 @@
                           dense
                           color="grey darken-2"
                           label="Kode Karyawan"
-                          v-model="editedItem.KODE_KARYAWAN"
+                          v-model="editedItem.Kode_Karyawan"
                         ></v-text-field>
                       </v-col>
 
@@ -97,7 +97,7 @@
                           clearable
                           label="Nama"
                           color="grey darken-2"
-                          v-model="editedItem.NAMA"
+                          v-model="editedItem.Nama"
                         ></v-text-field>
                       </v-col>
 
@@ -107,7 +107,7 @@
                           clearable
                           label="NRK"
                           color="grey darken-2"
-                          v-model="editedItem.NRK"
+                          v-model="editedItem.Nrk"
                         ></v-text-field>
                       </v-col>
 
@@ -116,7 +116,7 @@
                           dense
                           label="Kode Jabatan"
                           color="grey darken-2"
-                          v-model="editedItem.KODE_JABATAN"
+                          v-model="editedItem.Kode_Jabatan"
                         ></v-text-field>
                       </v-col>
 
@@ -126,7 +126,7 @@
                           clearable
                           label="POH"
                           color="grey darken-2"
-                          v-model="editedItem.POH"
+                          v-model="editedItem.Poh"
                         ></v-text-field>
                       </v-col>
 
@@ -141,7 +141,7 @@
                         >
                           <template v-slot:activator="{ on, attrs }">
                             <v-text-field
-                              v-model="editedItem.TGL_MASUK"
+                              v-model="editedItem.Tgl_Masuk"
                               label="Tgl Masuk"
                               prepend-icon="mdi-calendar"
                               color="grey darken-2"
@@ -152,7 +152,7 @@
                             ></v-text-field>
                           </template>
                           <v-date-picker
-                            v-model="editedItem.TGL_MASUK"
+                            v-model="editedItem.Tgl_Masuk"
                             @input="MenuTglMasuk = false"
                             color="red darken-4"
                             locale="id"
@@ -166,7 +166,7 @@
                           clearable
                           label="Tempat Lahir"
                           color="grey darken-2"
-                          v-model="editedItem.TEMPAT_LAHIR"
+                          v-model="editedItem.Tempat_Lahir"
                         ></v-text-field>
                       </v-col>
 
@@ -181,7 +181,7 @@
                         >
                           <template v-slot:activator="{ on, attrs }">
                             <v-text-field
-                              v-model="editedItem.TGL_LAHIR"
+                              v-model="editedItem.Tgl_Lahir"
                               label="Tgl Lahir"
                               prepend-icon="mdi-calendar"
                               color="grey darken-2"
@@ -192,7 +192,7 @@
                             ></v-text-field>
                           </template>
                           <v-date-picker
-                            v-model="editedItem.TGL_LAHIR"
+                            v-model="editedItem.Tgl_Lahir"
                             @input="MenuTglMasuk = false"
                             color="red darken-4"
                             :max="new Date().toISOString().substr(0, 10)"
@@ -209,7 +209,7 @@
                           clearable
                           label="Alamat KTP"
                           color="grey darken-2"
-                          v-model="editedItem.ALAMAT_KTP"
+                          v-model="editedItem.Alamat_Ktp"
                         ></v-text-field>
                       </v-col>
 
@@ -219,7 +219,7 @@
                           clearable
                           label="Alamat Sekarang"
                           color="grey darken-2"
-                          v-model="editedItem.ALAMAT_SEKARANG"
+                          v-model="editedItem.Alamat_Sekarang"
                         ></v-text-field>
                       </v-col>
 
@@ -229,7 +229,7 @@
                           clearable
                           label="No. Tlp"
                           color="grey darken-2"
-                          v-model="editedItem.NO_TLP"
+                          v-model="editedItem.No_Tlp"
                         ></v-text-field>
                       </v-col>
 
@@ -240,7 +240,7 @@
                           :items="['Laki-Laki','Perempuan']"
                           label="Jenis Kelamin"
                           color="grey darken-2"
-                          v-model="editedItem.JENIS_KELAMIN"
+                          v-model="editedItem.Jenis_Kelamin"
                         ></v-combobox>
                       </v-col>
 
@@ -250,7 +250,7 @@
                           clearable
                           label="Pendidikan Terakhir"
                           color="grey darken-2"
-                          v-model="editedItem.PENDIDIKAN_TERAKHIR"
+                          v-model="editedItem.Pendidikan_Terakhir"
                         ></v-text-field>
                       </v-col>
 
@@ -260,7 +260,7 @@
                           clearable
                           label="Jurusan"
                           color="grey darken-2"
-                          v-model="editedItem.JURUSAN"
+                          v-model="editedItem.Jurusan"
                         ></v-text-field>
                       </v-col>
 
@@ -271,7 +271,7 @@
                           :items="['Islam','Protestan','Katolik','Hindu','Buddha','Khonghucu']"
                           label="Agama"
                           color="grey darken-2"
-                          v-model="editedItem.AGAMA"
+                          v-model="editedItem.Agama"
                         ></v-combobox>
                       </v-col>
 
@@ -281,7 +281,7 @@
                           clearable
                           label="Suku"
                           color="grey darken-2"
-                          v-model="editedItem.SUKU"
+                          v-model="editedItem.Suku"
                         ></v-text-field>
                       </v-col>
 
@@ -291,7 +291,7 @@
                           clearable
                           label="No. Rekening Tabungan"
                           color="grey darken-2"
-                          v-model="editedItem.NO_REK_TABUNGAN"
+                          v-model="editedItem.No_Rek_Tabungan"
                         ></v-text-field>
                       </v-col>
 
@@ -301,7 +301,7 @@
                           clearable
                           label="No. Kartu BPJS TK"
                           color="grey darken-2"
-                          v-model="editedItem.NO_KARTU_BPJS_TK"
+                          v-model="editedItem.No_Kartu_Bpjs_Tk"
                         ></v-text-field>
                       </v-col>
 
@@ -311,7 +311,7 @@
                           clearable
                           label="No. Kartu BPJS KES"
                           color="grey darken-2"
-                          v-model="editedItem.NO_KARTU_BPJS_KES"
+                          v-model="editedItem.No_Kartu_Bpjs_Kes"
                         ></v-text-field>
                       </v-col>
 
@@ -321,7 +321,7 @@
                           clearable
                           label="No. KTP"
                           color="grey darken-2"
-                          v-model="editedItem.NO_KTP"
+                          v-model="editedItem.No_Ktp"
                         ></v-text-field>
                       </v-col>
 
@@ -331,7 +331,7 @@
                           clearable
                           label="No. NPWP"
                           color="grey darken-2"
-                          v-model="editedItem.NO_NPWP"
+                          v-model="editedItem.No_Npwp"
                         ></v-text-field>
                       </v-col>
 
@@ -341,7 +341,7 @@
                           clearable
                           label="Golongan Darah"
                           color="grey darken-2"
-                          v-model="editedItem.GOL_DR"
+                          v-model="editedItem.Gol_Dr"
                         ></v-text-field>
                       </v-col>
 
@@ -351,7 +351,7 @@
                           clearable
                           label="Status"
                           color="grey darken-2"
-                          v-model="editedItem.STATUS"
+                          v-model="editedItem.Status"
                         ></v-text-field>
                       </v-col>
 
@@ -361,7 +361,7 @@
                           clearable
                           label="Status Kerja"
                           color="grey darken-2"
-                          v-model="editedItem.STATUS_KERJA"
+                          v-model="editedItem.Status_Kerja"
                         ></v-text-field>
                       </v-col>
 
@@ -371,7 +371,7 @@
                           clearable
                           label="Ukuran Baju"
                           color="grey darken-2"
-                          v-model="editedItem.UKURAN_BAJU"
+                          v-model="editedItem.Ukuran_Baju"
                         ></v-text-field>
                       </v-col>
 
@@ -381,7 +381,7 @@
                           clearable
                           label="Ukuran Sepatu"
                           color="grey darken-2"
-                          v-model="editedItem.UKURAN_SEPATU"
+                          v-model="editedItem.Ukuran_Sepatu"
                         ></v-text-field>
                       </v-col>
 
@@ -391,7 +391,7 @@
                           clearable
                           label="PHK"
                           color="grey darken-2"
-                          v-model="editedItem.PHK"
+                          v-model="editedItem.Phk"
                         ></v-text-field>
                       </v-col>
 
@@ -406,7 +406,7 @@
                         >
                           <template v-slot:activator="{ on, attrs }">
                             <v-text-field
-                              v-model="editedItem.TGL_PHK"
+                              v-model="editedItem.Tgl_Phk"
                               label="Tgl PHK"
                               prepend-icon="mdi-calendar"
                               color="grey darken-2"
@@ -417,7 +417,7 @@
                             ></v-text-field>
                           </template>
                           <v-date-picker
-                            v-model="editedItem.TGL_PHK"
+                            v-model="editedItem.Tgl_Phk"
                             @input="MenuTglPHK = false"
                             color="red darken-4"
                             locale="id"
@@ -431,7 +431,7 @@
                           clearable
                           label="Keterangan"
                           color="grey darken-2"
-                          v-model="editedItem.KETERANGAN"
+                          v-model="editedItem.Keterangan"
                         ></v-text-field>
                       </v-col>
 
@@ -441,7 +441,7 @@
                           clearable
                           label="Photo"
                           color="grey darken-2"
-                          v-model="editedItem.PHOTO"
+                          v-model="editedItem.Photo"
                         ></v-text-field>
                       </v-col>
 
@@ -451,7 +451,7 @@
                           clearable
                           label="Nama Istri Suami"
                           color="grey darken-2"
-                          v-model="editedItem.NAMA_ISTRI_SUAMI"
+                          v-model="editedItem.Nama_Istri_Suami"
                         ></v-text-field>
                       </v-col>
                       <!-- --------------------------------- -->
@@ -496,37 +496,37 @@
             :pageSettings='pageSettings'
           >
             <e-columns>
-              <e-column field='KODE_KARYAWAN' headerText='Kode' textAlign='Left' width=150></e-column>
-              <e-column field='NAMA' headerText='Nama' width=300></e-column>
-              <e-column field='NRK' headerText='NRK' textAlign='Left' width=150></e-column>
-              <e-column field='KODE_JABATAN' headerText='Kode Jabatan' textAlign='Left' width=150></e-column>
-              <e-column field='POH' headerText='POH' textAlign='Left' width=150></e-column>
-              <e-column field='TGL_MASUK' headerText='Tgl Masuk' textAlign='Left' width=150></e-column>
-              <e-column field='TEMPAT_LAHIR' headerText='Tempat Lahir' textAlign='Left' width=150></e-column>
-              <e-column field='TGL_LAHIR' headerText='Tgl Lahir' textAlign='Left' width=150></e-column>
-              <e-column field='ALAMAT_KTP' headerText='Alamat KTP' textAlign='Left' width=200></e-column>
-              <e-column field='ALAMAT_SEKARANG' headerText='Alamat Sekarang' textAlign='Left' width=200></e-column>
-              <e-column field='NO_TLP' headerText='No. Tlp' textAlign='Left' width=150></e-column>
-              <e-column field='JENIS_KELAMIN' headerText='Jenis Kelamin' textAlign='Left' width=150></e-column>
-              <e-column field='PENDIDIKAN_TERAKHIR' headerText='Pendidikan Terakhir' textAlign='Left' width=150></e-column>
-              <e-column field='JURUSAN' headerText='Jurusan' textAlign='Left' width=150></e-column>
-              <e-column field='AGAMA' headerText='Agama' textAlign='Left' width=150></e-column>
-              <e-column field='SUKU' headerText='Suku' textAlign='Left' width=150></e-column>
-              <e-column field='NO_REK_TABUNGAN' headerText='No. RekTabungan' textAlign='Left' width=150></e-column>
-              <e-column field='NO_KARTU_BPJS_TK' headerText='No. Kartu BPJS TK' textAlign='Left' width=150></e-column>
-              <e-column field='NO_KARTU_BPJS_KES' headerText='No. Kartu BPJS Kes' textAlign='Left' width=150></e-column>
-              <e-column field='NO_KTP' headerText='No. KTP' textAlign='Left' width=150></e-column>
-              <e-column field='NO_NPWP' headerText='No. NPWP' textAlign='Left' width=150></e-column>
-              <e-column field='GOL_DR' headerText='Golongan Darah' textAlign='Left' width=150></e-column>
-              <e-column field='STATUS' headerText='Status' textAlign='Left' width=150></e-column>
-              <e-column field='STATUS_KERJA' headerText='Status Kerja' textAlign='Left' width=150></e-column>
-              <e-column field='UKURAN_BAJU' headerText='Ukuran Baju' textAlign='Left' width=150></e-column>
-              <e-column field='UKURAN_SEPATU' headerText='Ukuran Sepatu' textAlign='Left' width=150></e-column>
-              <e-column field='PHK' headerText='PHK' textAlign='Left' width=150></e-column>
-              <e-column field='TGL_PHK' headerText='Tgl PHK' textAlign='Left' width=150></e-column>
-              <e-column field='KETERANGAN' headerText='Keterangan' textAlign='Left' width=150></e-column>
-              <e-column field='PHOTO' headerText='Photo' textAlign='Left' width=150></e-column>
-              <e-column field='NAMA_ISTRI_SUAMI' headerText='Nama Istri Suami' textAlign='Left' width=150></e-column>
+              <e-column field='Kode_Karyawan' headerText='Kode' textAlign='Left' width=150></e-column>
+              <e-column field='Nama' headerText='Nama' width=300></e-column>
+              <e-column field='Nrk' headerText='NRK' textAlign='Left' width=150></e-column>
+              <e-column field='Kode_Jabatan' headerText='Kode Jabatan' textAlign='Left' width=150></e-column>
+              <e-column field='Poh' headerText='POH' textAlign='Left' width=150></e-column>
+              <e-column field='Tgl_Masuk' headerText='Tgl Masuk' textAlign='Left' width=150></e-column>
+              <e-column field='Tempat_Lahir' headerText='Tempat Lahir' textAlign='Left' width=150></e-column>
+              <e-column field='Tgl_Lahir' headerText='Tgl Lahir' textAlign='Left' width=150></e-column>
+              <e-column field='Alamat_Ktp' headerText='Alamat KTP' textAlign='Left' width=200></e-column>
+              <e-column field='Alamat_Sekarang' headerText='Alamat Sekarang' textAlign='Left' width=200></e-column>
+              <e-column field='No_Tlp' headerText='No. Tlp' textAlign='Left' width=150></e-column>
+              <e-column field='Jenis_Kelamin' headerText='Jenis Kelamin' textAlign='Left' width=150></e-column>
+              <e-column field='Pendidikan_Terakhir' headerText='Pendidikan Terakhir' textAlign='Left' width=150></e-column>
+              <e-column field='Jurusan' headerText='Jurusan' textAlign='Left' width=150></e-column>
+              <e-column field='Agama' headerText='Agama' textAlign='Left' width=150></e-column>
+              <e-column field='Suku' headerText='Suku' textAlign='Left' width=150></e-column>
+              <e-column field='No_Rek_Tabungan' headerText='No. RekTabungan' textAlign='Left' width=150></e-column>
+              <e-column field='No_Kartu_Bpjs_Tk' headerText='No. Kartu BPJS TK' textAlign='Left' width=150></e-column>
+              <e-column field='No_Kartu_Bpjs_Kes' headerText='No. Kartu BPJS Kes' textAlign='Left' width=150></e-column>
+              <e-column field='No_Ktp' headerText='No. KTP' textAlign='Left' width=150></e-column>
+              <e-column field='No_Npwp' headerText='No. NPWP' textAlign='Left' width=150></e-column>
+              <e-column field='Gol_Dr' headerText='Golongan Darah' textAlign='Left' width=150></e-column>
+              <e-column field='Status' headerText='Status' textAlign='Left' width=150></e-column>
+              <e-column field='Status_Kerja' headerText='Status Kerja' textAlign='Left' width=150></e-column>
+              <e-column field='Ukuran_Baju' headerText='Ukuran Baju' textAlign='Left' width=150></e-column>
+              <e-column field='Ukuran_Sepatu' headerText='Ukuran Sepatu' textAlign='Left' width=150></e-column>
+              <e-column field='Phk' headerText='PHK' textAlign='Left' width=150></e-column>
+              <e-column field='Tgl_Phk' headerText='Tgl PHK' textAlign='Left' width=150></e-column>
+              <e-column field='Keterangan' headerText='Keterangan' textAlign='Left' width=150></e-column>
+              <e-column field='Photo' headerText='Photo' textAlign='Left' width=150></e-column>
+              <e-column field='Nama_Istri_Suami' headerText='Nama Istri Suami' textAlign='Left' width=150></e-column>
               <e-column field='DibuatOleh' headerText='DibuatOleh' textAlign='Left' width=150></e-column>
               <e-column field='DibuatTgl' headerText='DibuatTgl' textAlign='Left' width=150></e-column>
               <e-column field='DiubahOleh' headerText='DiubahOleh' textAlign='Left' width=150></e-column>
@@ -555,70 +555,70 @@ export default {
 
       editedIndex: -1,
       defaultItem: {
-        KODE_KARYAWAN: "",
-        NAMA: "",
-        NRK: "",
-        KODE_JABATAN: "",
-        POH: "",
-        TGL_MASUK: "",
-        TEMPAT_LAHIR: "",
-        TGL_LAHIR: "",
-        ALAMAT_KTP: "",
-        ALAMAT_SEKARANG: "",
-        NO_TLP: "",
-        JENIS_KELAMIN: "",
-        PENDIDIKAN_TERAKHIR: "",
-        JURUSAN: "",
-        AGAMA: "",
-        SUKU: "",
-        NO_REK_TABUNGAN: "",
-        NO_KARTU_BPJS_TK: "",
-        NO_KARTU_BPJS_KES: "",
-        NO_KTP: "",
-        NO_NPWP: "",
-        GOL_DR: "",
-        STATUS: "",
-        STATUS_KERJA: "",
-        UKURAN_BAJU: "",
-        UKURAN_SEPATU: "",
-        PHK: "",
-        TGL_PHK: "",
-        KETERANGAN: "",
-        PHOTO: "",
-        NAMA_ISTRI_SUAMI: "",
+        Kode_Karyawan: "",
+        Nama: "",
+        Nrk: "",
+        Kode_Jabatan: "",
+        Poh: "",
+        Tgl_Masuk: "",
+        Tempat_Lahir: "",
+        Tgl_Lahir: "",
+        Alamat_Ktp: "",
+        Alamat_Sekarang: "",
+        No_Tlp: "",
+        Jenis_Kelamin: "",
+        Pendidikan_Terakhir: "",
+        Jurusan: "",
+        Agama: "",
+        Suku: "",
+        No_Rek_Tabungan: "",
+        No_Kartu_Bpjs_Tk: "",
+        No_Kartu_Bpjs_Kes: "",
+        No_Ktp: "",
+        No_Npwp: "",
+        Gol_Dr: "",
+        Status: "",
+        Status_Kerja: "",
+        Ukuran_Baju: "",
+        Ukuran_Sepatu: "",
+        Phk: "",
+        Tgl_Phk: "",
+        Keterangan: "",
+        Photo: "",
+        Nama_Istri_Suami: "",
       },
       editedItem: {
-        KODE_KARYAWAN: "",
-        NAMA: "",
-        NRK: "",
-        KODE_JABATAN: "",
-        POH: "",
-        TGL_MASUK: "",
-        TEMPAT_LAHIR: "",
-        TGL_LAHIR: "",
-        ALAMAT_KTP: "",
-        ALAMAT_SEKARANG: "",
-        NO_TLP: "",
-        JENIS_KELAMIN: "",
-        PENDIDIKAN_TERAKHIR: "",
-        JURUSAN: "",
-        AGAMA: "",
-        SUKU: "",
-        NO_REK_TABUNGAN: "",
-        NO_KARTU_BPJS_TK: "",
-        NO_KARTU_BPJS_KES: "",
-        NO_KTP: "",
-        NO_NPWP: "",
-        GOL_DR: "",
-        STATUS: "",
-        STATUS_KERJA: "",
-        UKURAN_BAJU: "",
-        UKURAN_SEPATU: "",
-        PHK: "",
-        TGL_PHK: "",
-        KETERANGAN: "",
-        PHOTO: "",
-        NAMA_ISTRI_SUAMI: "",
+        Kode_Karyawan: "",
+        Nama: "",
+        Nrk: "",
+        Kode_Jabatan: "",
+        Poh: "",
+        Tgl_Masuk: "",
+        Tempat_Lahir: "",
+        Tgl_Lahir: "",
+        Alamat_Ktp: "",
+        Alamat_Sekarang: "",
+        No_Tlp: "",
+        Jenis_Kelamin: "",
+        Pendidikan_Terakhir: "",
+        Jurusan: "",
+        Agama: "",
+        Suku: "",
+        No_Rek_Tabungan: "",
+        No_Kartu_Bpjs_Tk: "",
+        No_Kartu_Bpjs_Kes: "",
+        No_Ktp: "",
+        No_Npwp: "",
+        Gol_Dr: "",
+        Status: "",
+        Status_Kerja: "",
+        Ukuran_Baju: "",
+        Ukuran_Sepatu: "",
+        Phk: "",
+        Tgl_Phk: "",
+        Keterangan: "",
+        Photo: "",
+        Nama_Istri_Suami: "",
       },
       toolbarOptions: ['Search'],
       DataKaryawan: [],
@@ -630,9 +630,9 @@ export default {
   },
 
   mounted(){
-    this.editedItem.TGL_MASUK = this.date
-    this.editedItem.TGL_LAHIR = this.date
-    this.editedItem.TGL_PHK = this.date
+    this.editedItem.Tgl_Masuk = this.date
+    this.editedItem.Tgl_Lahir = this.date
+    this.editedItem.Tgl_Phk = this.date
   },
 
   computed: {
@@ -729,9 +729,9 @@ export default {
       this.$nextTick(() => {
         this.editedItem = Object.assign({}, this.defaultItem)
         this.editedIndex = -1
-        this.editedItem.TGL_MASUK = this.date
-        this.editedItem.TGL_LAHIR = this.date
-        this.editedItem.TGL_PHK = this.date
+        this.editedItem.Tgl_Masuk = this.date
+        this.editedItem.Tgl_Lahir = this.date
+        this.editedItem.Tgl_Phk = this.date
       })
     },
 
