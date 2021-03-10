@@ -43,7 +43,6 @@
               :append-icon="TampilkanSandi ? 'mdi-eye' : 'mdi-eye-off'"
               :type="TampilkanSandi ? 'text' : 'password'"
               @click:append="TampilkanSandi = !TampilkanSandi"
-              @keyup.enter="login()"
             ></v-text-field>
           </v-col>
 
@@ -53,7 +52,6 @@
               dark
               color="red darken-4"
               class="btn btn-primary rounded-lg text-capitalize mt-n6"
-              @click="login"
             >
               Masuk
             </v-btn>
@@ -78,7 +76,6 @@
 
 <script>
 export default {
-  name:"login",
     data: () => ({
 
     TampilkanSandi: false,
