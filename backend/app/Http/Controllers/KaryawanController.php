@@ -200,6 +200,20 @@ class KaryawanController extends Controller
         $x = $id;
         $x.= '/';
         $x.= $kode;
+        $foto = Karyawan::where('KODE_KARYAWAN',$x)->get();
+        foreach ($foto as $key => $value) {
+            $path = substr($value->PHOTO,1);
+        }
+            if(File::exists($path)) {
+                if($path == "Photo/no.png"){
+                    //do nothing
+                }else{
+                 File::delete($path); 
+                }
+               
+            } else {
+                return response()->json('delete image not success in path');
+            }
         $del = DB::delete('delete from karyawan where KODE_KARYAWAN = :kd',['kd'=>$x]);
         if ($del == 1) {
             return response()->json([

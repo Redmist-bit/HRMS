@@ -493,21 +493,21 @@
             :allowSorting='true'
             :allowResizing='true'
             :allowGrouping='true'
-            :commandClick="commandClick"
             :toolbar='toolbarOptions'
+            :commandClick="commandClick"
             :pageSettings='pageSettings'
           >
             <e-columns>
-              <e-column field="Commands" headerText=" Action" width="120" :commands="commands">
-                <div class="btn-group">
-                  <!-- <v-btn type="button" class="btn btn-default" (click)="prediemRowEdit($event)">
-                    <i class="fa fa-pencil"></i>
-                  </v-btn>
-                  <v-btn type="button" class="btn btn-default" (click)="prediemRowDelete($event)">
-                    <i class="fa fa-trash"></i>
-                  </v-btn> -->
-                </div>
-              </e-column>
+              <e-column headerText="Action" width="120" :commands="commands">
+									<div class="btn-group">
+										<v-btn type="button" class="btn btn-default" (click)="prediemRowEdit($event)">
+											<i class="fa fa-pencil"></i>
+										</v-btn>
+										<v-btn type="button" class="btn btn-default" (click)="prediemRowDelete($event)">
+											<i class="fa fa-trash"></i>
+										</v-btn>
+									</div>
+								</e-column>
               <e-column field='KODE_KARYAWAN' headerText='Kode' textAlign='Left' width=150></e-column>
               <e-column field='NAMA' headerText='Nama' width=300></e-column>
               <e-column field='NRK' headerText='NRK' textAlign='Left' width=150></e-column>
@@ -552,13 +552,21 @@
 </template>
 <script>
 import Vue from "vue";
-import { GridPlugin, Page, Sort, Group, Resize, Toolbar, Search } from "@syncfusion/ej2-vue-grids";
+import { GridPlugin, Page, Sort, Group, Resize, Toolbar, Search,CommandColumn } from "@syncfusion/ej2-vue-grids";
 import api from "@/services/http";
 Vue.use(GridPlugin);
 
 export default {
   data() {
     return {
+      commands: [
+        {
+          buttonOption: { cssClass: "e-flat Edit", iconCss: "e-edit e-icons"}
+        },
+        {
+          buttonOption: { cssClass:"e-flat Delete", iconCss: "e-delete e-icons"}
+        }
+      ],
       date: new Date().toISOString().substr(0, 10),
       MenuTglMasuk: false,
       MenuTglLahir: false,
@@ -640,17 +648,9 @@ export default {
     };
   },
   
-  commands: [
-    {
-      buttonOption: { cssClass: "e-flat Edit", iconCss: "e-edit e-icons"}
-    },
-    {
-      buttonOption: { cssClass:"e-flat Delete", iconCss: "e-delete e-icons"}
-    }
-  ],
 
   provide: {
-    grid: [Page, Sort, Group, Resize, Toolbar, Search]
+    grid: [Page, Sort, Group, Resize, Toolbar, CommandColumn, Search]
   },
 
   mounted(){
@@ -745,7 +745,9 @@ export default {
           // DiubahOleh: this.editedItem.DiubahOleh
             )
             .then((res) => {
-              console.log(res)
+              if(res){
+                this.getdata()
+              }
               this.$refs.fileupload.value=null
               this.FotoKaryawan = []
               this.form = new FormData
@@ -757,7 +759,44 @@ export default {
       }else{
           // this.UpdateData()
       }
+      this.$refs.fileupload.value=null
+      this.FotoKaryawan = []
+      this.form = new FormData
+      this.foto = null
       this.KeluarDialogKaryawan()    
+    },
+
+    commandClick: function(args) {
+      if (args.target.classList.contains("custombutton")){
+        // let data = JSON.stringify(args.rowData);
+		
+        console.log(args.rowData);
+      } else if (args.target.classList.contains("Delete")){
+        var r = confirm("Yakin Hapus Data?");
+        if (r == true) {
+          api
+            .delete("/karyawan/"+args.rowData.KODE_KARYAWAN)
+            .then((res) =>{
+              console.log(res);
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+        }
+      } else if (args.target.classList.contains("Edit")){
+	if (args.rowData.Aktif == 0) {
+		this.dataTemp = args.rowData
+		this.dialogAktifData = true
+		}else{
+		this.scrollKeEdit()
+        let data = args;
+        this.editedIndex = 1;
+        console.log(data);
+        this.editedItem = data.rowData;
+				this.kode_brg = this.editedItem.Kode
+        // this.dialogWO = true;
+		}
+      }
     },
 
     fieldChange(e){
