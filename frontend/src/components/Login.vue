@@ -18,13 +18,13 @@
             sm="12"
             md="12"
           >
-            <v-subheader class="mx-n4 body-1">Username</v-subheader>
+            <v-subheader class="mx-n4 body-1">Nama</v-subheader>
             <v-text-field
               dense
               outlined
               color="red darken-4"
               class="form-control rounded-lg mt-n2"
-              v-model="credentials.name"
+              v-model="credentials.Nama"
             ></v-text-field>
           </v-col>
 
@@ -43,6 +43,7 @@
               :append-icon="TampilkanSandi ? 'mdi-eye' : 'mdi-eye-off'"
               :type="TampilkanSandi ? 'text' : 'password'"
               @click:append="TampilkanSandi = !TampilkanSandi"
+              @keyup.enter="login()"
             ></v-text-field>
           </v-col>
 
@@ -52,6 +53,7 @@
               dark
               color="red darken-4"
               class="btn btn-primary rounded-lg text-capitalize mt-n6"
+              @click="login()"
             >
               Masuk
             </v-btn>
@@ -75,12 +77,13 @@
 </template>
 
 <script>
+import api from "@/services/http";
 export default {
     data: () => ({
 
     TampilkanSandi: false,
       credentials:{
-        name: '',
+        Nama: '',
         password: ''
       },
     return:{
@@ -95,7 +98,26 @@ export default {
   },
 
   methods: {
-
+    login(){
+      api.post('/login', this.credentials)
+        .then(res=>{
+          if (res.data.status == false) {
+          this.pesan = "Access Denied : Email Atau Password salah"  
+          } else {
+            console.log(res)
+            localStorage.setItem('token', res.data.token)
+            localStorage.setItem('user', JSON.stringify(res.data.user))
+            location.reload(false)
+          }
+  
+        })
+        .catch(err=>{
+          alert('email atau password salah')
+          console.log(err)
+          confirm('email atau password salah')
+          console.log('email atau password salah')
+        })
+    },
   },
 };
 

@@ -588,6 +588,8 @@ export default {
       MenuTglMasuk: false,
       MenuTglLahir: false,
       MenuTglPHK: false,
+      user:[],
+      token:null,
       DialogTambahKaryawan: false,
       form: new FormData,
       editedIndex: -1,
@@ -671,6 +673,8 @@ export default {
   },
 
   mounted(){
+    this.user = JSON.parse(localStorage.getItem('user'))
+    this.token = localStorage.getItem('token')
     this.getdata()
     this.editedItem.Tgl_Masuk = this.date
     this.editedItem.Tgl_Lahir = this.date
@@ -694,7 +698,7 @@ export default {
 
   methods: {
     Simpan(){
-      if(this.formTitleKaryawan === "Tambah Karyawan"){
+      if(this.formTitleKaryawan === "Tambah Karyawan Baru"){
           this.form.append('files',this.FotoKaryawan);
           this.form.append('Nama', this.editedItem.Nama);
           this.form.append('Nrk', this.editedItem.Nrk);
@@ -725,11 +729,11 @@ export default {
           this.form.append('Tgl_Phk', this.editedItem.Tgl_Phk);
           this.form.append('Keterangan', this.editedItem.Keterangan);
           this.form.append('Nama_Istri_Suami', this.editedItem.Nama_Istri_Suami);
-          this.form.append('DiBuatOleh', this.editedItem.DiBuatOleh);
-          this.form.append('DiubahOleh', this.editedItem.DiubahOleh); 
+          this.form.append('DiBuatOleh', this.user.Kode);
+          this.form.append('DiubahOleh', this.user.Kode); 
           console.log(this.form)
           const config = { headers: { 'Content-Type': 'multipart/form-data' } };
-          api.post("/karyawan",this.form,config 
+          api.post("/karyawan?token="+this.token,this.form,config 
           // Nama: this.editedItem.Nama,
           // Nrk: this.editedItem.Nrk,
           // Kode_Jabatan: this.editedItem.Kode_Jabatan,
@@ -792,7 +796,7 @@ export default {
         var r = confirm("Yakin Hapus Data?");
         if (r == true) {
           api
-            .delete("/karyawan/"+args.rowData.KODE_KARYAWAN)
+            .delete("/karyawan/"+args.rowData.KODE_KARYAWAN+'?token='+this.token)
             .then((res) =>{
               console.log(res);
               this.getdata()
@@ -873,7 +877,7 @@ export default {
     },
 
     getdata(){
-      api.get('/karyawan').then(
+      api.get('/karyawan?token='+this.token).then(
 				res => {
 					console.log(res);
           this.DataKaryawan = res.data

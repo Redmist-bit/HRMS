@@ -1,0 +1,15 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class UserMenu extends Model
+{
+    use HasFactory;
+    protected $table = 'usermenus';
+    protected $primaryKey = 'Kode';
+    const CREATED_AT = 'DiBuatTgl';
+    const UPDATED_AT = 'DiubahTgl';
+}
