@@ -133,6 +133,7 @@
                   block
                   outlined
                   depressed
+                  to="/Register"
                   color="dark"
                   class="text-capitalize rounded-lg"
                 >
@@ -366,7 +367,6 @@ import api from "@/services/http";
       this.token = localStorage.getItem('token')
       // this.menu()
       this.user = JSON.parse(localStorage.getItem('user'))
-      this.vm.$vuetify.theme.dark = true
     },
 
     computed: {
