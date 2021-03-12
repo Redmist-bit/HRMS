@@ -4,7 +4,6 @@
     <v-app-bar
       app
       flat
-      color="white"
     >
       <!-- Button Drawer Menu -->
       <v-btn
@@ -17,9 +16,19 @@
         <v-icon>{{ drawerMenu ? 'mdi-backburger' : 'mdi-menu' }}</v-icon>
       </v-btn>
 
-      <a @click="home" class="title black--text">HRM</a>
+      <a @click="home">
+        <v-list-item>
+          <v-toolbar-title class="title">HRM</v-toolbar-title>
+        </v-list-item>
+      </a>
 
       <v-spacer></v-spacer>
+
+      <v-switch
+        v-model="$vuetify.theme.dark"
+        hide-details
+        color="red darken-4"
+      ></v-switch>
 
       <!-- Pencarian -->
       <v-col
@@ -117,11 +126,10 @@
               <!-- Register -->
               <v-list-item>
                 <v-btn
-                  dark
                   block
                   outlined
                   depressed
-                  color="grey darken-3"
+                  color="dark"
                   class="text-capitalize rounded-lg"
                 >
                   <v-icon class="mr-1">mdi-account-plus-outline</v-icon>
@@ -153,11 +161,9 @@
       fixed
       width="250"
       v-model="drawerMenu"
-      color="white"
     >
       <v-toolbar
         flat
-        color="white"
       >
         <a @click="home">
           <v-list-item>
@@ -187,7 +193,6 @@
           :key="item.title"
           :to="item.link"
           link
-          color="red darken-4"
         >
           <v-list-item-icon>
             <v-icon>{{ item.icon }}</v-icon>
@@ -205,7 +210,7 @@
             v-model="item.active"
             :prepend-icon="item.action"
             no-action
-            color="red darken-4"
+            color="dark"
           >
             <template v-slot:activator>
               <v-list-item-content>
@@ -218,7 +223,7 @@
               :key="child.title"
               :to="child.link"
               link
-              color="red darken-4"
+              color="dark"
             >
               <v-list-item-content>
                 <v-list-item-title v-text="child.title"></v-list-item-title>
@@ -262,6 +267,13 @@
         </v-layout>
       </v-toolbar>
       <v-divider></v-divider>
+
+      <v-list-group>
+        <v-list-item>
+          
+        </v-list-item>
+      </v-list-group>
+
     </v-navigation-drawer>
 
     
@@ -270,8 +282,18 @@
 
 <script>
   export default {
-    data () {
+    props: {
+      attrs: {
+        type: Object,
+        default: () => ({}),
+      },
+    },
+
+    data: vm => {
       return {
+        initialDark: vm.$vuetify
+        ? vm.$vuetify.theme.dark
+        : true,
         drawerNotif: null,
         accountshow: false,
         notifshow: false,
@@ -310,6 +332,10 @@
       }
     },
 
+    mounted(){
+      this.vm.$vuetify.theme.dark = true
+    },
+
     computed: {
 
     },
@@ -324,7 +350,6 @@
         }else{
           this.$router.push("/")
         }
-        
       },
     },
   }
