@@ -281,6 +281,7 @@
 </template>
 
 <script>
+import api from "@/services/http";
   export default {
     props: {
       attrs: {
@@ -300,6 +301,8 @@
         MenuShowAkun: false,
         MenuShowNotif: false,
         drawerMenu: true,
+        token:null,
+        user:[],
 
         // Menu Navigation Drawer
 
@@ -333,6 +336,9 @@
     },
 
     mounted(){
+      this.token = localStorage.getItem('token')
+      // this.menu()
+      this.user = JSON.parse(localStorage.getItem('user'))
       this.vm.$vuetify.theme.dark = true
     },
 
@@ -351,6 +357,46 @@
           this.$router.push("/")
         }
       },
+      menu(){
+    // console.log()
+        api.get('/menu?token='+this.token).then(
+        res=>{
+          let tes = []
+          for (let index = 0; index < res.data.menus.length; index++) {
+            const element = res.data.menus[index];
+            element.title = res.data.menus[index].Nama;
+
+            tes.push(element)
+          }
+          console.log('tes',tes)
+          var id = tes.filter( function(item){return (item.Parent == null);} );
+
+          let List = []
+          for (let index = 0; index < id.length; index++) {
+            const element = id[index];
+            element.title = id[index].Nama
+            element.action = id[index].Icon
+            element.ListMenu = tes.filter( function(item){return (item.Parent == id[index].Kode);} );
+            List.push(element)
+          }
+          // console.log('akwowk',List)
+          // this.List = List
+          this.Menu = List
+          console.log(List)
+          // this.isLoading = false
+          // console.log('listmenu',this.List)
+          }
+        )
+        .catch(err=>{
+          // alert(err)
+          if (err == "Error: Request failed with status code 401" && this.$route.path != "/login") {
+            this.logout()
+          }
+        })
+        // if (this.List.length == 0 && this.$route.path != "/login") {
+        //  this.logout()
+        // }
+    },
     },
   }
 </script>
