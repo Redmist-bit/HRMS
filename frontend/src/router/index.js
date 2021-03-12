@@ -5,6 +5,7 @@ import About from '../views/About.vue'
 import Login from '../components/Login.vue'
 import Register from '../components/Register.vue'
 import Karyawan from '../components/Karyawan.vue'
+import UserMenu from '../components/UserMenu.vue'
 
 Vue.use(VueRouter)
 
@@ -33,6 +34,11 @@ const routes = [
     path: '/karyawan',
     name: 'Karyawan',
     component: Karyawan
+  },
+  {
+    path: '/usermenu',
+    name: 'UserMenu',
+    component: UserMenu
   },
 ]
 

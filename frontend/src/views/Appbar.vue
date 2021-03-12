@@ -346,7 +346,8 @@ import api from "@/services/http";
           {
             action: 'mdi-database',
             ListMenu: [
-              { title: 'Karyawan', icon: 'mdi-badge-account-horizontal' , link: 'Karyawan' }
+              { title: 'Karyawan', icon: 'mdi-badge-account-horizontal' , link: 'Karyawan' },
+              { title: 'User Menu', icon: 'mdi-badge-account-horizontal' , link: 'UserMenu' }
             ],
             title: 'Master',
           },
