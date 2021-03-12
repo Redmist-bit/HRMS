@@ -24,11 +24,16 @@
 
       <v-spacer></v-spacer>
 
-      <v-switch
+      <!-- <v-switch
         v-model="$vuetify.theme.dark"
         hide-details
         color="red darken-4"
-      ></v-switch>
+        label="Mode Malam"
+      ></v-switch> -->
+
+      <!-- <div>
+        <ModeMalam/>
+      </div> -->
 
       <!-- Pencarian -->
       <v-col
@@ -85,7 +90,6 @@
               small
               v-bind="attrs"
               v-on="on"
-              @click.stop="accountshow = !accountshow"
             >
               <v-icon>mdi-account-circle-outline</v-icon>
               <!-- <v-icon>{{ accountshow ? 'mdi-account-circle' : 'mdi-account-circle-outline' }}</v-icon> -->
@@ -152,6 +156,42 @@
           <!-- <v-icon>{{ notifshow ? 'mdi-bell' : 'mdi-bell-outline' }}</v-icon> -->
           <v-icon>mdi-bell-outline</v-icon>
         </v-btn>
+      </div>
+
+      <!-- Button Tampilkan Setting -->
+      <div class="text-center">
+        <v-menu
+          v-model="MenuShowSetting"
+          :close-on-content-click="false"
+          :nudge-width="200"
+          offset-y
+        >
+          <template v-slot:activator="{ on, attrs }">
+            <v-btn
+              fab
+              text
+              
+              small
+              v-bind="attrs"
+              v-on="on"
+            >
+              <v-icon>mdi-cog</v-icon>
+              <!-- <v-icon>{{ accountshow ? 'mdi-account-circle' : 'mdi-account-circle-outline' }}</v-icon> -->
+            </v-btn>
+          </template>
+
+          <v-card height="85">
+            <v-list>
+              <!-- Setting -->
+              <v-list-item>
+                <v-layout justify-center>
+                <ModeMalam/>
+                </v-layout>
+              </v-list-item>
+
+            </v-list>
+          </v-card>
+        </v-menu>
       </div>
     </v-app-bar>
 
@@ -241,12 +281,12 @@
       right
       temporary
       width="350"
-      color="white"
+      color="dark"
       v-model="drawerNotif"
     >
       <v-toolbar
         flat
-        color="grey lighten-2"
+        color="dark"
       >
         <div>
           <v-btn
@@ -259,21 +299,12 @@
           </v-btn>
         </div>
         
-        <v-layout justify-center>
-          <v-toolbar-title class="title">
-            Notifikasi
-            <v-icon>mdi-bell-ring</v-icon>
-          </v-toolbar-title>
-        </v-layout>
+        <span class="title mx-3">
+          Notifikasi
+          <v-icon>mdi-bell-ring</v-icon>
+        </span>
       </v-toolbar>
       <v-divider></v-divider>
-
-      <v-list-group>
-        <v-list-item>
-          
-        </v-list-item>
-      </v-list-group>
-
     </v-navigation-drawer>
 
     
@@ -281,24 +312,20 @@
 </template>
 
 <script>
+  import ModeMalam from '@/views/ModeMalam';
   export default {
-    props: {
-      attrs: {
-        type: Object,
-        default: () => ({}),
-      },
+    components: {
+      ModeMalam,
     },
 
-    data: vm => {
+    data: () => {
       return {
-        initialDark: vm.$vuetify
-        ? vm.$vuetify.theme.dark
-        : true,
         drawerNotif: null,
         accountshow: false,
         notifshow: false,
         MenuShowAkun: false,
         MenuShowNotif: false,
+        MenuShowSetting: false,
         drawerMenu: true,
 
         // Menu Navigation Drawer
@@ -333,7 +360,7 @@
     },
 
     mounted(){
-      this.vm.$vuetify.theme.dark = true
+      
     },
 
     computed: {
