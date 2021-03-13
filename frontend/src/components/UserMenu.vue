@@ -1,36 +1,40 @@
 <template>
   <v-card
     class="mx-auto"
-    max-width="350"
+    max-width="300"
+    tile
   >
-    <v-list dense>
-      <v-list-item
-        v-for="(item, i) in Beranda"
-        :key="i"
-        link
+    <v-list flat dense nav>
+      <v-list-item-group
+        v-model="selectedItem"
+        color="primary"
       >
-        <v-list-item-icon>
-          <v-icon v-text="item.icon"></v-icon>
-        </v-list-item-icon>
-        <div class="mr-3">
-          <input type="checkbox" v-text="item.title">
-        </div>
-        <v-list-item-content>
-          <v-list-item-title v-text="item.text"></v-list-item-title>
-        </v-list-item-content>
-      </v-list-item>
-      
+        <v-list-item
+          v-for="(item, i) in Beranda"
+          :key="i"
+        >
+          <template v-slot:default="{ active }">
+            <v-list-item-action>
+              <v-checkbox :input-value="active"></v-checkbox>
+            </v-list-item-action>
+
+            <v-list-item-content>
+              <v-list-item-title v-text="item.text"></v-list-item-title>
+            </v-list-item-content>
+          </template>
+        </v-list-item>
+      </v-list-item-group>
+
       <v-list-group
         v-for="item in Master"
         :key="item.title"
-        v-model="item.active"
-        :prepend-icon="item.action"
+        
         no-action
       >
         <template v-slot:activator>
-          <div class="mr-3">
-            <input type="checkbox" v-text="item.title" v-model="item.active">
-          </div>
+          <v-list-item-action>
+            <v-checkbox :input-value="active"></v-checkbox>
+          </v-list-item-action>
           <v-list-item-content>
             <v-list-item-title v-text="item.title"></v-list-item-title>
           </v-list-item-content>
@@ -41,12 +45,15 @@
           :key="child.title"
           link
         >
-          <div class="mr-3">
-            <input type="checkbox" v-text="child.title" v-model="child.active">
-          </div>
-          <v-list-item-content>
-            <v-list-item-title v-text="child.title"></v-list-item-title>
-          </v-list-item-content>
+          <template v-slot:default="{ active }">
+            <v-list-item-action>
+              <v-checkbox :input-value="active"></v-checkbox>
+            </v-list-item-action>
+
+            <v-list-item-content>
+              <v-list-item-title v-text="child.title"></v-list-item-title>
+            </v-list-item-content>
+          </template>
         </v-list-item>
       </v-list-group>
     </v-list>
@@ -65,14 +72,12 @@
           action: 'mdi-database',
           items: [
             { title: 'Karyawan' },
-            { title: 'UserMenu' },
+            { title: 'UserMenu' }
+
           ],
           title: 'Master',
         },
-        
       ],
-
-      
     }),
   }
 </script>
