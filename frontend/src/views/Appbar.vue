@@ -97,7 +97,7 @@
           </template>
 
           <v-card>
-            <v-list>
+            <v-list v-show="this.token == null">
               <!-- Login -->
               <v-list-item>
                 <v-btn
@@ -110,20 +110,6 @@
                 >
                   <v-icon class="mr-1">mdi-login-variant</v-icon>
                   Masuk
-                </v-btn>
-              </v-list-item>
-
-              <!-- Logout -->
-              <v-list-item>
-                <v-btn
-                  dark
-                  block
-                  depressed
-                  color="red darken-4"
-                  class="text-capitalize rounded-lg"
-                >
-                  Keluar
-                  <v-icon class="ml-1">mdi-logout-variant</v-icon>
                 </v-btn>
               </v-list-item>
 
@@ -140,6 +126,23 @@
                   <v-icon class="mr-1">mdi-account-plus-outline</v-icon>
                   Daftar Akun
                 </v-btn>
+              </v-list-item>
+            </v-list>
+            <v-list v-show="this.token !=null">
+              <!-- Logout -->
+              <v-list-item>
+                <v-btn
+                  dark
+                  block
+                  depressed
+                  color="red darken-4"
+                  class="text-capitalize rounded-lg"
+                  @click="logout"
+                >
+                  Keluar
+                  <v-icon class="ml-1">mdi-logout-variant</v-icon>
+                </v-btn>
+                
               </v-list-item>
             </v-list>
           </v-card>
@@ -230,8 +233,8 @@
       <!-- Menu Beranda -->
       <v-list nav dense>
         <v-list-item
-          v-for="item in Beranda"
-          :key="item.title"
+          v-for="(item,key) in Beranda"
+          :key="key"
           :to="item.link"
           link
         >
@@ -336,36 +339,36 @@ import api from "@/services/http";
 
         // Beranda
         Beranda: [
-          { title: 'Beranda', icon: 'mdi-home', link: '/' },
+          // { title: 'Beranda', icon: 'mdi-home', link: '/' },
           
         ],
 
         // Menu
         Menu: [
           // Master
-          {
-            action: 'mdi-database',
-            ListMenu: [
-              { title: 'Karyawan', icon: 'mdi-badge-account-horizontal' , link: 'Karyawan' }
-            ],
-            title: 'Master',
-          },
+          // {
+          //   action: 'mdi-database',
+          //   ListMenu: [
+          //     { title: 'Karyawan', icon: 'mdi-badge-account-horizontal' , link: 'Karyawan' }
+          //   ],
+          //   title: 'Master',
+          // },
 
-          // Proses
-          {
-            action: 'mdi-database',
-            ListMenu: [
+          // // Proses
+          // {
+          //   action: 'mdi-database',
+          //   ListMenu: [
               
-            ],
-            title: 'Proses',
-          },
+          //   ],
+          //   title: 'Proses',
+          // },
         ],
       }
     },
 
     mounted(){
       this.token = localStorage.getItem('token')
-      // this.menu()
+      this.menu()
       this.user = JSON.parse(localStorage.getItem('user'))
     },
 
@@ -385,31 +388,48 @@ import api from "@/services/http";
         }
       },
       menu(){
-    // console.log()
+      // console.log()
+      if (this.token == null) {
+        //do nothing
+        this.$router.replace("/login")
+      }else{
         api.get('/menu?token='+this.token).then(
         res=>{
+          // console.log('res',res)
           let tes = []
-          for (let index = 0; index < res.data.menus.length; index++) {
-            const element = res.data.menus[index];
-            element.title = res.data.menus[index].Nama;
+          for (let index = 0; index < res.data.length; index++) {
+            const element = res.data[index];
+            element.title = res.data[index].Nama;
+            element.action = res.data[index].Icon;
+            element.icon = res.data[index].action
+            element.link = res.data[index].Object
 
             tes.push(element)
           }
-          console.log('tes',tes)
+          // console.log('tes',tes)
           var id = tes.filter( function(item){return (item.Parent == null);} );
-
+          console.log('id',id)
           let List = []
           for (let index = 0; index < id.length; index++) {
             const element = id[index];
-            element.title = id[index].Nama
-            element.action = id[index].Icon
-            element.ListMenu = tes.filter( function(item){return (item.Parent == id[index].Kode);} );
+            element.ListMenu = tes.filter( function(item){return (item.Parent == id[index].KodeMenu);} );
             List.push(element)
           }
-          // console.log('akwowk',List)
-          // this.List = List
+          // console.log(List)
+          var home = tes.filter( function(item){return (item.Parent == "BtnHome" && item.Object == "BtnHome");} );
+          let beranda = []
+          for (let index = 0; index < home.length; index++) {
+            const element = home[index];
+            element.title = home[index].Nama
+            element.icon = home[index].Icon
+            element.link = "/"
+            beranda.push(element)
+          }
+          // // console.log('akwowk',List)
+          // // this.List = List
+          this.Beranda = beranda
           this.Menu = List
-          console.log(List)
+          // console.log(List)
           // this.isLoading = false
           // console.log('listmenu',this.List)
           }
@@ -420,10 +440,17 @@ import api from "@/services/http";
             this.logout()
           }
         })
-        // if (this.List.length == 0 && this.$route.path != "/login") {
-        //  this.logout()
-        // }
-    },
+       }
+      },
+      logout(){
+        api.post('/logout', this.token)
+        .then(res=>{
+          console.log(res)
+        })
+        localStorage.removeItem('token')
+        localStorage.removeItem('user')
+        location.reload(false)
+      },
     },
   }
 </script>

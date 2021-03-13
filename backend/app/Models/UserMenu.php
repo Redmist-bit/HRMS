@@ -12,4 +12,6 @@ class UserMenu extends Model
     protected $primaryKey = 'Kode';
     const CREATED_AT = 'DiBuatTgl';
     const UPDATED_AT = 'DiubahTgl';
+
 }
+    

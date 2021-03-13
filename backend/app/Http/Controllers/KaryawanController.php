@@ -54,7 +54,7 @@ class KaryawanController extends Controller
         $krywn->TGL_MASUK = $request->Tgl_Masuk;
         $krywn->TEMPAT_LAHIR = $request->Tempat_Lahir;
         $krywn->TGL_LAHIR = $request->Tgl_Lahir;
-        $krywn->ALAMAT_KTP = $request->Alamat_KTP;
+        $krywn->ALAMAT_KTP = $request->Alamat_Ktp;
         $krywn->ALAMAT_SEKARANG = $request->Alamat_Sekarang;
         $krywn->NO_TLP = $request->No_Tlp;
         $krywn->JENIS_KELAMIN = $request->Jenis_Kelamin;
@@ -174,7 +174,6 @@ class KaryawanController extends Controller
             "TGL_PHK"=>$request->Tgl_Phk,
             "KETERANGAN"=>$request->Keterangan,
             "NAMA_ISTRI_SUAMI"=>$request->Nama_Istri_Suami,
-            "DiBuatOleh"=>$request->DiBuatOleh,
             "DiubahOleh"=>$request->DiubahOleh,
         ]);
         if ($data == 1) {
@@ -251,7 +250,7 @@ class KaryawanController extends Controller
                     'PHOTO' => $filename,
                 ]);
             }   
-            return response()->json(['status' => 'success']);
+            return response()->json(['status' => 'success','foto' => $filename]);
         }
 
 }

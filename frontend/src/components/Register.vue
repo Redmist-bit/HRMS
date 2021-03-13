@@ -64,7 +64,7 @@
               </v-col>
 
               <!-- Ulangi Password -->
-              <!-- <v-col cols="12" md="6">
+              <v-col cols="12" md="6">
                 <v-text-field
                   dense
                   outlined
@@ -81,7 +81,7 @@
                   counter
                   @click:append="TampilkanPassword2 = !TampilkanPassword2"
                 ></v-text-field>
-              </v-col> -->
+              </v-col>
             </v-row>
           </v-col>
         </v-card-text>
@@ -146,7 +146,6 @@ export default {
 
           editedItem: {
           name: "",
-          email: "",
           password: "",
 				},
 				
@@ -173,20 +172,14 @@ export default {
     },
     methods: {
         save(){
-          let today = this.d.getFullYear() +"/"+("0" + (this.d.getMonth()+1)).slice(-2) +"/"+("0" + this.d.getDate()).slice(-2) + " "
           if (this.password != this.password2) {
             alert ('Pastikan Password telah benar')
           } else {
             api.post('/register',{
-              Kode: "0101/"+this.Nama,
-              Nama: this.Nama,
-              Email: this.Email,
-              password: this.password,
-              UserMenu: 0,
-              DibuatOleh: "SYS ADMIN",
-              DiBuatTgl:today,
-              DiubahOleh: "SYS ADMIN",
-              DiubahTgl:today
+            Kode: "0101/"+this.Nama,
+            Nama: this.Nama,
+            password: this.password,
+            UserMenu: 'ADMIN',
             })
             .then((res)=>{
               if (res.data.status == true) {
@@ -195,7 +188,7 @@ export default {
                 localStorage.setItem('user', JSON.stringify(res.data.user))
                 this.$router.push('/')
               } else {
-                alert('email sudah digunakan')
+                alert('User Sudah Digunakan')
               }
             })
             .catch((err)=>{

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use JWTAuth;
 use App\Models\User;
+use App\Models\UserMenu;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Tymon\JWTAuth\Exceptions\JWTException;
@@ -24,10 +25,11 @@ class AuthController extends Controller
             ]);
         }
         $currentUser = JWTAuth::user();
+        // $menu = JWTAuth::parseToken()->authenticate();
         return response()->json([
             "status"=>true,
             "token"=>$token,
-            "user"=>$currentUser
+            "user"=>$currentUser,
         ]);
     }
 
@@ -53,7 +55,7 @@ class AuthController extends Controller
     {
         $this->validate($request, [
             "Nama" => "required|string|unique:users",
-            "password" => "required|string|min:4|max:20"
+            "password" => "required|string|min:4|max:50"
         ]);
 
         $user = new User();
@@ -61,8 +63,28 @@ class AuthController extends Controller
         $user->Nama = $request->Nama;
         $user->UserMenu = $request->UserMenu;
         $user->password = bcrypt($request->password);
-
         $user->save();
+        // if ($user->save()){
+        //     for ($i=0; $i < count($request->UserMenu); $i++) {
+        //         $last = DB::table('usermenus')->orderBy('KodeMenu', 'desc')->first();
+        //         if (isset($last) == null) {
+        //             $fixcode = '01/0001';
+        //         } else {
+        //             $kode = substr($last->KodeMenu,3);
+        //             $kode_dpn = substr($last->KodeMenu,0,3);
+        //             $fixcode = $kode_dpn.str_pad($kode+1, 4, "0", STR_PAD_LEFT);
+        //         };
+        //         $UserMenu = new UserMenu;
+        //         $UserMenu->KodeMenu = $fixcode;
+        //         $UserMenu->Parent = $request->UserMenu[$i]['Parent'];
+        //         $UserMenu->Nama = $request->UserMenu[$i]['Nama'];
+        //         $UserMenu->Object = $request->UserMenu[$i]['Object'];
+        //         $UserMenu->UserMenu = $user->UserMenu;
+        //         $UserMenu->Visible = $request->UserMenu[$i]['Visible'];
+        //         $UserMenu->Icon = $request->UserMenu[$i]['Icon'];
+        //         $UserMenu->save();
+        //     }
+        // }
         // if ($user->save()){ 
         //         if (isset($request->jabatan['jabatan']) == false) {
         //             $jabatan = new Jabatan;

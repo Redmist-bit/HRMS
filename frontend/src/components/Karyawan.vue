@@ -565,6 +565,35 @@
         </v-col>
       </v-card>
     </v-col>
+    <!-- dialog ganti gambar -->
+    <v-dialog v-model="dialogchangefoto" max-width="298">
+				<v-card>
+					<v-card-title>
+						<v-spacer></v-spacer>
+						<span class="headline">Yakin Mengganti Foto Karyawan?</span> 
+						<v-spacer></v-spacer>                   
+					</v-card-title>
+					
+					<v-card-actions>
+						<v-spacer></v-spacer>
+						<v-btn
+							color="blue darken-4"
+							text
+							@click="GantiGambar = false, dialogchangefoto = false, foto = fotoTemp"
+						>
+							Tidak
+						</v-btn>
+						<v-btn
+							color="blue darken-4"
+							text
+							@click="gantifotokaryawan"
+						>
+							Ya
+						</v-btn>
+						<v-spacer></v-spacer>
+					</v-card-actions>
+				</v-card>
+			</v-dialog>
   </div>
 </template>
 <script>
@@ -590,11 +619,15 @@ export default {
       MenuTglPHK: false,
       user:[],
       token:null,
+      KodeKaryawan:null,
       DialogTambahKaryawan: false,
       form: new FormData,
       editedIndex: -1,
       FotoKaryawan:[],
+      fotoTemp:null,
       foto: null,
+      dialogchangefoto:false,
+      GantiGambar:null,
       defaultItem: {
         Kode_Karyawan: "",
         Nama: "",
@@ -688,6 +721,28 @@ export default {
   },
   
   watch: {
+    FotoKaryawan:{
+      handler(){
+      if (this.formTitleKaryawan == "Ubah Data Karyawan" && this.DialogTambahKaryawan == true) {
+        this.dialogchangefoto = true
+        // this.form.append('files',this.FotoKaryawan);
+        // const config = { headers: { 'Content-Type': 'multipart/form-data' } };
+        //   api.post("/karyawanFoto/"+this.KodeKaryawan+"?token="+this.token,this.form,config)
+        //     .then((res) => {
+        //       if(res){
+        //         //do nothing
+        //       }
+        //       this.$refs.fileupload.value=null
+        //       this.FotoKaryawan = []
+        //       this.form = new FormData
+        //       this.foto = null
+        //     })
+        //     .catch((error) => {
+        //             console.log(JSON.stringify(error))
+        //         })
+        }
+      }
+    },
     DialogTambahKaryawan (val) {
       val || this.KeluarDialogKaryawan()
     },
@@ -777,8 +832,46 @@ export default {
             .catch((error) => {
                     console.log(JSON.stringify(error))
                 })
-      }else{
-          // this.UpdateData()
+      }else if(this.formTitleKaryawan === "Ubah Data Karyawan"){
+         api.put("/karyawan/" +this.KodeKaryawan+'?token='+this.token,{
+            Nama: this.editedItem.Nama,
+            Nrk: this.editedItem.Nrk,
+            Kode_Jabatan: this.editedItem.Kode_Jabatan,
+            Poh: this.editedItem.Poh,
+            Tgl_Masuk: this.editedItem.Tgl_Masuk,
+            Tempat_Lahir: this.editedItem.Tempat_Lahir,
+            Tgl_lahir: this.editedItem.Tgl_lahir,
+            Alamat_KTP: this.editedItem.Alamat_KTP,
+            Alamat_Sekarang: this.editedItem.Alamat_Sekarang,
+            No_Telp: this.editedItem.No_Telp,
+            Jenis_Kelamin: this.editedItem.Jenis_Kelamin,
+            Pendidikan_Terakhir: this.editedItem.Pendidikan_Terakhir,
+            Jurusan: this.editedItem.Jurusan,
+            Agama:this.editedItem.Agama,
+            Suku: this.editedItem.Suku,
+            No_Rek_Tabungan: this.editedItem.No_Rek_Tabungan,
+            No_Kartu_BPJS_TK: this.editedItem.No_Kartu_BPJS_TK,
+            No_Kartu_BPJS_KES: this.editedItem.No_Kartu_BPJS_KES,
+            No_NPWP: this.editedItem.No_NPWP,
+            Gol_Dr: this.editedItem.Gol_Dr,
+            Status: this.editedItem.Status,
+            Status_Kerja: this.editedItem.Status_Kerja,
+            Ukuran_Baju: this.editedItem.Ukuran_Baju,
+            Ukuran_Sepatu: this.editedItem.Ukuran_Sepatu,
+            Phk: this.editedItem.Phk,
+            Tgl_Phk: this.editedItem.Tgl_Phk,
+            Keterangan: this.editedItem.Keterangan,
+            Nama_Istri_Suami: this.editedItem.Nama_Istri_Suami,
+            DiubahOleh: this.user.Kode
+					})
+					.then((res) => {
+						if (!res) {
+							//do nothing
+						}else{
+              this.getdata()
+						}
+						
+					})
       }
       this.$refs.fileupload.value=null
       this.FotoKaryawan = []
@@ -812,19 +905,68 @@ export default {
             this.editedItem = data.rowData
             this.DialogTambahKaryawan = true
 
-	if (args.rowData.Aktif == 0) {
-		this.dataTemp = args.rowData
-		this.dialogAktifData = true
-		}else{
-		this.scrollKeEdit()
-        let data = args;
-        this.editedIndex = 1;
-        console.log(data);
-        this.editedItem = data.rowData;
-				this.kode_brg = this.editedItem.Kode
-        // this.dialogWO = true;
-		}
+          if (args.rowData.Aktif == 0) {
+            this.dataTemp = args.rowData
+            this.dialogAktifData = true
+            }else{
+                let data = args;
+                this.editedIndex = 1;
+                this.KodeKaryawan = data.rowData.KODE_KARYAWAN
+                this.editedItem.Nama = data.rowData.NAMA
+                this.editedItem.Nrk = data.rowData.NRK
+                this.editedItem.Kode_Jabatan = data.rowData.KODE_JABATAN
+                this.editedItem.Poh = data.rowData.POH
+                this.editedItem.Tgl_Masuk = data.rowData.TGL_MASUK
+                this.editedItem.Tempat_Lahir = data.rowData.TEMPAT_LAHIR
+                this.editedItem.Tgl_Lahir = data.rowData.TGL_LAHIR
+                this.editedItem.Alamat_Ktp = data.rowData.ALAMAT_KTP
+                this.editedItem.Alamat_Sekarang = data.rowData.ALAMAT_SEKARANG
+                this.editedItem.No_Tlp = data.rowData.NO_TLP
+                this.editedItem.Jenis_Kelamin = data.rowData.JENIS_KELAMIN
+                this.editedItem.Pendidikan_Terakhir = data.rowData.PENDIDIKAN_TERAKHIR
+                this.editedItem.Jurusan = data.rowData.JURUSAN
+                this.editedItem.Agama = data.rowData.AGAMA
+                this.editedItem.Suku = data.rowData.SUKU
+                this.editedItem.No_Rek_Tabungan = data.rowData.NO_REK_TABUNGAN
+                this.editedItem.No_Kartu_Bpjs_Tk = data.rowData.NO_KARTU_BPJS_TK
+                this.editedItem.No_Kartu_Bpjs_Kes = data.rowData.NO_KARTU_BPJS_KES
+                this.editedItem.No_Ktp = data.rowData.NO_KTP
+                this.editedItem.No_Npwp = data.rowData.NO_NPWP
+                this.editedItem.Gol_Dr = data.rowData.GOL_DR
+                this.editedItem.Status = data.rowData.STATUS
+                this.editedItem.Status_Kerja = data.rowData.STATUS_KERJA
+                this.editedItem.Ukuran_Baju = data.rowData.UKURAN_BAJU
+                this.editedItem.Ukuran_Sepatu = data.rowData.UKURAN_SEPATU
+                this.editedItem.Phk = data.rowData.PHK
+                this.editedItem.Tgl_Phk = data.rowData.TGL_PHK
+                this.editedItem.Keterangan = data.rowData.KETERANGAN
+                this.editedItem.Nama_Istri_Suami = data.rowData.NAMA_ISTRI_SUAMI
+                this.foto = "http://"+window.location.hostname+":8000"+data.rowData.PHOTO
+                this.fotoTemp = "http://"+window.location.hostname+":8000"+data.rowData.PHOTO
+                console.log(this.fotoTemp)
+                // this.dialogWO = true;
+            }
       }
+    },
+    gantifotokaryawan(){
+    this.dialogchangefoto = false
+    this.form.append('files',this.FotoKaryawan);
+      const config = { headers: { 'Content-Type': 'multipart/form-data' } };
+        api.post("/karyawanFoto/"+this.KodeKaryawan+"?token="+this.token,this.form,config)
+          .then((res) => {
+            console.log(res.data.foto)
+            if(res){
+              //do nothing
+            this.getdata()
+            this.foto = "http://"+window.location.hostname+":8000"+res.data.foto
+            this.fotoTemp = "http://"+window.location.hostname+":8000"+res.data.foto
+            }
+            this.$refs.fileupload.value=null
+            this.form = new FormData
+          })
+          .catch((error) => {
+                  console.log(JSON.stringify(error))
+              })
     },
 
     fieldChange(e){
