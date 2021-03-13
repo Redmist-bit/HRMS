@@ -176,7 +176,7 @@ export default {
             alert ('Pastikan Password telah benar')
           } else {
             api.post('/register',{
-            Kode: "0101/"+this.Nama,
+            Kode: "0101/"+this.Nama.toUpperCase(),
             Nama: this.Nama,
             password: this.password,
             UserMenu: 'ADMIN',
