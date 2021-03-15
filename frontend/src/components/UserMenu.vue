@@ -243,7 +243,7 @@
         <v-divider></v-divider>
         <v-list flat dense nav>
           <v-list-item-group
-            color="primary"
+            color="dark"
           >
             <v-list-item
               v-for="(item, i) in Beranda"
@@ -251,12 +251,17 @@
             >
               <template v-slot:default="{ active }">
                 <v-list-item-action>
-                  <v-checkbox v-on:change="toggleBeranda(item)" v-bind:checked="item.enabled" :input-value="active" v-model="item.enabled"></v-checkbox>
+                  <v-checkbox color="red lighten-1" v-on:change="toggleBeranda(item)" v-bind:checked="item.enabled" :input-value="active" v-model="item.enabled"></v-checkbox>
                 </v-list-item-action>
 
                 <v-list-item-content>
                   <v-list-item-title v-text="item.Nama"></v-list-item-title>
                 </v-list-item-content>
+
+                <!-- Btn Delete -->
+                <v-btn fab text small>
+                  <v-icon>mdi-delete</v-icon>
+                </v-btn>
               </template>
             </v-list-item>
           </v-list-item-group>
@@ -274,6 +279,11 @@
               <v-list-item-content>
                 <v-list-item-title v-text="item.Nama"></v-list-item-title>
               </v-list-item-content>
+
+              <!-- Btn Delete -->
+              <v-btn fab text small>
+                <v-icon>mdi-delete</v-icon>
+              </v-btn>
             </template>
 
             <v-list-item
@@ -289,6 +299,11 @@
                 <v-list-item-content>
                   <v-list-item-title v-text="child.Nama"></v-list-item-title>
                 </v-list-item-content>
+                
+                <!-- Btn Delete -->
+                <v-btn fab text small>
+                  <v-icon>mdi-delete</v-icon>
+                </v-btn>
               </template>
             </v-list-item>
           </v-list-group>
