@@ -1,6 +1,45 @@
 <template>
   <div id="app">
     <v-col>
+      <!-- Alert Data Tersimpan -->
+      <v-alert style="position:fixed;z-index:2;right:20px;"
+        dismissible
+        color="red"
+        border="left"
+        elevation="4"
+        colored-border
+        v-model="Alert"
+        transition="slide-x-transition"
+      >
+        Data Telah Tersimpan
+      </v-alert>
+
+      <!-- Alert Data Sudah Terhapus -->
+      <v-alert style="position:fixed;z-index:2;right:20px;"
+        dismissible
+        color="red"
+        border="left"
+        elevation="4"
+        colored-border
+        v-model="AlertDataTerhapus"
+        transition="slide-x-transition"
+      >
+        Data Telah Terhapus
+      </v-alert>
+
+      <!-- Alert Data Berhasil Terubah -->
+      <v-alert style="position:fixed;z-index:2;right:20px;"
+        dismissible
+        color="red"
+        border="left"
+        elevation="4"
+        colored-border
+        v-model="AlertBerhasilTerubah"
+        transition="slide-x-transition"
+      >
+        Data Berhasil Terubah
+      </v-alert>
+
       <v-card outlined class="rounded-lg">
         <v-col>
           <v-toolbar
@@ -38,6 +77,7 @@
                   flat
                 >
                   <v-toolbar-title>
+                    <v-icon class="mt-n2 mr-1">{{Icon}}</v-icon>
                     <span class="headline">{{ formTitleKaryawan }}</span>
                   </v-toolbar-title>
                   <v-spacer></v-spacer>
@@ -53,49 +93,46 @@
                 <v-divider></v-divider>
                 
                 <v-card-text>
-                  <v-container class="mt-4">
+                  <div class="mt-4">
                     <v-row>
                       <!-- upload foto -->
-                      <v-col cols="12" sm="6" md="3">
+                      <v-col cols="12" sm="4" md="3">
                         <v-card
                           outlined
-                          max-width="280"
-                          class="rounded-lg pa-2 mx-auto"
+                          class="rounded-lg pa-2"
                         >
                           <v-card
                             outlined
-                            height="338"
-                            max-width="280"
                             color="grey darken-1"
-                            class="rounded-lg mb-2 mx-auto"
+                            class="rounded-lg mb-2 fill-height"
                           >
-                            <v-img
-                              height="336"
-                              max-width="280"
-                              v-if="foto"
-                              :src="foto"
-                              class="d-flex flex-row"
-                            >
-                              <template v-slot:placeholder>
-                                <v-row
-                                  class="fill-height ma-0"
-                                  align="center"
-                                  justify="center"
-                                >
-                                  <v-progress-circular
-                                    indeterminate
-                                    color="grey lighten-5"
-                                  ></v-progress-circular>
-                                </v-row>
-                              </template>
-                            </v-img>
+                            <v-responsive :aspect-ratio="3/4">
+                              <v-img
+                                v-if="foto"
+                                :src="foto"
+                                class="d-flex flex-row rounded-lg fill-height"
+                              >
+                                <template v-slot:placeholder>
+                                  <v-row
+                                    class="fill-height ma-0"
+                                    align="center"
+                                    justify="center"
+                                  >
+                                    <v-progress-circular
+                                      indeterminate
+                                      color="grey lighten-5"
+                                    ></v-progress-circular>
+                                  </v-row>
+                                </template>
+                              </v-img>
+                            </v-responsive>
                           </v-card>
                           <div class="form-group d-flex flex-row">
                             <input
                             id="upload-file"
                             type="file"
                             ref="fileupload"
-                            class="custom-file-input rounded-lg"
+                            class="custom-file-input rounded-lg col-12"
                             @change="fieldChange">
                           <!-- <img class="preview" :ref="'image'" /> -->
                           </div>
@@ -103,10 +140,10 @@
                       </v-col>
 
                       <!-- ----------------------------------------------- -->
-                      <v-col cols="12" sm="12" md="9">
+                      <v-col cols="12" sm="8" md="9">
                         <v-toolbar flat dense outlined color="dark" class="rounded-lg mb-3">
                           <v-icon color="dark" class="mr-1">mdi-card-account-details</v-icon>
-                          <span class="title">Detail Karyawan</span>
+                          <span class="title d-inline-block text-truncate">Detail Karyawan</span>
                         </v-toolbar>
                         <v-card 
                           outlined
@@ -129,7 +166,7 @@
                                 dense
                                 clearable
                                 label="NRK"
-                                color="grey darken-2"
+                                color="dark"
                                 v-model="editedItem.Nrk"
                               ></v-text-field>
                             </v-col>
@@ -138,7 +175,7 @@
                               <v-text-field
                                 dense
                                 label="Kode Jabatan"
-                                color="grey darken-2"
+                                color="dark"
                                 v-model="editedItem.Kode_Jabatan"
                               ></v-text-field>
                             </v-col>
@@ -148,7 +185,7 @@
                                 dense
                                 clearable
                                 label="POH"
-                                color="grey darken-2"
+                                color="dark"
                                 v-model="editedItem.Poh"
                               ></v-text-field>
                             </v-col>
@@ -167,7 +204,7 @@
                                     v-model="editedItem.Tgl_Masuk"
                                     label="Tgl Masuk"
                                     prepend-icon="mdi-calendar"
-                                    color="grey darken-2"
+                                    color="dark"
                                     readonly
                                     dense
                                     v-bind="attrs"
@@ -177,6 +214,7 @@
                                 <v-date-picker
                                   v-model="editedItem.Tgl_Masuk"
                                   @input="MenuTglMasuk = false"
+                                  year-icon="mdi-calendar-blank"
                                   color="red darken-4"
                                   locale="id"
                                 ></v-date-picker>
@@ -188,7 +226,7 @@
                                 dense
                                 clearable
                                 label="Tempat Lahir"
-                                color="grey darken-2"
+                                color="dark"
                                 v-model="editedItem.Tempat_Lahir"
                               ></v-text-field>
                             </v-col>
@@ -207,7 +245,7 @@
                                     v-model="editedItem.Tgl_Lahir"
                                     label="Tgl Lahir"
                                     prepend-icon="mdi-calendar"
-                                    color="grey darken-2"
+                                    color="dark"
                                     readonly
                                     dense
                                     v-bind="attrs"
@@ -216,7 +254,8 @@
                                 </template>
                                 <v-date-picker
                                   v-model="editedItem.Tgl_Lahir"
-                                  @input="MenuTglMasuk = false"
+                                  @input="MenuTglLahir = false"
+                                  year-icon="mdi-calendar-blank"
                                   color="red darken-4"
                                   :max="new Date().toISOString().substr(0, 10)"
                                   min="1950-01-01"
@@ -231,7 +270,7 @@
                                 dense
                                 clearable
                                 label="Alamat KTP"
-                                color="grey darken-2"
+                                color="dark"
                                 v-model="editedItem.Alamat_Ktp"
                               ></v-text-field>
                             </v-col>
@@ -241,7 +280,7 @@
                                 dense
                                 clearable
                                 label="Alamat Sekarang"
-                                color="grey darken-2"
+                                color="dark"
                                 v-model="editedItem.Alamat_Sekarang"
                               ></v-text-field>
                             </v-col>
@@ -251,7 +290,7 @@
                                 dense
                                 clearable
                                 label="No. Tlp"
-                                color="grey darken-2"
+                                color="dark"
                                 v-model="editedItem.No_Tlp"
                               ></v-text-field>
                             </v-col>
@@ -262,7 +301,7 @@
                                 clearable
                                 :items="['Laki-Laki','Perempuan']"
                                 label="Jenis Kelamin"
-                                color="grey darken-2"
+                                color="dark"
                                 v-model="editedItem.Jenis_Kelamin"
                               ></v-combobox>
                             </v-col>
@@ -272,7 +311,7 @@
                                 dense
                                 clearable
                                 label="Pendidikan Terakhir"
-                                color="grey darken-2"
+                                color="dark"
                                 v-model="editedItem.Pendidikan_Terakhir"
                               ></v-text-field>
                             </v-col>
@@ -282,7 +321,7 @@
                                 dense
                                 clearable
                                 label="Jurusan"
-                                color="grey darken-2"
+                                color="dark"
                                 v-model="editedItem.Jurusan"
                               ></v-text-field>
                             </v-col>
@@ -293,7 +332,7 @@
                                 clearable
                                 :items="['Islam','Protestan','Katolik','Hindu','Buddha','Khonghucu']"
                                 label="Agama"
-                                color="grey darken-2"
+                                color="dark"
                                 v-model="editedItem.Agama"
                               ></v-combobox>
                             </v-col>
@@ -303,7 +342,7 @@
                                 dense
                                 clearable
                                 label="Suku"
-                                color="grey darken-2"
+                                color="dark"
                                 v-model="editedItem.Suku"
                               ></v-text-field>
                             </v-col>
@@ -313,7 +352,7 @@
                                 dense
                                 clearable
                                 label="No. Rekening Tabungan"
-                                color="grey darken-2"
+                                color="dark"
                                 v-model="editedItem.No_Rek_Tabungan"
                               ></v-text-field>
                             </v-col>
@@ -323,7 +362,7 @@
                                 dense
                                 clearable
                                 label="No. Kartu BPJS TK"
-                                color="grey darken-2"
+                                color="dark"
                                 v-model="editedItem.No_Kartu_Bpjs_Tk"
                               ></v-text-field>
                             </v-col>
@@ -333,7 +372,7 @@
                                 dense
                                 clearable
                                 label="No. Kartu BPJS KES"
-                                color="grey darken-2"
+                                color="dark"
                                 v-model="editedItem.No_Kartu_Bpjs_Kes"
                               ></v-text-field>
                             </v-col>
@@ -343,7 +382,7 @@
                                 dense
                                 clearable
                                 label="No. KTP"
-                                color="grey darken-2"
+                                color="dark"
                                 v-model="editedItem.No_Ktp"
                               ></v-text-field>
                             </v-col>
@@ -353,7 +392,7 @@
                                 dense
                                 clearable
                                 label="No. NPWP"
-                                color="grey darken-2"
+                                color="dark"
                                 v-model="editedItem.No_Npwp"
                               ></v-text-field>
                             </v-col>
@@ -363,7 +402,7 @@
                                 dense
                                 clearable
                                 label="Golongan Darah"
-                                color="grey darken-2"
+                                color="dark"
                                 :items="['A','B','AB','O']"
                                 v-model="editedItem.Gol_Dr"
                               ></v-combobox>
@@ -374,7 +413,7 @@
                                 dense
                                 clearable
                                 label="Status"
-                                color="grey darken-2"
+                                color="dark"
                                 v-model="editedItem.Status"
                               ></v-text-field>
                             </v-col>
@@ -384,7 +423,7 @@
                                 dense
                                 clearable
                                 label="Status Kerja"
-                                color="grey darken-2"
+                                color="dark"
                                 v-model="editedItem.Status_Kerja"
                               ></v-text-field>
                             </v-col>
@@ -394,7 +433,7 @@
                                 dense
                                 clearable
                                 label="Ukuran Baju"
-                                color="grey darken-2"
+                                color="dark"
                                 v-model="editedItem.Ukuran_Baju"
                               ></v-text-field>
                             </v-col>
@@ -404,7 +443,7 @@
                                 dense
                                 clearable
                                 label="Ukuran Sepatu"
-                                color="grey darken-2"
+                                color="dark"
                                 v-model="editedItem.Ukuran_Sepatu"
                               ></v-text-field>
                             </v-col>
@@ -414,7 +453,7 @@
                                 dense
                                 clearable
                                 label="PHK"
-                                color="grey darken-2"
+                                color="dark"
                                 v-model="editedItem.Phk"
                               ></v-text-field>
                             </v-col>
@@ -433,7 +472,7 @@
                                     v-model="editedItem.Tgl_Phk"
                                     label="Tgl PHK"
                                     prepend-icon="mdi-calendar"
-                                    color="grey darken-2"
+                                    color="dark"
                                     readonly
                                     dense
                                     v-bind="attrs"
@@ -443,6 +482,7 @@
                                 <v-date-picker
                                   v-model="editedItem.Tgl_Phk"
                                   @input="MenuTglPHK = false"
+                                  year-icon="mdi-calendar-blank"
                                   color="red darken-4"
                                   locale="id"
                                 ></v-date-picker>
@@ -454,7 +494,7 @@
                                 dense
                                 clearable
                                 label="Keterangan"
-                                color="grey darken-2"
+                                color="dark"
                                 v-model="editedItem.Keterangan"
                               ></v-text-field>
                             </v-col>
@@ -464,7 +504,7 @@
                                 dense
                                 clearable
                                 label="Nama Istri Suami"
-                                color="grey darken-2"
+                                color="dark"
                                 v-model="editedItem.Nama_Istri_Suami"
                               ></v-text-field>
                             </v-col>
@@ -474,20 +514,33 @@
                       </v-col>
                       <!-- --------------------------------- -->
                     </v-row>
-                  </v-container>
+                  </div>
                 </v-card-text>
                 <v-divider></v-divider>
                 <v-card-actions>
+                  <span class="d-inline-block text-truncate">
+                    Status : <span>{{Status}}</span>
+                  </span>
                 <v-spacer></v-spacer>
+                <v-tooltip bottom>
+                  <template v-slot:activator="{ on, attrs }">
                   <v-btn
-                    dark
-                    color="red darken-4 mx-4"
-                    class="text-capitalize"
+                    fab
+                    text
+                    small
+                    v-bind="attrs"
+                    v-on="on"
+                    color="dark"
+                    class="text-capitalize mx-4"
                     @click="Reset"
                   >
-                    <v-icon class="mr-1">mdi-refresh</v-icon>
-                    Refresh
+                    <v-icon>mdi-refresh</v-icon>
                   </v-btn>
+                  </template>
+                  <span>Refresh</span>
+                </v-tooltip>
+
+
                   <v-btn
                     dark
                     color="red darken-4 mx-n2"
@@ -515,17 +568,17 @@
             :pageSettings='pageSettings'
           >
             <e-columns>
-              <e-column headerText="Action" width="120" :commands="commands">
-									<div class="btn-group">
-										<v-btn type="button" class="btn btn-default" (click)="prediemRowEdit($event)">
-											<i class="fa fa-pencil"></i>
-										</v-btn>
-										<v-btn type="button" class="btn btn-default" (click)="prediemRowDelete($event)">
-											<i class="fa fa-trash"></i>
-										</v-btn>
-									</div>
-								</e-column>
-              <e-column field='KODE_KARYAWAN' headerText='Kode' textAlign='Left' width=150></e-column>
+              <e-column headerText="Aksi" textAlign='Center' width="120" :commands="commands" :lockColumn='true' :customAttributes="customAttributes">
+                <div class="btn-group">
+                  <v-btn type="button" class="btn btn-default" (click)="prediemRowEdit($event)">
+                    <i class="fa fa-pencil"></i>
+                  </v-btn>
+                  <v-btn type="button" class="btn btn-default" (click)="prediemRowDelete($event)">
+                    <i class="fa fa-trash"></i>
+                  </v-btn>
+                </div>
+              </e-column>
+              <e-column field='KODE_KARYAWAN' headerText='Kode' textAlign='Left' width=110></e-column>
               <e-column field='NAMA' headerText='Nama' width=300></e-column>
               <e-column field='NRK' headerText='NRK' textAlign='Left' width=150></e-column>
               <e-column field='KODE_JABATAN' headerText='Kode Jabatan' textAlign='Left' width=150></e-column>
@@ -566,8 +619,8 @@
       </v-card>
     </v-col>
     <!-- dialog ganti gambar -->
-    <v-dialog v-model="dialogchangefoto" max-width="298">
-				<v-card>
+    <v-dialog v-model="dialogchangefoto" max-width="405">
+				<v-card class="rounded-lg">
 					<v-card-title>
 						<v-spacer></v-spacer>
 						<span class="headline">Yakin Mengganti Foto Karyawan?</span> 
@@ -577,14 +630,16 @@
 					<v-card-actions>
 						<v-spacer></v-spacer>
 						<v-btn
-							color="blue darken-4"
+              class="text-capitalize"
+							color="dark"
 							text
 							@click="GantiGambar = false, dialogchangefoto = false, foto = fotoTemp"
 						>
 							Tidak
 						</v-btn>
 						<v-btn
-							color="blue darken-4"
+              class="text-capitalize"
+							color="dark"
 							text
 							@click="gantifotokaryawan"
 						>
@@ -613,6 +668,10 @@ export default {
           buttonOption: { cssClass:"e-flat Delete", iconCss: "e-delete e-icons"}
         }
       ],
+      customAttributes : {class: 'customcss'},
+      Alert:false,
+      AlertDataTerhapus:false,
+      AlertBerhasilTerubah:false,
       date: new Date().toISOString().substr(0, 10),
       MenuTglMasuk: false,
       MenuTglLahir: false,
@@ -718,6 +777,12 @@ export default {
     formTitleKaryawan () {
       return this.editedIndex === -1 ? 'Tambah Karyawan Baru' : 'Ubah Data Karyawan'
     },
+    Icon () {
+      return this.editedIndex === -1 ? 'mdi-plus-thick' : 'mdi-pencil'
+    },
+    Status () {
+      return this.editedIndex === -1 ? 'Baru' : 'Ubah'
+    },
   },
   
   watch: {
@@ -748,6 +813,16 @@ export default {
     },
     MenuTglLahir (val) {
       val && setTimeout(() => (this.$refs.picker.activePicker = 'YEAR'))
+    },
+
+    Alert(){
+      this.AlertItem()
+    },
+    AlertDataTerhapus(){
+      this.AlertItem()
+    },
+    AlertBerhasilTerubah(){
+      this.AlertItem()
     },
   },
 
@@ -786,6 +861,7 @@ export default {
           this.form.append('Nama_Istri_Suami', this.editedItem.Nama_Istri_Suami);
           this.form.append('DiBuatOleh', this.user.Kode);
           this.form.append('DiubahOleh', this.user.Kode); 
+          this.Alert = true
           console.log(this.form)
           const config = { headers: { 'Content-Type': 'multipart/form-data' } };
           api.post("/karyawan?token="+this.token,this.form,config 
@@ -869,6 +945,7 @@ export default {
 							//do nothing
 						}else{
               this.getdata()
+              this.AlertBerhasilTerubah = true
 						}
 						
 					})
@@ -887,12 +964,13 @@ export default {
         console.log(args.rowData);
       } else if (args.target.classList.contains("Delete")){
         var r = confirm("Yakin Hapus Data?");
-        if (r == true) {
+        if (r == true) { 
           api
             .delete("/karyawan/"+args.rowData.KODE_KARYAWAN+'?token='+this.token)
             .then((res) =>{
               console.log(res);
               this.getdata()
+              this.AlertDataTerhapus = true
             })
             .catch((err) => {
               console.log(err);
@@ -1034,7 +1112,14 @@ export default {
       this.$nextTick(() => {
         this.editedItem = Object.assign({}, this.defaultItem)
       })
-      
+    },
+
+    AlertItem(){
+      window.setInterval(() => {
+        this.Alert = false;
+        this.AlertDataTerhapus = false;
+        this.AlertBerhasilTerubah = false;
+      }, 3000)
     },
   },
 }
@@ -1046,6 +1131,13 @@ export default {
   display: inline-block solid #ccc;
   padding: 6px 6px 6px;
   cursor: pointer;
+}
+
+.e-grid .e-rowcell.customcss{
+  background-color: #d6d6d6;
+}
+.e-grid .e-headercell.customcss{
+  background-color: #ecedee;
 }
 </style>
 
