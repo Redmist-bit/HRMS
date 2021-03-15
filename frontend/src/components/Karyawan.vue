@@ -11,7 +11,7 @@
         v-model="Alert"
         transition="slide-x-transition"
       >
-        Data Telah Tersimpan
+        Data Berhasil Disimpan
       </v-alert>
 
       <!-- Alert Data Sudah Terhapus -->
@@ -24,7 +24,7 @@
         v-model="AlertDataTerhapus"
         transition="slide-x-transition"
       >
-        Data Telah Terhapus
+        Data Berhasil Dihapus
       </v-alert>
 
       <!-- Alert Data Berhasil Terubah -->
@@ -37,7 +37,7 @@
         v-model="AlertBerhasilTerubah"
         transition="slide-x-transition"
       >
-        Data Berhasil Terubah
+        Data Berhasil Diubah
       </v-alert>
 
       <v-card outlined class="rounded-lg">
