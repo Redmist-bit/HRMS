@@ -3,7 +3,6 @@
     <!-- Appbar -->
     <v-app-bar
       app
-      flat
     >
       <!-- Button Drawer Menu -->
       <v-btn
@@ -90,7 +89,7 @@
               v-bind="attrs"
               v-on="on"
             >
-              <v-icon>mdi-account-circle-outline</v-icon>
+              <v-icon>mdi-account-circle</v-icon>
               <!-- <v-icon>{{ accountshow ? 'mdi-account-circle' : 'mdi-account-circle-outline' }}</v-icon> -->
             </v-btn>
           </template>
@@ -157,7 +156,7 @@
           @click.stop="drawerNotif = !drawerNotif"
         >
           <!-- <v-icon>{{ notifshow ? 'mdi-bell' : 'mdi-bell-outline' }}</v-icon> -->
-          <v-icon>mdi-bell-outline</v-icon>
+          <v-icon>mdi-bell</v-icon>
         </v-btn>
       </div>
 
@@ -201,6 +200,7 @@
       app
       fixed
       width="250"
+      class="elevation-3"
       v-model="drawerMenu"
     >
       <v-toolbar

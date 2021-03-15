@@ -40,12 +40,13 @@
         Data Berhasil Diubah
       </v-alert>
 
-      <v-card outlined class="rounded-lg">
+      <v-card outlined class="rounded-lg elevation-10">
         <v-col>
           <v-toolbar
             dense
             flat
             color="dark"
+            v-resize="onResize"
           >
             <v-toolbar-title>
               Data Karyawan
@@ -60,7 +61,9 @@
                 offset-y
               >
                 <template v-slot:activator="{ on, attrs }">
+                  <!-- Btn Biasa -->
                   <v-btn
+                    v-show="mobile == false"
                     text
                     v-bind="attrs"
                     v-on="on"
@@ -68,6 +71,19 @@
                   >
                     <v-icon class="mr-1">mdi-table-arrow-right</v-icon>
                     Export Data
+                  </v-btn>
+
+                  <!-- Btn Mode Mobile -->
+                  <v-btn
+                    v-show="mobile == true"
+                    v-bind="attrs"
+                    v-on="on"
+                    class="mx-2"
+                    small
+                    text
+                    fab
+                  >
+                    <v-icon>mdi-table-arrow-right</v-icon>
                   </v-btn>
                 </template>
 
@@ -111,14 +127,27 @@
             >
               <template v-slot:activator="{ on, attrs }">
                 <v-btn
-                  class="text-capitalize mx-n2 rounded-lg"
+                  v-show="mobile == false"
+                  class="text-capitalize mx-n3 rounded-lg"
                   color="dark"
                   v-bind="attrs"
                   v-on="on"
                   text
                 >
-                  <v-icon class="mr-1">mdi-plus</v-icon>
+                  <v-icon class="mr-1">mdi-plus-thick</v-icon>
                   Tambah
+                </v-btn>
+
+                <v-btn 
+                  class="mx-n3"
+                  v-show="mobile == true"
+                  v-bind="attrs"
+                  v-on="on"
+                  small
+                  text
+                  fab
+                >
+                  <v-icon>mdi-plus-thick</v-icon>
                 </v-btn>
               </template>
               <v-card>
@@ -709,6 +738,8 @@ Vue.use(GridPlugin);
 export default {
   data() {
     return {
+      mobile:null,
+      windowSize: {x: 0, y: 0},
       MenuExport: false,
 
       commands: [
@@ -837,6 +868,16 @@ export default {
   },
   
   watch: {
+    windowSize(){
+      if (this.windowSize.x < 450) {
+        this.titleClass = "d-none"
+        this.mobile = true
+      }else{
+        this.titleClass = "mr-4"
+        this.mobile = false
+      }
+    },
+
     FotoKaryawan:{
       handler(){
       if (this.formTitleKaryawan == "Ubah Data Karyawan" && this.DialogTambahKaryawan == true) {
@@ -878,6 +919,10 @@ export default {
   },
 
   methods: {
+    onResize(){
+      this.windowSize = { x: window.innerWidth, y: window.innerHeight }
+    },
+
     Simpan(){
       if(this.formTitleKaryawan === "Tambah Karyawan Baru"){
           this.form.append('files',this.FotoKaryawan);
