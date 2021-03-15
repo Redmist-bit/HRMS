@@ -485,8 +485,14 @@ import api from "@/services/http";
       },
       Simpan(){
         if(this.formTitleUserMenu === "Tambah User Menu"){
+          let parent
+          if (this.ParentSelect == null) {
+            parent = null
+          }else{
+            parent = this.ParentSelect.KodeMenu
+          }
           api.post('/addmenu?token='+this.token,{
-            Parent: this.ParentSelect.KodeMenu,
+            Parent: parent,
             Nama: this.editedItem.Nama,
             Object: this.editedItem.Object,
             UserMenu: this.JabatanSelect,
