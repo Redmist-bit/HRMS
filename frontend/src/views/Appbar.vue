@@ -416,7 +416,7 @@ import api from "@/services/http";
             List.push(element)
           }
           // console.log(List)
-          var home = tes.filter( function(item){return (item.Object == "Home");} );
+          var home = tes.filter( function(item){return (item.Object == "Link" && item.Nama == "Beranda");} );
           let beranda = []
           for (let index = 0; index < home.length; index++) {
             const element = home[index];
