@@ -36,7 +36,7 @@
       </div> -->
 
       <!-- Pencarian -->
-      <v-col
+      <!-- <v-col
         cols="5"
         sm="8"
         md="4"
@@ -52,7 +52,6 @@
           placeholder="Pencarian"
           
         >
-        <!-- prepend-inner-icon="mdi-magnify" -->
           <template v-slot:append>
             <v-btn
               text
@@ -70,7 +69,7 @@
 
           <v-divider></v-divider>
         </v-text-field>
-      </v-col>
+      </v-col> -->
 
       <v-divider inset vertical class="mr-1"></v-divider>
 
@@ -79,7 +78,7 @@
         <v-menu
           v-model="MenuShowAkun"
           :close-on-content-click="false"
-          :nudge-width="200"
+          :nudge-width="150"
           offset-y
         >
           <template v-slot:activator="{ on, attrs }">
@@ -96,8 +95,8 @@
             </v-btn>
           </template>
 
-          <v-card>
-            <v-list v-show="this.token == null">
+          <v-card outlined class="rounded-lg">
+            <v-list class="rounded-lg" v-show="this.token == null">
               <!-- Login -->
               <v-list-item>
                 <v-btn
@@ -128,7 +127,7 @@
                 </v-btn>
               </v-list-item>
             </v-list>
-            <v-list v-show="this.token !=null">
+            <v-list class="rounded-lg" v-show="this.token !=null">
               <!-- Logout -->
               <v-list-item>
                 <v-btn
@@ -167,7 +166,7 @@
         <v-menu
           v-model="MenuShowSetting"
           :close-on-content-click="false"
-          :nudge-width="200"
+          :nudge-width="150"
           offset-y
         >
           <template v-slot:activator="{ on, attrs }">
@@ -180,15 +179,13 @@
               v-on="on"
             >
               <v-icon>mdi-cog</v-icon>
-              <!-- <v-icon>{{ accountshow ? 'mdi-account-circle' : 'mdi-account-circle-outline' }}</v-icon> -->
             </v-btn>
           </template>
 
-          <v-card height="85">
+          <v-card outlined height="70" class="rounded-lg">
             <v-list>
-              <!-- Setting -->
               <v-list-item>
-                <v-layout justify-center>
+                <v-layout justify-center class="mt-n3">
                 <ModeMalam/>
                 </v-layout>
               </v-list-item>
