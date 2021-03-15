@@ -31,7 +31,9 @@ class UserMenuController extends Controller
     }
     public function menuselected($usermenu)
     {
-        return UserMenu::where('UserMenu',$usermenu)->get();
+        $menu = UserMenu::where('UserMenu',$usermenu)->get();
+        $distnct = UserMenu::distinct()->get(['Object']);
+        return response()->json(["Menu"=>$menu,"Object"=>$distnct]);
     }
     public function updatemenu(Request $request, $id,$kode)
     {

@@ -129,7 +129,11 @@
                         clearable
                         label="Parent"
                         color="dark"
-                        v-model="editedItem.Parent"
+                        :items="ParentTemp"
+                        item-text="Nama"
+                        item-value="KodeMenu"
+                        v-model="ParentSelect"
+                        return-object
                       ></v-select>
                     </v-col>
 
@@ -145,11 +149,28 @@
 
                     <v-col cols="12" sm="6" md="6">
                       <v-select
+                      v-show="ParentSelect != null"
                         dense
                         clearable
                         label="Object"
                         color="dark"
+                        :items="ObjectTemp"
+                        item-text="Object"
+                        item-value="Object"
                         v-model="editedItem.Object"
+                        return-object
+                      ></v-select>
+                      <v-select
+                      v-show="ParentSelect == null || ParentSelect.length == 0"
+                        dense
+                        clearable
+                        label="Object"
+                        color="dark"
+                        :items="ObjectTemp"
+                        item-text="Object"
+                        item-value="Object"
+                        v-model="editedItem.Object"
+                        return-object
                       ></v-select>
                     </v-col>
 
@@ -286,11 +307,14 @@ import api from "@/services/http";
       DialogUserMenu: false,
       editedIndex: -1,
       token:null,
+      MenuTemp:[],
+      ParentTemp:[],
+      ObjectTemp:[],
+      ParentSelect:null,
       JabatanSelect:null,
       resMenu:[],
       defaultItem: {
         KodeMenu: "",
-        Parent: "",
         Nama: "",
         Object: "",
         UserMenu: "",
@@ -300,7 +324,6 @@ import api from "@/services/http";
       },
       editedItem: {
         KodeMenu: "",
-        Parent: "",
         Nama: "",
         Object: "",
         UserMenu: "",
@@ -339,7 +362,26 @@ import api from "@/services/http";
     watch: {
       DialogUserMenu(val) {
         val || this.KeluarDialogUserMenu();
+        if (this.DialogUserMenu == true) {
+          this.ObjectTemp = ['List','Link']
+          api.get('menuselected/'+this.JabatanSelect+'?token='+this.token).then(res=>{
+            this.MenuTemp = res.data
+            var parent = res.data.Menu.filter( function(item){return (item.Parent == null && item.Object != "Link");} );
+            this.ParentTemp = parent
+          })
+        }
       },
+      ParentSelect(){
+        if (this.ParentSelect == null || this.ParentSelect.length == 0) {
+          //do nothing
+          this.ObjectTemp = [...new Array]
+          this.ObjectTemp = ['List','Link']
+        }else if(this.ParentSelect.Object == "List") {
+          this.ObjectTemp = ['Page']
+        }else{
+          //do nothing
+        }
+      }
     },
 
     DialogUserMenu (val) {
@@ -352,9 +394,9 @@ import api from "@/services/http";
 				res => {
           console.log(res.data)
           let tes = []
-          for (let index = 0; index < res.data.length; index++) {
-            const element = res.data[index];
-            element.enabled = !!parseInt(res.data[index].Visible);
+          for (let index = 0; index < res.data.Menu.length; index++) {
+            const element = res.data.Menu[index];
+            element.enabled = !!parseInt(res.data.Menu[index].Visible);
             tes.push(element)
           }
           // console.log('tes',tes)
@@ -367,7 +409,7 @@ import api from "@/services/http";
             List.push(element)
           }
           // console.log(List)
-          var home = tes.filter( function(item){return (item.Object == "Home");} );
+          var home = tes.filter( function(item){return (item.Object == "Link" && item.Nama == "Beranda");} );
           let beranda = []
           for (let index = 0; index < home.length; index++) {
             const element = home[index];
@@ -444,7 +486,7 @@ import api from "@/services/http";
       Simpan(){
         if(this.formTitleUserMenu === "Tambah User Menu"){
           api.post('/addmenu?token='+this.token,{
-            Parent: this.editedItem.Parent,
+            Parent: this.ParentSelect.KodeMenu,
             Nama: this.editedItem.Nama,
             Object: this.editedItem.Object,
             UserMenu: this.JabatanSelect,
@@ -469,6 +511,7 @@ import api from "@/services/http";
         this.DialogUserMenu = false
         this.$nextTick(() => {
           this.editedItem = Object.assign({}, this.defaultItem)
+          this.ParentSelect = null
           this.editedIndex = -1
         })
       },
