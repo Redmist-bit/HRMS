@@ -48,9 +48,58 @@
             color="dark"
           >
             <v-toolbar-title>
-              Tabel Data Karyawan
+              Data Karyawan
             </v-toolbar-title>
             <v-spacer></v-spacer>
+
+            <div class="text-center mx-2">
+              <v-menu
+                v-model="MenuExport"
+                :close-on-content-click="false"
+                :nudge-width="1"
+                offset-y
+              >
+                <template v-slot:activator="{ on, attrs }">
+                  <v-btn
+                    text
+                    v-bind="attrs"
+                    v-on="on"
+                    class="text-capitalize rounded-lg"
+                  >
+                    <v-icon class="mr-1">mdi-table-arrow-right</v-icon>
+                    Export Data
+                  </v-btn>
+                </template>
+
+                <v-card outlined height="100" class="rounded-lg">
+                  <v-list dense>
+                    <!-- PDF -->
+                    <v-list-item>
+                      <v-btn
+                        block
+                        small
+                        depressed
+                        class="text-capitalize rounded-lg"
+                      >
+                        PDF
+                      </v-btn>
+                    </v-list-item>
+
+                    <!-- EXCEL -->
+                    <v-list-item>
+                      <v-btn
+                        block
+                        small
+                        depressed
+                        class="text-capitalize rounded-lg"
+                      >
+                        EXCEL
+                      </v-btn>
+                    </v-list-item>
+                  </v-list>
+                </v-card>
+              </v-menu>
+            </div>
 
             <!-- Dialog Tambah Karyawan -->
             <v-dialog
@@ -62,11 +111,11 @@
             >
               <template v-slot:activator="{ on, attrs }">
                 <v-btn
-                  class="text-capitalize mx-n2"
+                  class="text-capitalize mx-n2 rounded-lg"
                   color="dark"
                   v-bind="attrs"
                   v-on="on"
-                  depressed 
+                  text
                 >
                   <v-icon class="mr-1">mdi-plus</v-icon>
                   Tambah
@@ -660,6 +709,8 @@ Vue.use(GridPlugin);
 export default {
   data() {
     return {
+      MenuExport: false,
+
       commands: [
         {
           buttonOption: { cssClass: "e-flat Edit", iconCss: "e-edit e-icons"}
