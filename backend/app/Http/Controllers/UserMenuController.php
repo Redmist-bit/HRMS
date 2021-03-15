@@ -35,6 +35,18 @@ class UserMenuController extends Controller
         $distnct = UserMenu::distinct()->get(['Object']);
         return response()->json(["Menu"=>$menu,"Object"=>$distnct]);
     }
+    public function hapusMenu($id,$kode)
+    {
+        $x = $id;
+        $x.= '/';
+        $x.= $kode;
+        $del = DB::delete('delete from usermenus where KodeMenu = :kd',['kd'=>$x]);
+        if ($del == 1) {
+            return response()->json([
+                "status"=>'success',
+            ],200);
+        }
+    }
     public function updatemenu(Request $request, $id,$kode)
     {
         $x = $id ;

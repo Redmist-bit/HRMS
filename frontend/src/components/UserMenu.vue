@@ -259,7 +259,7 @@
                 </v-list-item-content>
 
                 <!-- Btn Delete -->
-                <v-btn fab text small>
+                <v-btn fab text small @click="hpsBeranda(item)">
                   <v-icon>mdi-delete</v-icon>
                 </v-btn>
               </template>
@@ -281,7 +281,7 @@
               </v-list-item-content>
 
               <!-- Btn Delete -->
-              <v-btn fab text small>
+              <v-btn fab text small @click="hpsGrup(item)">
                 <v-icon>mdi-delete</v-icon>
               </v-btn>
             </template>
@@ -301,7 +301,7 @@
                 </v-list-item-content>
                 
                 <!-- Btn Delete -->
-                <v-btn fab text small>
+                <v-btn fab text small @click="hpsChild(child)">
                   <v-icon>mdi-delete</v-icon>
                 </v-btn>
               </template>
@@ -487,6 +487,60 @@ import api from "@/services/http";
 						
 					})
       },
+      hpsBeranda(item){
+       var r = confirm("Yakin Hapus Menu "+item.Nama+" ?");
+        if (r == true) { 
+          api
+            .delete("/menu/"+item.KodeMenu+'?token='+this.token)
+            .then((res) =>{
+              if (res) {
+                this.tampilkanMenu()
+              }else{
+                //do nothing
+              }
+              
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+        }
+      },
+      hpsGrup(item){
+       var r = confirm("Yakin Hapus Menu "+item.Nama+" ?");
+        if (r == true) { 
+          api
+            .delete("/menu/"+item.KodeMenu+'?token='+this.token)
+            .then((res) =>{
+              if (res) {
+                this.tampilkanMenu()
+              }else{
+                //do nothing
+              }
+              
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+        }
+      },
+      hpsChild(child){
+       var r = confirm("Yakin Hapus Menu "+child.Nama+" ?");
+        if (r == true) { 
+          api
+            .delete("/menu/"+child.KodeMenu+'?token='+this.token)
+            .then((res) =>{
+              if (res) {
+                this.tampilkanMenu()
+              }else{
+                //do nothing
+              }
+              
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+        }
+      },
       getJabatan(){
         api.get('/list?token='+this.token).then(
 				res => {
@@ -516,7 +570,7 @@ import api from "@/services/http";
             })
             .then((res)=>{
               if (res) {
-                //
+                this.tampilkanMenu()
               } else {
                 //
               }
