@@ -61,7 +61,7 @@
                 offset-y
               >
                 <template v-slot:activator="{ on, attrs }">
-                  <!-- Btn Biasa -->
+                  <!-- Btn Export Mode Biasa -->
                   <v-btn
                     v-show="mobile == false"
                     text
@@ -71,19 +71,6 @@
                   >
                     <v-icon class="mr-1">mdi-table-arrow-right</v-icon>
                     Export Data
-                  </v-btn>
-
-                  <!-- Btn Mode Mobile -->
-                  <v-btn
-                    v-show="mobile == true"
-                    v-bind="attrs"
-                    v-on="on"
-                    class="mx-2"
-                    small
-                    text
-                    fab
-                  >
-                    <v-icon>mdi-table-arrow-right</v-icon>
                   </v-btn>
                 </template>
 
@@ -115,6 +102,46 @@
                   </v-list>
                 </v-card>
               </v-menu>
+
+              <!-- Btn Export Dialog Mode Mobile -->
+              <v-dialog
+                v-model="DialogPilihExport"
+                max-width="200"
+              >
+                <template v-slot:activator="{ on, attrs }">
+                  <v-btn
+                    v-show="mobile == true"
+                    v-bind="attrs"
+                    v-on="on"
+                    class="mx-2"
+                    small
+                    text
+                    fab
+                  >
+                    <v-icon>mdi-table-arrow-right</v-icon>
+                  </v-btn>
+                </template>
+                <v-card class="rounded-lg">
+                  <v-toolbar dense>
+                    <v-layout justify-center>
+                      <v-toolbar-title>
+                        Pilih Export File
+                      </v-toolbar-title>
+                    </v-layout>
+                  </v-toolbar>
+                  <v-card class="pa-2">
+                    <v-btn outlined block class="text-capitalize rounded-lg">
+                      Pdf
+                      <v-icon class="ml-1">mdi-adobe-acrobat</v-icon>
+                    </v-btn>
+
+                    <v-btn outlined block class="text-capitalize rounded-lg mt-2">
+                      Excel
+                      <v-icon class="ml-1">mdi-microsoft-excel</v-icon>
+                    </v-btn>
+                  </v-card>
+                </v-card>
+              </v-dialog>
             </div>
 
             <!-- Dialog Tambah Karyawan -->
@@ -739,6 +766,7 @@ export default {
   data() {
     return {
       mobile:null,
+      DialogPilihExport:false,
       windowSize: {x: 0, y: 0},
       MenuExport: false,
 
