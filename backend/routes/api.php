@@ -34,6 +34,7 @@ Route::group(["middleware"=>"auth.jwt"], function(){
     Route::put('updatemenu/{id}/{kode}',[UserMenuController::class,'updatemenu']);
     Route::get("menuselected/{usermenu}", [UserMenuController::class, 'menuselected']); // cek
     Route::post("logout", [AuthController::class, 'logout']);
+    Route::delete('menu/{id}/{kode}',[UserMenuController::class,'hapusMenu']);
     Route::post("addmenu", [UserMenuController::class, 'addMenu']);
 });
 Route::post("login", [AuthController::class, 'login']); // register

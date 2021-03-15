@@ -95,6 +95,7 @@
                         small
                         depressed
                         class="text-capitalize rounded-lg"
+                        @click.native="excelExport"
                       >
                         EXCEL
                       </v-btn>
@@ -661,8 +662,10 @@
           </v-toolbar>
 
           <ejs-grid
+          ref='gridkaryawan'
             height="310"
             gridLines='Both'
+            id="karyawanview"
             :dataSource="DataKaryawan"
             :allowPaging="true"
             :allowSorting='true'
@@ -671,6 +674,7 @@
             :toolbar='toolbarOptions'
             :commandClick="commandClick"
             :pageSettings='pageSettings'
+            :allowExcelExport='true'
           >
             <e-columns>
               <e-column headerText="Aksi" textAlign='Center' width="120" :commands="commands" :lockColumn='true' :customAttributes="customAttributes">
@@ -758,7 +762,7 @@
 </template>
 <script>
 import Vue from "vue";
-import { GridPlugin, Page, Sort, Group, Resize, Toolbar, Search,CommandColumn } from "@syncfusion/ej2-vue-grids";
+import { GridPlugin, Page, Sort, Group, Resize, Toolbar, Search,CommandColumn,ExcelExport  } from "@syncfusion/ej2-vue-grids";
 import api from "@/services/http";
 Vue.use(GridPlugin);
 
@@ -769,7 +773,6 @@ export default {
       DialogPilihExport:false,
       windowSize: {x: 0, y: 0},
       MenuExport: false,
-
       commands: [
         {
           buttonOption: { cssClass: "e-flat Edit", iconCss: "e-edit e-icons"}
@@ -871,7 +874,7 @@ export default {
   
 
   provide: {
-    grid: [Page, Sort, Group, Resize, Toolbar, CommandColumn, Search]
+    grid: [Page, Sort, Group, Resize, Toolbar, CommandColumn, Search,ExcelExport]
   },
 
   mounted(){
@@ -1207,6 +1210,13 @@ export default {
       // const file = selectedFiles[0];
       // this.foto = URL.createObjectURL(file);
       // console.log('awowowo',this.FotoKaryawan);
+    },
+    excelExport(){
+      this.$refs.gridkaryawan.excelExport();
+      console.log(this.$refs.gridkaryawan)
+      // let data = document.getElementById('karyawanview').ej2_instances[0];
+      // console.log(data)
+      // data.excelExport();
     },
 
     KeluarDialogKaryawan () {
