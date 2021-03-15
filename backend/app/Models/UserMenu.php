@@ -9,7 +9,6 @@ class UserMenu extends Model
 {
     use HasFactory;
     protected $table = 'usermenus';
-    protected $primaryKey = 'Kode';
     const CREATED_AT = 'DiBuatTgl';
     const UPDATED_AT = 'DiubahTgl';
 

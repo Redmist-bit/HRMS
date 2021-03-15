@@ -5,6 +5,8 @@
         <v-autocomplete
           dense
           color="dark"
+          v-model="JabatanSelect"
+          :items="Jabatan"
           label="Jabatan"
         >
         </v-autocomplete>
@@ -15,7 +17,7 @@
           dark
           color="red darken-4 mx-4"
           class="text-capitalize"
-          
+          @click="tampilkanMenu"
         >
           Tampilkan Menu
         </v-btn>
@@ -46,6 +48,7 @@
             v-bind="attrs"
             v-on="on"
             depressed 
+            v-show="JabatanSelect"
           >
             <v-icon class="mr-1">mdi-plus</v-icon>
             Tambah
@@ -83,17 +86,8 @@
           <v-card-text>
             <v-container class="mt-4">
               <v-row>             
-                <v-col cols="12" sm="6" md="6">
-                  <v-text-field
-                    dense
-                    clearable
-                    label="No"
-                    color="dark"
-                    v-model="editedItem.no"
-                  ></v-text-field>
-                </v-col>
 
-                <v-col cols="12" sm="6" md="6">
+                <!-- <v-col cols="12" sm="6" md="6">
                   <v-text-field
                     dense
                     clearable
@@ -101,7 +95,7 @@
                     color="dark"
                     v-model="editedItem.KodeMenu"
                   ></v-text-field>
-                </v-col>
+                </v-col> -->
 
                 <v-col cols="12" sm="6" md="6">
                   <v-text-field
@@ -133,7 +127,7 @@
                   ></v-text-field>
                 </v-col>
 
-                <v-col cols="12" sm="6" md="6">
+                <!-- <v-col cols="12" sm="6" md="6">
                   <v-text-field
                     dense
                     clearable
@@ -141,7 +135,7 @@
                     color="dark"
                     v-model="editedItem.UserMenu"
                   ></v-text-field>
-                </v-col>
+                </v-col> -->
 
                 <v-col cols="12" sm="6" md="6">
                   <v-text-field
@@ -209,11 +203,11 @@
             >
               <template v-slot:default="{ active }">
                 <v-list-item-action>
-                  <v-checkbox :input-value="active"></v-checkbox>
+                  <v-checkbox v-on:change="toggleBeranda(item)" v-bind:checked="item.enabled" :input-value="active" v-model="item.enabled"></v-checkbox>
                 </v-list-item-action>
 
                 <v-list-item-content>
-                  <v-list-item-title v-text="item.text"></v-list-item-title>
+                  <v-list-item-title v-text="item.Nama"></v-list-item-title>
                 </v-list-item-content>
               </template>
             </v-list-item>
@@ -221,31 +215,31 @@
 
           <v-list-group
             v-for="item in Master"
-            :key="item.title"
+            :key="item.Nama"
             
             no-action
           >
             <template v-slot:activator>
               <v-list-item-action>
-                <v-checkbox></v-checkbox>
+                <v-checkbox v-on:change="toggleGrup(item)" v-bind:checked="item.enabled" v-model="item.enabled"></v-checkbox>
               </v-list-item-action>
               <v-list-item-content>
-                <v-list-item-title v-text="item.title"></v-list-item-title>
+                <v-list-item-title v-text="item.Nama"></v-list-item-title>
               </v-list-item-content>
             </template>
 
             <v-list-item
-              v-for="child in item.items"
-              :key="child.title"
+              v-for="(child,i) in item.items"
+              :key="child.Nama"
               link
             >
               <template v-slot:default="{ active }">
                 <v-list-item-action>
-                  <v-checkbox :input-value="active"></v-checkbox>
+                  <v-checkbox v-on:change="toggleChild(child,i)" v-bind:checked="child.enabled" v-model="child.enabled" :input-value="active"></v-checkbox>
                 </v-list-item-action>
 
                 <v-list-item-content>
-                  <v-list-item-title v-text="child.title"></v-list-item-title>
+                  <v-list-item-title v-text="child.Nama"></v-list-item-title>
                 </v-list-item-content>
               </template>
             </v-list-item>
@@ -257,12 +251,15 @@
 </template>
 
 <script>
+import api from "@/services/http";
   export default {
     data: () => ({
       DialogUserMenu: false,
       editedIndex: -1,
+      token:null,
+      JabatanSelect:null,
+      resMenu:[],
       defaultItem: {
-        no: "",
         KodeMenu: "",
         Parent: "",
         Nama: "",
@@ -273,7 +270,6 @@
         
       },
       editedItem: {
-        no: "",
         KodeMenu: "",
         Parent: "",
         Nama: "",
@@ -283,25 +279,26 @@
         Icon: ""
         
       },
+      Jabatan:[],
       Beranda: [
-        { text: 'Beranda', icon: 'mdi-home' },
+        // { Nama: 'Beranda'},
       ],
 
       Master: [
-        {
-          action: 'mdi-database',
-          items: [
-            { title: 'Karyawan' },
-            { title: 'UserMenu' }
+        // {
+        //   items: [
+        //     { Nama: 'Karyawan' },
+        //     { Nama: 'UserMenu' }
 
-          ],
-          title: 'Master',
-        },
+        //   ],
+        //   Nama: 'Master',
+        // },
       ],
     }),
 
     mounted(){
-
+      this.token = localStorage.getItem('token')
+      this.getJabatan()
     },
 
     computed: {
@@ -321,9 +318,117 @@
     },
 
     methods: {
+      tampilkanMenu(){
+        api.get('/menuselected/'+this.JabatanSelect+'?token='+this.token).then(
+				res => {
+          console.log(res.data)
+          let tes = []
+          for (let index = 0; index < res.data.length; index++) {
+            const element = res.data[index];
+            element.enabled = !!parseInt(res.data[index].Visible);
+            tes.push(element)
+          }
+          // console.log('tes',tes)
+          var id = tes.filter( function(item){return (item.Parent == null && item.Object == "List");} );
+          console.log('id',id)
+          let List = []
+          for (let index = 0; index < id.length; index++) {
+            const element = id[index];
+            element.items = tes.filter( function(item){return (item.Parent == id[index].KodeMenu);} );
+            List.push(element)
+          }
+          // console.log(List)
+          var home = tes.filter( function(item){return (item.Object == "Home");} );
+          let beranda = []
+          for (let index = 0; index < home.length; index++) {
+            const element = home[index];
+            beranda.push(element)
+          }
+          // // console.log('akwowk',List)
+          // // this.List = List
+          this.Beranda = beranda
+          this.Master = List
+          this.resMenu = res.data
+				},
+				err => {
+					console.log(err);
+				}
+			)
+      },
+      toggleBeranda(item){
+        item.enabled = !!item.enabled
+        item.Visible = item.enabled*1
+        api.put("/updatemenu/" +item.KodeMenu+'?token='+this.token,{
+            Visible: item.Visible,
+					})
+					.then((res) => {
+						if (!res) {
+							//do nothing
+						}else{
+              // this.getdata()
+						}
+						
+					})
+        console.log(this.Beranda)
+      },
+      toggleGrup(item){
+        item.enabled = !!item.enabled
+        item.Visible = item.enabled*1
+        api.put("/updatemenu/" +item.KodeMenu+'?token='+this.token,{
+            Visible: item.Visible,
+					})
+					.then((res) => {
+						if (!res) {
+							//do nothing
+						}else{
+              // this.getdata()
+						}
+						
+					})
+      },
+      toggleChild(child){
+        child.enabled = !!child.enabled
+        child.Visible = child.enabled*1
+        api.put("/updatemenu/" +child.KodeMenu+'?token='+this.token,{
+            Visible: child.Visible,
+					})
+					.then((res) => {
+						if (!res) {
+							//do nothing
+						}else{
+              // this.getdata()
+						}
+						
+					})
+      },
+      getJabatan(){
+        api.get('/list?token='+this.token).then(
+				res => {
+          console.log(res.data)
+          this.Jabatan = res.data
+				},
+				err => {
+					console.log(err);
+				}
+			)
+      },
       Simpan(){
         if(this.formTitleUserMenu === "Tambah User Menu"){
-          // this.TambahData()
+          api.post('/addmenu?token='+this.token,{
+            Parent: this.editedItem.Parent,
+            Nama: this.editedItem.Nama,
+            Object: this.editedItem.Object,
+            UserMenu: this.JabatanSelect,
+            Visible: this.editedItem.Visible,
+            Icon: this.editedItem.Icon
+            })
+            .then((res)=>{
+              if (res) {
+                //
+              } else {
+                //
+              }
+            })
         }
         else{
           // this.UpdateData()

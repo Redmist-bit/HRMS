@@ -402,12 +402,12 @@ import api from "@/services/http";
             element.title = res.data[index].Nama;
             element.action = res.data[index].Icon;
             element.icon = res.data[index].action
-            element.link = res.data[index].Object
+            element.link = res.data[index].Nama
 
             tes.push(element)
           }
           // console.log('tes',tes)
-          var id = tes.filter( function(item){return (item.Parent == null);} );
+          var id = tes.filter( function(item){return (item.Parent == null && item.Object == "List");} );
           console.log('id',id)
           let List = []
           for (let index = 0; index < id.length; index++) {
@@ -416,7 +416,7 @@ import api from "@/services/http";
             List.push(element)
           }
           // console.log(List)
-          var home = tes.filter( function(item){return (item.Parent == "BtnHome" && item.Object == "BtnHome");} );
+          var home = tes.filter( function(item){return (item.Object == "Home");} );
           let beranda = []
           for (let index = 0; index < home.length; index++) {
             const element = home[index];

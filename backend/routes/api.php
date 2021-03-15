@@ -30,7 +30,11 @@ Route::group(["middleware"=>"auth.jwt"], function(){
     Route::delete('karyawan/{id}/{kode}',[KaryawanController::class,'destroy']);
     Route::post("karyawanFoto/{id}/{kode}", [KaryawanController::class, 'uploadFotoKaryawan']);
     Route::get("menu", [UserMenuController::class, 'menu']); // cek
+    Route::get("list", [UserMenuController::class, 'list']); // cek
+    Route::put('updatemenu/{id}/{kode}',[UserMenuController::class,'updatemenu']);
+    Route::get("menuselected/{usermenu}", [UserMenuController::class, 'menuselected']); // cek
     Route::post("logout", [AuthController::class, 'logout']);
+    Route::post("addmenu", [UserMenuController::class, 'addMenu']);
 });
 Route::post("login", [AuthController::class, 'login']); // register
 Route::post("register", [AuthController::class, 'register']); // register
