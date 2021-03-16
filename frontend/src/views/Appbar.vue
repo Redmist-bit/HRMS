@@ -324,7 +324,7 @@
     <v-bottom-sheet v-model="sheet">
       <v-sheet
         class="text-center"
-        max-height="200px"
+        max-height="280px"
       >
         <v-btn
           fab
@@ -332,7 +332,7 @@
           small
           color="red"
           @click="sheet = !sheet"
-          class="mt-2"
+          class="mt-3 my-2"
         >
           <v-icon>mdi-close-circle-outline</v-icon>
         </v-btn>
@@ -346,7 +346,7 @@
               height="50"
               to="/Login"
               color="red darken-4"
-              class="text-capitalize rounded-lg mt-n3"
+              class="text-capitalize rounded-lg"
             >
               <v-icon class="mr-1">mdi-login-variant</v-icon>
               Masuk
@@ -354,7 +354,7 @@
           </v-list-item>
 
           <!-- Register Mode Mobile -->
-          <v-list-item>
+          <v-list-item class="mt-5">
             <v-btn
               block
               outlined
@@ -362,7 +362,7 @@
               height="50"
               to="/Register"
               color="dark"
-              class="text-capitalize rounded-lg"
+              class="text-capitalize rounded-lg mt-n4"
             >
               <v-icon class="mr-1">mdi-account-plus-outline</v-icon>
               Daftar Akun
@@ -378,7 +378,7 @@
               depressed
               height="50"
               color="red darken-4"
-              class="text-capitalize rounded-lg title"
+              class="text-capitalize rounded-lg title mt-n4"
               @click="logout"
             >
               Keluar
