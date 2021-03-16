@@ -23,7 +23,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 Route::group(["middleware"=>"auth.jwt"], function(){
     Route::get("karyawan", [KaryawanController::class, 'index']);
-    Route::post("saya", [AuthController::class, 'saya']); // cek
+    Route::get("saya", [AuthController::class, 'saya']); // cek
     Route::post("karyawan", [KaryawanController::class, 'store']);
     Route::get('karyawan/{id}/{kode}',[KaryawanController::class,'show']);
     Route::put('karyawan/{id}/{kode}',[KaryawanController::class,'update']);

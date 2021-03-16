@@ -456,6 +456,9 @@ import api from "@/services/http";
 
     },
     watch: {
+      $route(){
+        this.saya()
+      },
       windowSize(){
         if (this.windowSize.x < 450) {
           this.titleClass = "d-none"
@@ -477,6 +480,19 @@ import api from "@/services/http";
         }else{
           this.$router.push("/")
         }
+      },
+      saya(){
+        api.get('/saya',{ headers: {"Authorization" : `Bearer ${this.token}`} }).then(
+        res=>{
+          if (res) {
+            //do noting
+          }
+        }).catch(err=>{
+          // alert(err)
+          if (err == "Error: Request failed with status code 401" && this.$route.path != "/login") {
+            this.logout()
+          }
+        })
       },
       menu(){
       // console.log()

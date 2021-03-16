@@ -1,6 +1,15 @@
 <template>
   <div id="app">
-    <v-col>
+    <v-overlay :value="loading">
+      <v-progress-circular
+        indeterminate
+        size="64"
+      ></v-progress-circular>
+    </v-overlay>
+    <v-alert type="error" v-show="this.valid == false">
+      Kamu Tidak punya Akses Ke halaman ini
+    </v-alert>
+    <v-col v-show="this.valid == true">
       <!-- Alert Data Tersimpan -->
       <v-alert style="position:fixed;z-index:2;right:20px;"
         dismissible
@@ -83,6 +92,7 @@
                         small
                         depressed
                         class="text-capitalize rounded-lg"
+                        @click.native="PdfExport"
                       >
                         PDF
                       </v-btn>
@@ -131,12 +141,12 @@
                     </v-layout>
                   </v-toolbar>
                   <v-card class="pa-2">
-                    <v-btn outlined block class="text-capitalize rounded-lg">
+                    <v-btn outlined block class="text-capitalize rounded-lg" @click.native="PdfExport">
                       Pdf
                       <v-icon class="ml-1">mdi-adobe-acrobat</v-icon>
                     </v-btn>
 
-                    <v-btn outlined block class="text-capitalize rounded-lg mt-2">
+                    <v-btn outlined block class="text-capitalize rounded-lg mt-2" @click.native="excelExport">
                       Excel
                       <v-icon class="ml-1">mdi-microsoft-excel</v-icon>
                     </v-btn>
@@ -675,6 +685,7 @@
             :commandClick="commandClick"
             :pageSettings='pageSettings'
             :allowExcelExport='true'
+            :allowPdfExport='true'
           >
             <e-columns>
               <e-column headerText="Aksi" textAlign='Center' width="120" :commands="commands" :lockColumn='true' :customAttributes="customAttributes">
@@ -762,7 +773,7 @@
 </template>
 <script>
 import Vue from "vue";
-import { GridPlugin, Page, Sort, Group, Resize, Toolbar, Search,CommandColumn,ExcelExport  } from "@syncfusion/ej2-vue-grids";
+import { GridPlugin, Page, Sort, Group, Resize, Toolbar, Search,CommandColumn,ExcelExport,PdfExport } from "@syncfusion/ej2-vue-grids";
 import api from "@/services/http";
 Vue.use(GridPlugin);
 
@@ -770,6 +781,8 @@ export default {
   data() {
     return {
       mobile:null,
+      valid:null,
+      loading:true,
       DialogPilihExport:false,
       windowSize: {x: 0, y: 0},
       MenuExport: false,
@@ -783,6 +796,7 @@ export default {
       ],
       customAttributes : {class: 'customcss'},
       Alert:false,
+      akun:[],
       AlertDataTerhapus:false,
       AlertBerhasilTerubah:false,
       date: new Date().toISOString().substr(0, 10),
@@ -874,12 +888,13 @@ export default {
   
 
   provide: {
-    grid: [Page, Sort, Group, Resize, Toolbar, CommandColumn, Search,ExcelExport]
+    grid: [Page, Sort, Group, Resize, Toolbar, CommandColumn, Search,ExcelExport,PdfExport ]
   },
 
-  mounted(){
-    this.user = JSON.parse(localStorage.getItem('user'))
+ async mounted(){
     this.token = localStorage.getItem('token')
+    this.user = JSON.parse(localStorage.getItem('user'))
+    await Promise.all([this.saya()])
     this.getdata()
     this.editedItem.Tgl_Masuk = this.date
     this.editedItem.Tgl_Lahir = this.date
@@ -953,6 +968,37 @@ export default {
     onResize(){
       this.windowSize = { x: window.innerWidth, y: window.innerHeight }
     },
+  async saya(){
+      await api.get('/menu',{ headers: {"Authorization" : `Bearer ${this.token}`} }).then(
+        res=>{
+          if (res) {
+            this.akun = res.data
+            console.log('menu',this.akun)
+            //do noting
+          }
+        }).catch(err=>{
+          // alert(err)
+          if (err == "Error: Request failed with status code 401" && this.$route.path != "/login") {
+            this.logout()
+          }
+        })
+         if (this.akun.length == 0) {
+            //do nothing
+          }else{
+            let route = this.$route.name
+            let a = this.akun.filter( function(item){return (item.Nama == route);} );
+            if (a.length > 0) {
+               this.valid = true
+            }else{
+              this.valid = false
+              this.loading = false
+            }
+            console.log(a)
+          }
+      },
+      // cekmenu(){
+        
+      // },
 
     Simpan(){
       if(this.formTitleKaryawan === "Tambah Karyawan Baru"){
@@ -990,8 +1036,8 @@ export default {
           this.form.append('DiubahOleh', this.user.Kode); 
           this.Alert = true
           console.log(this.form)
-          const config = { headers: { 'Content-Type': 'multipart/form-data' } };
-          api.post("/karyawan?token="+this.token,this.form,config 
+          const config = { headers: { 'Content-Type': 'multipart/form-data',"Authorization" : `Bearer ${this.token}` } };
+          api.post("/karyawan",this.form,config 
           // Nama: this.editedItem.Nama,
           // Nrk: this.editedItem.Nrk,
           // Kode_Jabatan: this.editedItem.Kode_Jabatan,
@@ -1036,7 +1082,7 @@ export default {
                     console.log(JSON.stringify(error))
                 })
       }else if(this.formTitleKaryawan === "Ubah Data Karyawan"){
-         api.put("/karyawan/" +this.KodeKaryawan+'?token='+this.token,{
+         api.put("/karyawan/"+this.KodeKaryawan,{
             Nama: this.editedItem.Nama,
             Nrk: this.editedItem.Nrk,
             Kode_Jabatan: this.editedItem.Kode_Jabatan,
@@ -1067,7 +1113,8 @@ export default {
             Keterangan: this.editedItem.Keterangan,
             Nama_Istri_Suami: this.editedItem.Nama_Istri_Suami,
             DiubahOleh: this.user.Kode
-					})
+					},
+          { headers: {"Authorization" : `Bearer ${this.token}` } })
 					.then((res) => {
 						if (!res) {
 							//do nothing
@@ -1211,6 +1258,23 @@ export default {
       // this.foto = URL.createObjectURL(file);
       // console.log('awowowo',this.FotoKaryawan);
     },
+    PdfExport(){
+      let data = document.getElementById('karyawanview').ej2_instances[0];
+      // console.log(data)
+      data.pdfExportProperties = {
+        pageOrientation: 'Landscape',
+        fileName:"ReportKaryawan.pdf"
+      }
+      data.columns[1].visible = false
+      data.columns[4].visible = false
+      data.columns[3].visible = false
+      // let pdfExportProperties = {
+       
+      // };
+      // this.$refs.gridkaryawan.columns[0].visible = false;
+      // this.$refs.gridkaryawan.columns[1].visible = true;
+      this.$refs.gridkaryawan.pdfExport(data.pdfExportProperties);
+    },
     excelExport(){
       this.$refs.gridkaryawan.excelExport();
       console.log(this.$refs.gridkaryawan)
@@ -1231,11 +1295,16 @@ export default {
       })
     },
 
+    // beforeExport: function(args) {
+      
+    // },
+
     getdata(){
-      api.get('/karyawan?token='+this.token).then(
+      api.get('/karyawan',{ headers: {"Authorization" : `Bearer ${this.token}`} }).then(
 				res => {
 					console.log(res);
           this.DataKaryawan = res.data
+          this.loading = false
 				},
 				err => {
 					console.log(err);
@@ -1248,6 +1317,15 @@ export default {
         this.editedItem = Object.assign({}, this.defaultItem)
       })
     },
+    logout(){
+        api.post('/logout', this.token)
+        .then(res=>{
+          console.log(res)
+        })
+        localStorage.removeItem('token')
+        localStorage.removeItem('user')
+        location.reload(false)
+      },
 
     AlertItem(){
       window.setInterval(() => {
