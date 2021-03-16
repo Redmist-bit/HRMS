@@ -729,7 +729,7 @@
               <e-column field='KETERANGAN' headerText='Keterangan' textAlign='Left' width=150></e-column>
               <e-column field='PHOTO' headerText='Photo' textAlign='Left' width=150></e-column>
               <e-column field='NAMA_ISTRI_SUAMI' headerText='Nama Istri Suami' textAlign='Left' width=150></e-column>
-              <e-column field='DiBuatOleh' headerText='DibuatOleh' textAlign='Left' width=150></e-column>
+              <e-column field='DibuatOleh' headerText='DibuatOleh' textAlign='Left' width=150></e-column>
               <e-column field='DibuatTgl' headerText='DibuatTgl' textAlign='Left' width=150></e-column>
               <e-column field='DiubahOleh' headerText='DiubahOleh' textAlign='Left' width=150></e-column>
               <e-column field='DiubahTgl' headerText='DiubahTgl' textAlign='Left' width=150></e-column>
