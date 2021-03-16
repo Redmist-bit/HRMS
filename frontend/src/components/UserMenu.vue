@@ -1,64 +1,58 @@
 <template>
-  <div class="pa-3 mt-1">
-    <v-card outlined class="rounded-lg">
-      <v-card-text class="mt-3">
-        <v-row dense> 
-          
-
-          
-        </v-row>
-      </v-card-text>
-    </v-card>
-  
-  <!-- Card User Menu Depan -->
-  <div class="mt-3">
-    <v-card
-      outlined
-      class="mx-auto rounded-lg"
-      max-width="500"
-    >
-      <v-row class="pa-3">
-        <v-col cols="12" sm="12" md="7">
-          <v-autocomplete
-            solo
-            flat
-            dense
-            outlined
-            color="dark"
-            class="rounded-lg"
-            v-model="JabatanSelect"
-            :items="Jabatan"
-            label="Jabatan"
-          >
-          </v-autocomplete>
-        </v-col>
-
-        <v-col cols="6" sm="12" md="5">
+  <div class="pa-3">
+    <!-- Card User Menu Depan -->
+    <div>
+      <v-card
+        outlined
+        class="mx-auto rounded-lg elevation-15"
+        max-width="470"
+      >
+        <v-toolbar flat dense color="dark">
+          <span class="font-weight-bold">Pilih Jabatan</span>
+        </v-toolbar>
+        <v-divider></v-divider>
+        
+        <div class="pa-3">
           <div>
+            <v-autocomplete
+              solo
+              flat
+              dense
+              outlined
+              color="red darken-4"
+              class="rounded-lg font-weight-bold"
+              v-model="JabatanSelect"
+              :items="Jabatan"
+              label="Pilih Jabatan--"
+            >
+            </v-autocomplete>
+          </div>
+
+          <div class="mt-n3">
             <v-btn
               dark
               block
               depressed
               color="red darken-4"
-              class="text-capitalize"
+              class="text-capitalize rounded-lg"
               @click="tampilkanMenu"
             >
-              Tampilkan
+              Tampilkan Menu
+              <v-icon class="ml-1">mdi-format-list-checkbox</v-icon>
             </v-btn>
           </div>
-        </v-col>
-      </v-row>
-    </v-card>
-  </div>
+        </div>
+      </v-card>
+    </div>
 
     <div class="mt-3">
       <v-card
         outlined
-        class="mx-auto rounded-lg"
-        max-width="500"
+        class="mx-auto rounded-lg elevation-15"
+        max-width="470"
       >
         <v-toolbar flat dense color="dark">
-          <span>User Menu</span>
+          <span class="font-weight-bold">User Menu</span>
           <v-spacer></v-spacer>
 
           <v-dialog
@@ -69,14 +63,14 @@
           >
             <template v-slot:activator="{ on, attrs }">
               <v-btn
-                class="text-capitalize mx-n3"
+                text
+                class="text-capitalize mx-n3 rounded-lg"
                 color="dark"
                 v-bind="attrs"
                 v-on="on"
-                depressed 
                 v-show="JabatanSelect"
               >
-                <v-icon class="mr-1">mdi-plus</v-icon>
+                <v-icon class="mr-1">mdi-plus-thick</v-icon>
                 Tambah
               </v-btn>
             </template>
@@ -88,16 +82,6 @@
                   <span class="headline">{{ formTitleUserMenu }}</span>
                 </v-toolbar-title>
                 <v-spacer></v-spacer>
-                <v-btn
-                  fab
-                  text
-                  small
-                  color="dark"
-                  class="text-capitalize"
-                  @click="Reset"
-                >
-                  <v-icon class="mr-1">mdi-refresh</v-icon>
-                </v-btn>
                 <v-btn
                   fab
                   text
@@ -218,13 +202,14 @@
               <v-card-actions>
               <v-spacer></v-spacer>
                 <v-btn
-                  dark
-                  color="red darken-4 mx-4"
-                  class="text-capitalize"
+                  fab
+                  text
+                  small
+                  color="dark"
+                  class="text-capitalize mx-3"
                   @click="Reset"
                 >
-                  <v-icon class="mr-1">mdi-refresh</v-icon>
-                  Refresh
+                  <v-icon>mdi-refresh</v-icon>
                 </v-btn>
                 <v-btn
                   dark
@@ -238,10 +223,9 @@
               </v-card-actions>
             </v-card>
           </v-dialog>
-        
         </v-toolbar>
         <v-divider></v-divider>
-        <v-list flat dense nav>
+        <v-list flat dense>
           <v-list-item-group
             color="dark"
           >
@@ -259,9 +243,11 @@
                 </v-list-item-content>
 
                 <!-- Btn Delete -->
-                <v-btn fab text small @click="hpsBeranda(item)">
-                  <v-icon>mdi-delete</v-icon>
-                </v-btn>
+                <div class="mx-n2">
+                  <v-btn fab text small @click="hpsBeranda(item)">
+                    <v-icon color="red lighten-1">mdi-delete-outline</v-icon>
+                  </v-btn>
+                </div>
               </template>
             </v-list-item>
           </v-list-item-group>
@@ -281,9 +267,11 @@
               </v-list-item-content>
 
               <!-- Btn Delete -->
-              <v-btn fab text small @click="hpsGrup(item)">
-                <v-icon>mdi-delete</v-icon>
-              </v-btn>
+              <div class="mx-n9">
+                <v-btn fab text small @click="hpsGrup(item)">
+                  <v-icon color="red lighten-1">mdi-delete-outline</v-icon>
+                </v-btn>
+              </div>
             </template>
 
             <v-list-item
@@ -301,9 +289,11 @@
                 </v-list-item-content>
                 
                 <!-- Btn Delete -->
-                <v-btn fab text small @click="hpsChild(child)">
-                  <v-icon>mdi-delete</v-icon>
-                </v-btn>
+                <div class="mx-n2">
+                  <v-btn fab text small @click="hpsChild(child)">
+                    <v-icon color="red lighten-1">mdi-delete-outline</v-icon>
+                  </v-btn>
+                </div>
               </template>
             </v-list-item>
           </v-list-group>

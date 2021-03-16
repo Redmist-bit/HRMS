@@ -3,6 +3,7 @@
     <!-- Appbar -->
     <v-app-bar
       app
+      v-resize="onResize"
     >
       <!-- Button Drawer Menu -->
       <v-btn
@@ -71,6 +72,18 @@
       </v-col> -->
 
       <v-divider inset vertical class="mr-1"></v-divider>
+      <!-- Button Akun Mode Mobile -->
+      <div class="text-center">
+        <v-btn
+          fab
+          text
+          small
+          v-show="mobile == true"
+          @click="sheet = !sheet"
+        >
+          <v-icon>mdi-account-circle</v-icon>
+        </v-btn>
+      </div>
 
       <!-- Button Akun -->
       <div class="text-center">
@@ -84,7 +97,7 @@
             <v-btn
               fab
               text
-              
+              v-show="mobile == false"
               small
               v-bind="attrs"
               v-on="on"
@@ -308,7 +321,74 @@
       <v-divider></v-divider>
     </v-navigation-drawer>
 
-    
+    <v-bottom-sheet v-model="sheet">
+      <v-sheet
+        class="text-center"
+        max-height="200px"
+      >
+        <v-btn
+          fab
+          text
+          small
+          color="red"
+          @click="sheet = !sheet"
+          class="mt-2"
+        >
+          <v-icon>mdi-close-circle-outline</v-icon>
+        </v-btn>
+        <v-list class="rounded-lg" v-show="this.token == null">
+          <!-- Login Mode Mobile -->
+          <v-list-item>
+            <v-btn
+              dark
+              block
+              depressed
+              height="50"
+              to="/Login"
+              color="red darken-4"
+              class="text-capitalize rounded-lg mt-n3"
+            >
+              <v-icon class="mr-1">mdi-login-variant</v-icon>
+              Masuk
+            </v-btn>
+          </v-list-item>
+
+          <!-- Register Mode Mobile -->
+          <v-list-item>
+            <v-btn
+              block
+              outlined
+              depressed
+              height="50"
+              to="/Register"
+              color="dark"
+              class="text-capitalize rounded-lg"
+            >
+              <v-icon class="mr-1">mdi-account-plus-outline</v-icon>
+              Daftar Akun
+            </v-btn>
+          </v-list-item>
+        </v-list>
+        <v-list class="rounded-lg" v-show="this.token !=null">
+          <!-- Logout Mode Mobile -->
+          <v-list-item>
+            <v-btn
+              dark
+              block
+              depressed
+              height="50"
+              color="red darken-4"
+              class="text-capitalize rounded-lg title"
+              @click="logout"
+            >
+              Keluar
+              <v-icon class="ml-1">mdi-logout-variant</v-icon>
+            </v-btn>
+            
+          </v-list-item>
+        </v-list>
+      </v-sheet>
+    </v-bottom-sheet>
   </div>
 </template>
 
@@ -322,6 +402,9 @@ import api from "@/services/http";
 
     data: () => {
       return {
+        mobile:null,
+        windowSize: {x: 0, y: 0},
+        sheet: false,
         drawerNotif: null,
         accountshow: false,
         notifshow: false,
@@ -373,10 +456,21 @@ import api from "@/services/http";
 
     },
     watch: {
-
+      windowSize(){
+        if (this.windowSize.x < 450) {
+          this.titleClass = "d-none"
+          this.mobile = true
+        }else{
+          this.titleClass = "mr-4"
+          this.mobile = false
+        }
+      },
     },
 
     methods: {
+      onResize(){
+        this.windowSize = { x: window.innerWidth, y: window.innerHeight }
+      },
       home(){
         if (this.$router.currentRoute.name == "Home") {
           //do nothing
