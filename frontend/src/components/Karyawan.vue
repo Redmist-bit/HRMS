@@ -267,367 +267,544 @@
                           class="pa-3 rounded-lg"
                         >
                           <div class="mt-3">
-                          <v-row>
-                            <v-col cols="12" sm="6" md="4">
-                              <v-text-field
-                                dense
-                                clearable
-                                label="Nama"
-                                color="dark"
-                                v-model="editedItem.Nama"
-                              ></v-text-field>
-                            </v-col>
+                            <v-row>
+                              <v-col cols="12" sm="6" md="4">
+                                <v-text-field
+                                  dense
+                                  clearable
+                                  label="Nama"
+                                  color="dark"
+                                  v-model="editedItem.Nama"
+                                ></v-text-field>
+                              </v-col>
 
-                            <v-col cols="12" sm="6" md="4">
-                              <v-text-field
-                                dense
-                                clearable
-                                label="NRK"
-                                color="dark"
-                                v-model="editedItem.Nrk"
-                              ></v-text-field>
-                            </v-col>
+                              <v-col cols="12" sm="6" md="4">
+                                <v-text-field
+                                  dense
+                                  clearable
+                                  label="NRK"
+                                  color="dark"
+                                  v-model="editedItem.Nrk"
+                                ></v-text-field>
+                              </v-col>
 
-                            <v-col cols="12" sm="6" md="4">
-                              <v-text-field
-                                dense
-                                label="Kode Jabatan"
-                                color="dark"
-                                v-model="editedItem.Kode_Jabatan"
-                              ></v-text-field>
-                            </v-col>
+                              <v-col cols="12" sm="6" md="4">
+                                <v-text-field
+                                  dense
+                                  label="Kode Jabatan"
+                                  color="dark"
+                                  v-model="editedItem.Kode_Jabatan"
+                                ></v-text-field>
+                              </v-col>
 
-                            <v-col cols="12" sm="6" md="4">
-                              <v-text-field
-                                dense
-                                clearable
-                                label="POH"
-                                color="dark"
-                                v-model="editedItem.Poh"
-                              ></v-text-field>
-                            </v-col>
+                              <v-col cols="12" sm="6" md="4">
+                                <v-text-field
+                                  dense
+                                  clearable
+                                  label="POH"
+                                  color="dark"
+                                  v-model="editedItem.Poh"
+                                ></v-text-field>
+                              </v-col>
 
-                            <v-col cols="12" sm="6" md="4">
-                              <v-menu
-                                v-model="MenuTglMasuk"
-                                :close-on-content-click="false"
-                                :nudge-right="40"
-                                transition="scale-transition"
-                                offset-y
-                                min-width="auto"
-                              >
-                                <template v-slot:activator="{ on, attrs }">
-                                  <v-text-field
+                              <v-col cols="12" sm="6" md="4">
+                                <v-menu
+                                  v-model="MenuTglMasuk"
+                                  :close-on-content-click="false"
+                                  :nudge-right="40"
+                                  transition="scale-transition"
+                                  offset-y
+                                  min-width="auto"
+                                >
+                                  <template v-slot:activator="{ on, attrs }">
+                                    <v-text-field
+                                      v-model="editedItem.Tgl_Masuk"
+                                      label="Tgl Masuk"
+                                      prepend-icon="mdi-calendar"
+                                      color="dark"
+                                      readonly
+                                      dense
+                                      v-bind="attrs"
+                                      v-on="on"
+                                    ></v-text-field>
+                                  </template>
+                                  <v-date-picker
                                     v-model="editedItem.Tgl_Masuk"
-                                    label="Tgl Masuk"
-                                    prepend-icon="mdi-calendar"
-                                    color="dark"
-                                    readonly
-                                    dense
-                                    v-bind="attrs"
-                                    v-on="on"
-                                  ></v-text-field>
-                                </template>
-                                <v-date-picker
-                                  v-model="editedItem.Tgl_Masuk"
-                                  @input="MenuTglMasuk = false"
-                                  year-icon="mdi-calendar-blank"
-                                  color="red darken-4"
-                                  locale="id"
-                                ></v-date-picker>
-                              </v-menu>
-                            </v-col>
+                                    @input="MenuTglMasuk = false"
+                                    year-icon="mdi-calendar-blank"
+                                    color="red darken-4"
+                                    locale="id"
+                                  ></v-date-picker>
+                                </v-menu>
+                              </v-col>
 
-                            <v-col cols="12" sm="6" md="4">
-                              <v-text-field
-                                dense
-                                clearable
-                                label="Tempat Lahir"
-                                color="dark"
-                                v-model="editedItem.Tempat_Lahir"
-                              ></v-text-field>
-                            </v-col>
+                              <v-col cols="12" sm="6" md="4">
+                                <v-text-field
+                                  dense
+                                  clearable
+                                  label="Tempat Lahir"
+                                  color="dark"
+                                  v-model="editedItem.Tempat_Lahir"
+                                ></v-text-field>
+                              </v-col>
 
-                            <v-col cols="12" sm="6" md="4">
-                              <v-menu
-                                v-model="MenuTglLahir"
-                                :close-on-content-click="false"
-                                :nudge-right="40"
-                                transition="scale-transition"
-                                offset-y
-                                min-width="auto"
-                              >
-                                <template v-slot:activator="{ on, attrs }">
-                                  <v-text-field
+                              <v-col cols="12" sm="6" md="4">
+                                <v-menu
+                                  v-model="MenuTglLahir"
+                                  :close-on-content-click="false"
+                                  :nudge-right="40"
+                                  transition="scale-transition"
+                                  offset-y
+                                  min-width="auto"
+                                >
+                                  <template v-slot:activator="{ on, attrs }">
+                                    <v-text-field
+                                      v-model="editedItem.Tgl_Lahir"
+                                      label="Tgl Lahir"
+                                      prepend-icon="mdi-calendar"
+                                      color="dark"
+                                      readonly
+                                      dense
+                                      v-bind="attrs"
+                                      v-on="on"
+                                    ></v-text-field>
+                                  </template>
+                                  <v-date-picker
                                     v-model="editedItem.Tgl_Lahir"
-                                    label="Tgl Lahir"
-                                    prepend-icon="mdi-calendar"
-                                    color="dark"
-                                    readonly
-                                    dense
-                                    v-bind="attrs"
-                                    v-on="on"
-                                  ></v-text-field>
-                                </template>
-                                <v-date-picker
-                                  v-model="editedItem.Tgl_Lahir"
-                                  @input="MenuTglLahir = false"
-                                  year-icon="mdi-calendar-blank"
-                                  color="red darken-4"
-                                  :max="new Date().toISOString().substr(0, 10)"
-                                  min="1950-01-01"
-                                  locale="id"
-                                  ref="picker"
-                                ></v-date-picker>
-                              </v-menu>
-                            </v-col>
+                                    @input="MenuTglLahir = false"
+                                    year-icon="mdi-calendar-blank"
+                                    color="red darken-4"
+                                    :max="new Date().toISOString().substr(0, 10)"
+                                    min="1950-01-01"
+                                    locale="id"
+                                    ref="picker"
+                                  ></v-date-picker>
+                                </v-menu>
+                              </v-col>
 
-                            <v-col cols="12" sm="6" md="4">
-                              <v-text-field
-                                dense
-                                clearable
-                                label="Alamat KTP"
-                                color="dark"
-                                v-model="editedItem.Alamat_Ktp"
-                              ></v-text-field>
-                            </v-col>
+                              <v-col cols="12" sm="6" md="4">
+                                <v-text-field
+                                  dense
+                                  clearable
+                                  label="Alamat KTP"
+                                  color="dark"
+                                  v-model="editedItem.Alamat_Ktp"
+                                ></v-text-field>
+                              </v-col>
 
-                            <v-col cols="12" sm="6" md="4">
-                              <v-text-field
-                                dense
-                                clearable
-                                label="Alamat Sekarang"
-                                color="dark"
-                                v-model="editedItem.Alamat_Sekarang"
-                              ></v-text-field>
-                            </v-col>
+                              <v-col cols="12" sm="6" md="4">
+                                <v-text-field
+                                  dense
+                                  clearable
+                                  label="Alamat Sekarang"
+                                  color="dark"
+                                  v-model="editedItem.Alamat_Sekarang"
+                                ></v-text-field>
+                              </v-col>
 
-                            <v-col cols="12" sm="6" md="4">
-                              <v-text-field
-                                dense
-                                clearable
-                                label="No. Tlp"
-                                color="dark"
-                                v-model="editedItem.No_Tlp"
-                              ></v-text-field>
-                            </v-col>
+                              <v-col cols="12" sm="6" md="4">
+                                <v-text-field
+                                  dense
+                                  clearable
+                                  label="No. Tlp"
+                                  color="dark"
+                                  v-model="editedItem.No_Tlp"
+                                ></v-text-field>
+                              </v-col>
 
-                            <v-col cols="12" sm="6" md="4">
-                              <v-combobox
-                                dense
-                                clearable
-                                :items="['Laki-Laki','Perempuan']"
-                                label="Jenis Kelamin"
-                                color="dark"
-                                v-model="editedItem.Jenis_Kelamin"
-                              ></v-combobox>
-                            </v-col>
+                              <v-col cols="12" sm="6" md="4">
+                                <v-combobox
+                                  dense
+                                  clearable
+                                  :items="['Laki-Laki','Perempuan']"
+                                  label="Jenis Kelamin"
+                                  color="dark"
+                                  v-model="editedItem.Jenis_Kelamin"
+                                ></v-combobox>
+                              </v-col>
 
-                            <v-col cols="12" sm="6" md="4">
-                              <v-combobox
-                                dense
-                                clearable
-                                label="Pendidikan Terakhir"
-                                color="dark"
-                                :items="['SD/Sederajat','SLTP/Sederajat','SLTA/Sederjat','Diploma I/I','Akademi/Diploma III','Strata I','Strata II','Strata III']"
-                                v-model="editedItem.Pendidikan_Terakhir"
-                              ></v-combobox>
-                            </v-col>
+                              <v-col cols="12" sm="6" md="4">
+                                <v-combobox
+                                  dense
+                                  clearable
+                                  label="Pendidikan Terakhir"
+                                  color="dark"
+                                  :items="['SD/Sederajat','SLTP/Sederajat','SLTA/Sederjat','Diploma I/I','Akademi/Diploma III','Strata I','Strata II','Strata III']"
+                                  v-model="editedItem.Pendidikan_Terakhir"
+                                ></v-combobox>
+                              </v-col>
 
-                            <v-col cols="12" sm="6" md="4">
-                              <v-text-field
-                                dense
-                                clearable
-                                label="Jurusan"
-                                color="dark"
-                                v-model="editedItem.Jurusan"
-                              ></v-text-field>
-                            </v-col>
+                              <v-col cols="12" sm="6" md="4">
+                                <v-text-field
+                                  dense
+                                  clearable
+                                  label="Jurusan"
+                                  color="dark"
+                                  v-model="editedItem.Jurusan"
+                                ></v-text-field>
+                              </v-col>
 
-                            <v-col cols="12" sm="6" md="4">
-                              <v-combobox
-                                dense
-                                clearable
-                                :items="['Islam','Protestan','Katolik','Hindu','Buddha','Khonghucu']"
-                                label="Agama"
-                                color="dark"
-                                v-model="editedItem.Agama"
-                              ></v-combobox>
-                            </v-col>
+                              <v-col cols="12" sm="6" md="4">
+                                <v-combobox
+                                  dense
+                                  clearable
+                                  :items="['Islam','Protestan','Katolik','Hindu','Buddha','Khonghucu']"
+                                  label="Agama"
+                                  color="dark"
+                                  v-model="editedItem.Agama"
+                                ></v-combobox>
+                              </v-col>
 
-                            <v-col cols="12" sm="6" md="4">
-                              <v-text-field
-                                dense
-                                clearable
-                                label="Suku"
-                                color="dark"
-                                v-model="editedItem.Suku"
-                              ></v-text-field>
-                            </v-col>
+                              <v-col cols="12" sm="6" md="4">
+                                <v-text-field
+                                  dense
+                                  clearable
+                                  label="Suku"
+                                  color="dark"
+                                  v-model="editedItem.Suku"
+                                ></v-text-field>
+                              </v-col>
 
-                            <v-col cols="12" sm="6" md="4">
-                              <v-text-field
-                                dense
-                                clearable
-                                label="No. Rekening Tabungan"
-                                color="dark"
-                                v-model="editedItem.No_Rek_Tabungan"
-                              ></v-text-field>
-                            </v-col>
+                              <v-col cols="12" sm="6" md="4">
+                                <v-text-field
+                                  dense
+                                  clearable
+                                  label="No. Rekening Tabungan"
+                                  color="dark"
+                                  v-model="editedItem.No_Rek_Tabungan"
+                                ></v-text-field>
+                              </v-col>
 
-                            <v-col cols="12" sm="6" md="4">
-                              <v-text-field
-                                dense
-                                clearable
-                                label="No. Kartu BPJS TK"
-                                color="dark"
-                                v-model="editedItem.No_Kartu_Bpjs_Tk"
-                              ></v-text-field>
-                            </v-col>
+                              <v-col cols="12" sm="6" md="4">
+                                <v-text-field
+                                  dense
+                                  clearable
+                                  label="No. Kartu BPJS TK"
+                                  color="dark"
+                                  v-model="editedItem.No_Kartu_Bpjs_Tk"
+                                ></v-text-field>
+                              </v-col>
 
-                            <v-col cols="12" sm="6" md="4">
-                              <v-text-field
-                                dense
-                                clearable
-                                label="No. Kartu BPJS KES"
-                                color="dark"
-                                v-model="editedItem.No_Kartu_Bpjs_Kes"
-                              ></v-text-field>
-                            </v-col>
+                              <v-col cols="12" sm="6" md="4">
+                                <v-text-field
+                                  dense
+                                  clearable
+                                  label="No. Kartu BPJS KES"
+                                  color="dark"
+                                  v-model="editedItem.No_Kartu_Bpjs_Kes"
+                                ></v-text-field>
+                              </v-col>
 
-                            <v-col cols="12" sm="6" md="4">
-                              <v-text-field
-                                dense
-                                clearable
-                                label="No. KTP"
-                                color="dark"
-                                v-model="editedItem.No_Ktp"
-                              ></v-text-field>
-                            </v-col>
+                              <v-col cols="12" sm="6" md="4">
+                                <v-text-field
+                                  dense
+                                  clearable
+                                  label="No. KTP"
+                                  color="dark"
+                                  v-model="editedItem.No_Ktp"
+                                ></v-text-field>
+                              </v-col>
 
-                            <v-col cols="12" sm="6" md="4">
-                              <v-text-field
-                                dense
-                                clearable
-                                label="No. NPWP"
-                                color="dark"
-                                v-model="editedItem.No_Npwp"
-                              ></v-text-field>
-                            </v-col>
+                              <v-col cols="12" sm="6" md="4">
+                                <v-text-field
+                                  dense
+                                  clearable
+                                  label="No. NPWP"
+                                  color="dark"
+                                  v-model="editedItem.No_Npwp"
+                                ></v-text-field>
+                              </v-col>
 
-                            <v-col cols="12" sm="6" md="4">
-                              <v-combobox
-                                dense
-                                clearable
-                                label="Golongan Darah"
-                                color="dark"
-                                :items="['A','B','AB','O']"
-                                v-model="editedItem.Gol_Dr"
-                              ></v-combobox>
-                            </v-col>
+                              <v-col cols="12" sm="6" md="4">
+                                <v-combobox
+                                  dense
+                                  clearable
+                                  label="Golongan Darah"
+                                  color="dark"
+                                  :items="['A','B','AB','O']"
+                                  v-model="editedItem.Gol_Dr"
+                                ></v-combobox>
+                              </v-col>
 
-                            <v-col cols="12" sm="6" md="4">
-                              <v-text-field
-                                dense
-                                clearable
-                                label="Status"
-                                color="dark"
-                                v-model="editedItem.Status"
-                              ></v-text-field>
-                            </v-col>
+                              <v-col cols="12" sm="6" md="4">
+                                <v-text-field
+                                  dense
+                                  clearable
+                                  label="Status"
+                                  color="dark"
+                                  v-model="editedItem.Status"
+                                ></v-text-field>
+                              </v-col>
 
-                            <v-col cols="12" sm="6" md="4">
-                              <v-text-field
-                                dense
-                                clearable
-                                label="Status Kerja"
-                                color="dark"
-                                v-model="editedItem.Status_Kerja"
-                              ></v-text-field>
-                            </v-col>
+                              <v-col cols="12" sm="6" md="4">
+                                <v-text-field
+                                  dense
+                                  clearable
+                                  label="Status Kerja"
+                                  color="dark"
+                                  v-model="editedItem.Status_Kerja"
+                                ></v-text-field>
+                              </v-col>
 
-                            <v-col cols="12" sm="6" md="4">
-                              <v-text-field
-                                dense
-                                clearable
-                                label="Ukuran Baju"
-                                color="dark"
-                                v-model="editedItem.Ukuran_Baju"
-                              ></v-text-field>
-                            </v-col>
+                              <v-col cols="12" sm="6" md="4">
+                                <v-text-field
+                                  dense
+                                  clearable
+                                  label="Ukuran Baju"
+                                  color="dark"
+                                  v-model="editedItem.Ukuran_Baju"
+                                ></v-text-field>
+                              </v-col>
 
-                            <v-col cols="12" sm="6" md="4">
-                              <v-text-field
-                                dense
-                                clearable
-                                label="Ukuran Sepatu"
-                                color="dark"
-                                v-model="editedItem.Ukuran_Sepatu"
-                              ></v-text-field>
-                            </v-col>
+                              <v-col cols="12" sm="6" md="4">
+                                <v-text-field
+                                  dense
+                                  clearable
+                                  label="Ukuran Sepatu"
+                                  color="dark"
+                                  v-model="editedItem.Ukuran_Sepatu"
+                                ></v-text-field>
+                              </v-col>
 
-                            <v-col cols="12" sm="6" md="4">
-                              <v-text-field
-                                dense
-                                clearable
-                                label="PHK"
-                                color="dark"
-                                v-model="editedItem.Phk"
-                              ></v-text-field>
-                            </v-col>
+                              <v-col cols="12" sm="6" md="4">
+                                <v-text-field
+                                  dense
+                                  clearable
+                                  label="PHK"
+                                  color="dark"
+                                  v-model="editedItem.Phk"
+                                ></v-text-field>
+                              </v-col>
 
-                            <v-col cols="12" sm="6" md="4">
-                              <v-menu
-                                v-model="MenuTglPHK"
-                                :close-on-content-click="false"
-                                :nudge-right="40"
-                                transition="scale-transition"
-                                offset-y
-                                min-width="auto"
-                              >
-                                <template v-slot:activator="{ on, attrs }">
-                                  <v-text-field
+                              <v-col cols="12" sm="6" md="4">
+                                <v-menu
+                                  v-model="MenuTglPHK"
+                                  :close-on-content-click="false"
+                                  :nudge-right="40"
+                                  transition="scale-transition"
+                                  offset-y
+                                  min-width="auto"
+                                >
+                                  <template v-slot:activator="{ on, attrs }">
+                                    <v-text-field
+                                      v-model="editedItem.Tgl_Phk"
+                                      label="Tgl PHK"
+                                      prepend-icon="mdi-calendar"
+                                      color="dark"
+                                      readonly
+                                      dense
+                                      v-bind="attrs"
+                                      v-on="on"
+                                    ></v-text-field>
+                                  </template>
+                                  <v-date-picker
                                     v-model="editedItem.Tgl_Phk"
-                                    label="Tgl PHK"
-                                    prepend-icon="mdi-calendar"
-                                    color="dark"
-                                    readonly
-                                    dense
-                                    v-bind="attrs"
-                                    v-on="on"
-                                  ></v-text-field>
-                                </template>
-                                <v-date-picker
-                                  v-model="editedItem.Tgl_Phk"
-                                  @input="MenuTglPHK = false"
-                                  year-icon="mdi-calendar-blank"
-                                  color="red darken-4"
-                                  locale="id"
-                                ></v-date-picker>
-                              </v-menu>
-                            </v-col>
+                                    @input="MenuTglPHK = false"
+                                    year-icon="mdi-calendar-blank"
+                                    color="red darken-4"
+                                    locale="id"
+                                  ></v-date-picker>
+                                </v-menu>
+                              </v-col>
 
-                            <v-col cols="12" sm="6" md="4">
-                              <v-text-field
-                                dense
-                                clearable
-                                label="Keterangan"
-                                color="dark"
-                                v-model="editedItem.Keterangan"
-                              ></v-text-field>
-                            </v-col>
+                              <v-col cols="12" sm="6" md="4">
+                                <v-text-field
+                                  dense
+                                  clearable
+                                  label="Keterangan"
+                                  color="dark"
+                                  v-model="editedItem.Keterangan"
+                                ></v-text-field>
+                              </v-col>
 
-                            <v-col cols="12" sm="6" md="4">
-                              <v-text-field
-                                dense
-                                clearable
-                                label="Nama Istri Suami"
-                                color="dark"
-                                v-model="editedItem.Nama_Istri_Suami"
-                              >
-                              </v-text-field>
-                            </v-col>
-                          </v-row>
+                              <v-col cols="12" sm="6" md="4">
+                                <v-text-field
+                                  dense
+                                  clearable
+                                  label="Nama Istri Suami"
+                                  color="dark"
+                                  v-model="editedItem.Nama_Istri_Suami"
+                                >
+                                </v-text-field>
+                              </v-col>
+
+                              <v-col cols="12" sm="6" md="4">
+                                <v-text-field
+                                  dense
+                                  prefix="Anak"
+                                  color="dark"
+                                  readonly
+                                  v-model="editedItem.Anak"
+                                >
+                                  <!-- ------------------dialog anak------------------ -->
+                                  <template v-slot:append-outer>
+                                    <v-dialog
+                                      v-model="DialogAnak"
+                                      max-width="800px"
+                                      scrollable
+                                      
+                                    >
+                                      <template v-slot:activator="{on, attrs}">
+                                        <v-btn
+                                          dark
+                                          x-small
+                                          height="25"
+                                          v-bind="attrs"
+                                          v-on="on"
+                                          color="red darken-4"
+                                        >
+                                          <v-icon>mdi-dots-horizontal</v-icon>
+                                        </v-btn>
+                                      </template>
+                                      <v-card>
+                                        <v-toolbar
+                                          flat
+                                          dense
+                                        >
+                                          <v-toolbar-title>
+                                            <span class="headline">{{ formTitleAnak }}</span>
+                                          </v-toolbar-title>
+                                          <v-spacer></v-spacer>
+                                          <v-btn
+                                            fab
+                                            text
+                                            small
+                                            @click="KeluarDialogAnak"
+                                          >
+                                            <v-icon>mdi-window-close</v-icon>
+                                          </v-btn>
+                                        </v-toolbar>
+                                        <v-divider></v-divider>
+                                        
+                                        <v-card-text>
+                                          <div class="mt-4">
+                                            <v-row>
+                                              <v-col cols="12" sm="12" md="12">
+                                                <v-card 
+                                                  outlined
+                                                  class="pa-3 rounded-lg"
+                                                >
+                                                  <div class="mt-3">
+                                                    <v-row>
+                                                      <v-col cols="12" sm="6" md="4">
+                                                        <v-text-field
+                                                          dense
+                                                          clearable
+                                                          label="Kode"
+                                                          color="dark"
+                                                          v-model="editedItem.Kode"
+                                                        ></v-text-field>
+                                                      </v-col>
+                                                      
+                                                      <v-col cols="12" sm="6" md="4">
+                                                        <v-text-field
+                                                          dense
+                                                          clearable
+                                                          label="Urutan"
+                                                          color="dark"
+                                                          v-model="editedItem.Urutan"
+                                                        ></v-text-field>
+                                                      </v-col>
+
+                                                      <v-col cols="12" sm="6" md="4">
+                                                        <v-text-field
+                                                          dense
+                                                          clearable
+                                                          label="Nama"
+                                                          color="dark"
+                                                          v-model="editedItem.Nama"
+                                                        ></v-text-field>
+                                                      </v-col>
+                                                    </v-row>
+                                                  </div>
+                                                </v-card>
+
+                                                <!-- Grid Tabel Anak -->
+                                                <v-card outlined class="rounded-lg mt-3 elevation-6">
+                                                  <!-- <v-toolbar
+                                                    dense
+                                                    color="dark"
+                                                  >
+                                                    <span class="font-weight-bold">Anak</span>
+                                                  </v-toolbar> -->
+                                                  <div class="pa-2">
+                                                    <ejs-grid
+                                                      ref='gridanak'
+                                                      height="130"
+                                                      gridLines='Both'
+                                                      id="anakview"
+                                                      :dataSource="DataAnak"
+                                                      :allowPaging="true"
+                                                      :allowSorting='true'
+                                                      :allowResizing='true'
+                                                      :toolbar='toolbarOptions'
+                                                      :commandClick="commandClick"
+                                                      :pageSettings='pageSettings'
+                                                      :allowExcelExport='true'
+                                                      :allowPdfExport='true'
+                                                    >
+                                                      <e-columns>
+                                                        <e-column headerText="Aksi" textAlign='Center' width="120" :commands="commands" :lockColumn='true' :customAttributes="customAttributes">
+                                                          <div class="btn-group">
+                                                            <v-btn type="button" class="btn btn-default" (click)="prediemRowEdit($event)">
+                                                              <i class="fa fa-pencil"></i>
+                                                            </v-btn>
+                                                            <v-btn type="button" class="btn btn-default" (click)="prediemRowDelete($event)">
+                                                              <i class="fa fa-trash"></i>
+                                                            </v-btn>
+                                                          </div>
+                                                        </e-column>
+                                                        <e-column field='Kode' headerText='Kode' textAlign='Left' width=120></e-column>
+                                                        <e-column field='Urutan' headerText='Urutan' textAlign='Left' width=110></e-column>
+                                                        <e-column field='Nama' headerText='Nama' width=300></e-column>
+                                                      </e-columns>
+                                                    </ejs-grid>
+                                                  </div>
+                                                </v-card>
+                                              </v-col> 
+                                            </v-row>
+                                          </div>
+                                        </v-card-text>
+                                        <v-divider></v-divider>
+                                        <v-card-actions>
+                                          <span class="d-inline-block text-truncate">
+                                            Status : <span>{{Status}}</span>
+                                          </span>
+                                        <v-spacer></v-spacer>
+                                        <v-tooltip bottom>
+                                          <template v-slot:activator="{ on, attrs }">
+                                          <v-btn
+                                            fab
+                                            text
+                                            small
+                                            v-bind="attrs"
+                                            v-on="on"
+                                            color="dark"
+                                            class="text-capitalize mx-4"
+                                            @click="Reset"
+                                          >
+                                            <v-icon>mdi-refresh</v-icon>
+                                          </v-btn>
+                                          </template>
+                                          <span>Refresh</span>
+                                        </v-tooltip>
+                                          <v-btn
+                                            dark
+                                            color="red darken-4 mx-n2"
+                                            class="text-capitalize"
+                                            @click="Simpan"
+                                          >
+                                            <v-icon class="mr-1">mdi-content-save</v-icon>
+                                            Simpan
+                                          </v-btn>
+                                        </v-card-actions>
+                                      </v-card>
+                                    </v-dialog>
+                                    <!-- ----------------end dialog anak----------------- -->
+                                  </template>
+                                </v-text-field>
+                              </v-col>
+                            </v-row>
                           </div>
                         </v-card>
                       </v-col>
@@ -810,6 +987,7 @@ export default {
       token:null,
       KodeKaryawan:null,
       DialogTambahKaryawan: false,
+      DialogAnak: false,
       form: new FormData,
       editedIndex: -1,
       FotoKaryawan:[],
@@ -908,6 +1086,9 @@ export default {
     formTitleKaryawan () {
       return this.editedIndex === -1 ? 'Tambah Karyawan Baru' : 'Ubah Data Karyawan'
     },
+    formTitleAnak () {
+      return this.editedIndex === -1 ? 'Input Data Anak' : 'Ubah Data Anak'
+    },
     Status () {
       return this.editedIndex === -1 ? 'Baru' : 'Ubah'
     },
@@ -948,6 +1129,9 @@ export default {
     },
     DialogTambahKaryawan (val) {
       val || this.KeluarDialogKaryawan()
+    },
+    DialogAnak (val) {
+      val || this.KeluarDialogAnak()
     },
     MenuTglLahir (val) {
       val && setTimeout(() => (this.$refs.picker.activePicker = 'YEAR'))
@@ -1292,6 +1476,14 @@ export default {
         this.editedItem.Tgl_Masuk = this.date
         this.editedItem.Tgl_Lahir = this.date
         this.editedItem.Tgl_Phk = this.date
+      })
+    },
+
+    KeluarDialogAnak () {
+      this.DialogAnak = false
+      this.$nextTick(() => {
+        this.editedItem = Object.assign({}, this.defaultItem)
+        this.editedIndex = -1
       })
     },
 
