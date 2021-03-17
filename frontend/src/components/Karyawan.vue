@@ -90,11 +90,12 @@
                       <v-btn
                         block
                         small
-                        depressed
+                        outlined
                         class="text-capitalize rounded-lg"
                         @click.native="PdfExport"
                       >
-                        PDF
+                        Pdf
+                        <v-icon class="ml-1">mdi-adobe-acrobat</v-icon>
                       </v-btn>
                     </v-list-item>
 
@@ -103,11 +104,12 @@
                       <v-btn
                         block
                         small
-                        depressed
+                        outlined
                         class="text-capitalize rounded-lg"
                         @click.native="excelExport"
                       >
-                        EXCEL
+                        Excel
+                        <v-icon class="ml-1">mdi-microsoft-excel</v-icon>
                       </v-btn>
                     </v-list-item>
                   </v-list>
@@ -193,7 +195,6 @@
                   flat
                 >
                   <v-toolbar-title>
-                    <v-icon class="mt-n2 mr-1">{{Icon}}</v-icon>
                     <span class="headline">{{ formTitleKaryawan }}</span>
                   </v-toolbar-title>
                   <v-spacer></v-spacer>
@@ -423,13 +424,14 @@
                             </v-col>
 
                             <v-col cols="12" sm="6" md="4">
-                              <v-text-field
+                              <v-combobox
                                 dense
                                 clearable
                                 label="Pendidikan Terakhir"
                                 color="dark"
+                                :items="['SD/Sederajat','SLTP/Sederajat','SLTA/Sederjat','Diploma I/I','Akademi/Diploma III','Strata I','Strata II','Strata III']"
                                 v-model="editedItem.Pendidikan_Terakhir"
-                              ></v-text-field>
+                              ></v-combobox>
                             </v-col>
 
                             <v-col cols="12" sm="6" md="4">
@@ -622,7 +624,8 @@
                                 label="Nama Istri Suami"
                                 color="dark"
                                 v-model="editedItem.Nama_Istri_Suami"
-                              ></v-text-field>
+                              >
+                              </v-text-field>
                             </v-col>
                           </v-row>
                           </div>
@@ -710,7 +713,7 @@
               <e-column field='ALAMAT_SEKARANG' headerText='Alamat Sekarang' textAlign='Left' width=200></e-column>
               <e-column field='NO_TLP' headerText='No. Tlp' textAlign='Left' width=150></e-column>
               <e-column field='JENIS_KELAMIN' headerText='Jenis Kelamin' textAlign='Left' width=150></e-column>
-              <e-column field='PENDIDIKAN_TERAKHIR' headerText='Pendidikan Terakhir' textAlign='Left' width=150></e-column>
+              <e-column field='PENDIDIKAN_TERAKHIR' headerText='Pendidikan Terakhir' textAlign='Left' width=190></e-column>
               <e-column field='JURUSAN' headerText='Jurusan' textAlign='Left' width=150></e-column>
               <e-column field='AGAMA' headerText='Agama' textAlign='Left' width=150></e-column>
               <e-column field='SUKU' headerText='Suku' textAlign='Left' width=150></e-column>
@@ -904,9 +907,6 @@ export default {
   computed: {
     formTitleKaryawan () {
       return this.editedIndex === -1 ? 'Tambah Karyawan Baru' : 'Ubah Data Karyawan'
-    },
-    Icon () {
-      return this.editedIndex === -1 ? 'mdi-plus-thick' : 'mdi-pencil'
     },
     Status () {
       return this.editedIndex === -1 ? 'Baru' : 'Ubah'
