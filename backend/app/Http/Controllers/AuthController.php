@@ -35,7 +35,7 @@ class AuthController extends Controller
 
     public function userdata(){
         $data = collect();
-        $sql = DB::select('select * from users order by id');
+        $sql = DB::select('select * from users order by Kode');
         $chunk = array_chunk($sql,1000);
         return response()->json(collect($chunk)->collapse());
     }
@@ -106,6 +106,18 @@ class AuthController extends Controller
             "status"=> true,
             "user" => $user
         ]);
+    }
+    public function hapusAkun($id,$kode)
+    {
+        $x = $id;
+        $x.= '/';
+        $x.= $kode;
+        $del = DB::delete('delete from users where Kode = :kd',['kd'=>$x]);
+        if ($del == 1) {
+            return response()->json([
+                "status"=>'success',
+            ],200);
+        }
     }
 
     public function logout(Request $request)
