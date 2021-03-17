@@ -11,6 +11,7 @@
         text
         small
         class="mr-2"
+        v-show="mobile == true"
         @click.stop="drawerMenu = !drawerMenu"
       >
         <v-icon>{{ drawerMenu ? 'mdi-backburger' : 'mdi-menu' }}</v-icon>
@@ -103,7 +104,6 @@
               v-on="on"
             >
               <v-icon>mdi-account-circle</v-icon>
-              <!-- <v-icon>{{ accountshow ? 'mdi-account-circle' : 'mdi-account-circle-outline' }}</v-icon> -->
             </v-btn>
           </template>
 
@@ -213,6 +213,9 @@
       app
       fixed
       width="250"
+      :permanent="mobile == false"
+      :expand-on-hover="mobile == false"
+      :temporary="mobile == true"
       class="elevation-3"
       v-model="drawerMenu"
     >
@@ -247,6 +250,7 @@
           :key="key"
           :to="item.link"
           link
+          color="error"
         >
           <v-list-item-icon>
             <v-icon>{{ item.icon }}</v-icon>
@@ -264,7 +268,7 @@
             v-model="item.active"
             :prepend-icon="item.action"
             no-action
-            color="dark"
+            color="error"
           >
             <template v-slot:activator>
               <v-list-item-content>
@@ -282,7 +286,7 @@
               <v-list-item-content>
                 <v-list-item-title v-text="child.title"></v-list-item-title>
               </v-list-item-content>
-              <v-icon v-text="child.icon"></v-icon>
+              <v-icon class="dark" v-text="child.icon"></v-icon>
             </v-list-item>
           </v-list-group>
       </v-list>
@@ -296,6 +300,7 @@
       temporary
       width="350"
       color="dark"
+      hide-overlay
       v-model="drawerNotif"
     >
       <v-toolbar
@@ -411,7 +416,7 @@ import api from "@/services/http";
         MenuShowAkun: false,
         MenuShowNotif: false,
         MenuShowSetting: false,
-        drawerMenu: true,
+        drawerMenu: false,
         token:null,
         user:[],
 
