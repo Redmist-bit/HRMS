@@ -3,12 +3,18 @@
 namespace App\Http\Controllers;
 use File;
 use Image;
+use JWTAuth;
 use App\Models\Karyawan;
+use App\Models\Child;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class KaryawanController extends Controller
 {
+    public function __construct()
+    {
+        $this->user = JWTAuth::parseToken()->authenticate();
+    }
     /**
      * Display a listing of the resource.
      *
@@ -16,7 +22,7 @@ class KaryawanController extends Controller
      */
     public function index()
     {
-        return Karyawan::take(100)->get();
+        return Karyawan::with('anak')->get();
     }
 
     /**
@@ -85,17 +91,28 @@ class KaryawanController extends Controller
         }else{
             $krywn->PHOTO = '/Photo/no.png';
         }
-        // dd($krywn->PHOTO);
         $krywn->NAMA_ISTRI_SUAMI = $request->Nama_Istri_Suami;
-        $krywn->DiBuatOleh = $request->DiBuatOleh;
+        $krywn->DiBuatOleh = $this->user->Kode;
         // $krywn->DiBuatTgl = $request->DiBuatTgl;
-        $krywn->DiubahOleh = $request->DiubahOleh;
+        $krywn->DiubahOleh = $this->user->Kode;
         // $krywn->DiubahTgl = $request->DiubahTgl;
-
         if ($krywn->save()){
+            if($request->input('Child')){
+            $anak = json_decode($request->input('Child'),true);
+            foreach ($anak as $anaks) {
+                 Child::create([
+                    'KodeKaryawan' => $krywn->KODE_KARYAWAN,
+                    'NamaAnak' => $anaks['NamaAnak'],
+                    'AnakKe' => $anaks['AnakKe'],
+                    'DibuatOleh' => $this->user->Kode,
+                    'DiubahOleh' => $this->user->Kode
+                ]);
+                }
+            }
             return response()->json([
                 "status" => 'success',
-                "Karyawan" => $krywn
+                "Karyawan" => $krywn,
+                "Anak" => $anak
             ]);
         }
         else {
@@ -174,7 +191,7 @@ class KaryawanController extends Controller
             "TGL_PHK"=>$request->Tgl_Phk,
             "KETERANGAN"=>$request->Keterangan,
             "NAMA_ISTRI_SUAMI"=>$request->Nama_Istri_Suami,
-            "DiubahOleh"=>$request->DiubahOleh,
+            "DiubahOleh"=>$this->user->Kode,
         ]);
         if ($data == 1) {
             return response()->json([

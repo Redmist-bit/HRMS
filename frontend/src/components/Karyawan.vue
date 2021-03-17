@@ -690,9 +690,9 @@
                                                         <v-text-field
                                                           dense
                                                           clearable
-                                                          label="Kode"
+                                                          label="Nama Anak"
                                                           color="dark"
-                                                          v-model="editedItem.Kode"
+                                                          v-model="Child.NamaAnak"
                                                         ></v-text-field>
                                                       </v-col>
                                                       
@@ -700,21 +700,12 @@
                                                         <v-text-field
                                                           dense
                                                           clearable
-                                                          label="Urutan"
+                                                          label="AnakKe"
                                                           color="dark"
-                                                          v-model="editedItem.Urutan"
+                                                          v-model="Child.AnakKe"
                                                         ></v-text-field>
                                                       </v-col>
 
-                                                      <v-col cols="12" sm="6" md="4">
-                                                        <v-text-field
-                                                          dense
-                                                          clearable
-                                                          label="Nama"
-                                                          color="dark"
-                                                          v-model="editedItem.Nama"
-                                                        ></v-text-field>
-                                                      </v-col>
                                                     </v-row>
                                                   </div>
                                                 </v-card>
@@ -738,7 +729,7 @@
                                                       :allowSorting='true'
                                                       :allowResizing='true'
                                                       :toolbar='toolbarOptions'
-                                                      :commandClick="commandClick"
+                                                      :commandClick="commandAnak"
                                                       :pageSettings='pageSettings'
                                                       :allowExcelExport='true'
                                                       :allowPdfExport='true'
@@ -754,9 +745,8 @@
                                                             </v-btn>
                                                           </div>
                                                         </e-column>
-                                                        <e-column field='Kode' headerText='Kode' textAlign='Left' width=120></e-column>
-                                                        <e-column field='Urutan' headerText='Urutan' textAlign='Left' width=110></e-column>
-                                                        <e-column field='Nama' headerText='Nama' width=300></e-column>
+                                                        <e-column field='AnakKe' headerText='AnakKe' textAlign='Left' width=110></e-column>
+                                                        <e-column field='NamaAnak' headerText='Nama Anak' width=300></e-column>
                                                       </e-columns>
                                                     </ejs-grid>
                                                   </div>
@@ -768,7 +758,7 @@
                                         <v-divider></v-divider>
                                         <v-card-actions>
                                           <span class="d-inline-block text-truncate">
-                                            Status : <span>{{Status}}</span>
+                                            Status : <span>{{StatusFormAnak}}</span>
                                           </span>
                                         <v-spacer></v-spacer>
                                         <v-tooltip bottom>
@@ -792,7 +782,7 @@
                                             dark
                                             color="red darken-4 mx-n2"
                                             class="text-capitalize"
-                                            @click="Simpan"
+                                            @click="SimpanAnak"
                                           >
                                             <v-icon class="mr-1">mdi-content-save</v-icon>
                                             Simpan
@@ -985,16 +975,28 @@ export default {
       MenuTglPHK: false,
       user:[],
       token:null,
+      arr:null,
       KodeKaryawan:null,
       DialogTambahKaryawan: false,
       DialogAnak: false,
       form: new FormData,
       editedIndex: -1,
+      ChildIndex: -1,
       FotoKaryawan:[],
       fotoTemp:null,
+      DataAnak:[],
       foto: null,
+      KodeKaryawanTemp:null,
       dialogchangefoto:false,
       GantiGambar:null,
+      Child: {
+        NamaAnak: "",
+        AnakKe: ""
+        },
+      ChildDefault: {
+      NamaAnak: "",
+      AnakKe: ""
+      },
       defaultItem: {
         Kode_Karyawan: "",
         Nama: "",
@@ -1027,6 +1029,7 @@ export default {
         Keterangan: "",
         Photo: "",
         Nama_Istri_Suami: "",
+        Anak:"",
       },
       editedItem: {
         Kode_Karyawan: "",
@@ -1060,6 +1063,7 @@ export default {
         Keterangan: "",
         Photo: "",
         Nama_Istri_Suami: "",
+        Anak:"",
       },
       toolbarOptions: ['Search'],
       DataKaryawan: [],
@@ -1087,10 +1091,13 @@ export default {
       return this.editedIndex === -1 ? 'Tambah Karyawan Baru' : 'Ubah Data Karyawan'
     },
     formTitleAnak () {
-      return this.editedIndex === -1 ? 'Input Data Anak' : 'Ubah Data Anak'
+      return this.ChildIndex === -1 ? 'Input Data Anak' : 'Ubah Data Anak'
     },
     Status () {
       return this.editedIndex === -1 ? 'Baru' : 'Ubah'
+    },
+    StatusFormAnak () {
+      return this.ChildIndex === -1 ? 'Baru' : 'Ubah'
     },
   },
   
@@ -1104,7 +1111,15 @@ export default {
         this.mobile = false
       }
     },
-
+    DataAnak(){
+      if (this.DataAnak == null) {
+        this.editedItem.Anak = 0
+      }else{
+        this.editedItem.Anak = 0
+        this.editedItem.Anak = this.DataAnak.length
+      }
+     console.log(this.editedItem.Anak)
+    },
     FotoKaryawan:{
       handler(){
       if (this.formTitleKaryawan == "Ubah Data Karyawan" && this.DialogTambahKaryawan == true) {
@@ -1183,9 +1198,44 @@ export default {
       // cekmenu(){
         
       // },
+    SimpanAnak(){
+      if(this.formTitleKaryawan === "Tambah Karyawan Baru" && this.formTitleAnak === "Input Data Anak"){
+      this.DataAnak.push(this.Child)
+      this.DataAnak = [...this.DataAnak]
+      this.$nextTick(() => {
+        this.Child = Object.assign({}, this.ChildDefault)
+      })
+    }else if (this.formTitleKaryawan === "Tambah Karyawan Baru" && this.formTitleAnak === "Ubah Data Anak") {
+      this.DataAnak[this.arr] = this.Child
+      this.DataAnak = [...this.DataAnak]
+      this.$nextTick(() => {
+        this.Child = Object.assign({}, this.ChildDefault)
+        this.ChildIndex = -1
+      })
+    }else if (this.formTitleKaryawan === "Ubah Data Karyawan" && this.formTitleAnak === "Input Data Anak") {
+      this.DataAnak.push(this.Child)
+      this.DataAnak = [...this.DataAnak]
+      this.$nextTick(() => {
+        this.Child = Object.assign({}, this.ChildDefault)
+      })
+      api.post('/tambahAnak?token='+this.token,{
+            KodeKaryawan: this.KodeKaryawanTemp,
+            NamaAnak: this.Child.NamaAnak,
+            AnakKe: this.Child.AnakKe,
+            })
+            .then((res)=>{
+              if (res) {
+                console.log(res)
+              } else {
+                //
+              }
+            })
+    }
+    },
 
     Simpan(){
       if(this.formTitleKaryawan === "Tambah Karyawan Baru"){
+          var anak = JSON.stringify(this.DataAnak);
           this.form.append('files',this.FotoKaryawan);
           this.form.append('Nama', this.editedItem.Nama);
           this.form.append('Nrk', this.editedItem.Nrk);
@@ -1217,9 +1267,11 @@ export default {
           this.form.append('Keterangan', this.editedItem.Keterangan);
           this.form.append('Nama_Istri_Suami', this.editedItem.Nama_Istri_Suami);
           this.form.append('DiBuatOleh', this.user.Kode);
-          this.form.append('DiubahOleh', this.user.Kode); 
+          this.form.append('DiubahOleh', this.user.Kode);
+          this.form.append('Child', anak);  
           this.Alert = true
-          console.log(this.form)
+          // console.log(this.form)
+          // console.log('anak',this.DataAnak)
           const config = { headers: { 'Content-Type': 'multipart/form-data',"Authorization" : `Bearer ${this.token}` } };
           api.post("/karyawan",this.form,config 
           // Nama: this.editedItem.Nama,
@@ -1315,6 +1367,36 @@ export default {
       this.foto = null
       this.KeluarDialogKaryawan()    
     },
+    commandAnak: function(args) {
+      if (args.target.classList.contains("custombutton")){
+        console.log(args.rowData);
+      } else if (args.target.classList.contains("Delete")){
+        var r = confirm("Yakin Hapus Data?");
+        if (r == true) { 
+          const index = this.DataAnak.findIndex(x => x.NamaAnak === args.rowData.NamaAnak);
+          this.DataAnak.splice(index,1)
+          this.DataAnak = [...this.DataAnak]
+
+          // api
+          //   .delete("/karyawan/"+args.rowData.KODE_KARYAWAN+'?token='+this.token)
+          //   .then((res) =>{
+          //     console.log(res);
+          //     this.getdata()
+          //     this.AlertDataTerhapus = true
+          //   })
+          //   .catch((err) => {
+          //     console.log(err);
+          //   });
+        }
+      } else if (args.target.classList.contains("Edit")){
+        this.ChildIndex = 1
+        let data = args
+            console.log(data)
+            this.arr = this.DataAnak.findIndex(x => x.NamaAnak === args.rowData.NamaAnak && x.AnakKe === args.rowData.AnakKe);
+            this.Child.NamaAnak = data.rowData.NamaAnak
+            this.Child.AnakKe = data.rowData.AnakKe
+      }
+    },
 
     commandClick: function(args) {
       if (args.target.classList.contains("custombutton")){
@@ -1336,6 +1418,7 @@ export default {
             });
         }
       } else if (args.target.classList.contains("Edit")){
+        this.KodeKaryawanTemp =  args.rowData.KODE_KARYAWAN
         let data = args
             this.editedIndex = 1;
             console.log(data)
@@ -1380,6 +1463,8 @@ export default {
                 this.editedItem.Nama_Istri_Suami = data.rowData.NAMA_ISTRI_SUAMI
                 this.foto = "http://"+window.location.hostname+":8000"+data.rowData.PHOTO
                 this.fotoTemp = "http://"+window.location.hostname+":8000"+data.rowData.PHOTO
+                this.DataAnak = data.rowData.anak
+                this.editedItem.Anak = this.DataAnak.length
                 console.log(this.fotoTemp)
                 // this.dialogWO = true;
             }
@@ -1473,6 +1558,7 @@ export default {
         this.editedItem = Object.assign({}, this.defaultItem)
         this.editedIndex = -1
         this.foto = null
+        this.DataAnak = []
         this.editedItem.Tgl_Masuk = this.date
         this.editedItem.Tgl_Lahir = this.date
         this.editedItem.Tgl_Phk = this.date
@@ -1481,9 +1567,13 @@ export default {
 
     KeluarDialogAnak () {
       this.DialogAnak = false
-      this.$nextTick(() => {
+      const a = this.editedItem
+      this.$nextTick(() => {   
+        this.Child = Object.assign({}, this.ChildDefault)
         this.editedItem = Object.assign({}, this.defaultItem)
-        this.editedIndex = -1
+        this.editedItem = a
+        this.editedItem.Anak = this.DataAnak.length
+        this.ChildIndex = -1
       })
     },
 

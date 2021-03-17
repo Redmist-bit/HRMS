@@ -12,4 +12,8 @@ class Karyawan extends Model
     protected $primaryKey = 'Kode_Karyawan';
     const CREATED_AT = 'DiBuatTgl';
     const UPDATED_AT = 'DiubahTgl';
+    public function anak()
+    {
+        return $this->hasMany(Child::class,'KodeKaryawan','KODE_KARYAWAN');
+    }
 }

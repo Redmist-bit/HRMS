@@ -6,6 +6,7 @@ use App\Models\Karyawan;
 use App\Http\Controllers\KaryawanController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserMenuController;
+use App\Http\Controllers\ChildController;
 
 /*
 |--------------------------------------------------------------------------
@@ -38,6 +39,7 @@ Route::group(["middleware"=>"auth.jwt"], function(){
     Route::delete('menu/{id}/{kode}',[UserMenuController::class,'hapusMenu']);
     Route::delete('user/{id}/{kode}',[AuthController::class,'hapusAkun']);
     Route::post("addmenu", [UserMenuController::class, 'addMenu']);
+    Route::post("tambahAnak", [ChildController::class, 'addChild']);
 });
 Route::post("login", [AuthController::class, 'login']); // register
 Route::post("register", [AuthController::class, 'register']); // register
