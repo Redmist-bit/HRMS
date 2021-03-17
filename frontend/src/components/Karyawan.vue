@@ -220,7 +220,7 @@
                         >
                           <v-card
                             outlined
-                            color="grey darken-3"
+                            color="grey darken-1"
                             class="rounded-lg mb-2 fill-height"
                           >
                             <v-responsive :aspect-ratio="3/4">
@@ -424,13 +424,14 @@
                             </v-col>
 
                             <v-col cols="12" sm="6" md="4">
-                              <v-text-field
+                              <v-combobox
                                 dense
                                 clearable
                                 label="Pendidikan Terakhir"
                                 color="dark"
+                                :items="['SD/Sederajat','SLTP/Sederajat','SLTA/Sederjat','Diploma I/I','Akademi/Diploma III','Strata I','Strata II','Strata III']"
                                 v-model="editedItem.Pendidikan_Terakhir"
-                              ></v-text-field>
+                              ></v-combobox>
                             </v-col>
 
                             <v-col cols="12" sm="6" md="4">
@@ -623,7 +624,8 @@
                                 label="Nama Istri Suami"
                                 color="dark"
                                 v-model="editedItem.Nama_Istri_Suami"
-                              ></v-text-field>
+                              >
+                              </v-text-field>
                             </v-col>
                           </v-row>
                           </div>
